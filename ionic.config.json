@@ -1,0 +1,7 @@
+{
+  "name": "psn",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
