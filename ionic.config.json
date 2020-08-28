@@ -1,7 +1,8 @@
 {
   "name": "psn",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }

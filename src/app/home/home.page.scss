@@ -1,0 +1,35 @@
+:host {
+    ion-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    ion-toolbar {
+        --background: transparent;
+        --ion-color-base: transparent !important;
+    }
+
+    .background-illustration {
+        width: 100%;
+        height: calc(100% - 30px);
+        object-fit: cover;
+        display: block;
+    }
+    
+    .cupertino-pane {
+        padding: 20px;
+    }
+
+    button {
+        position: fixed;
+        bottom: 50px;
+        left: 20px;
+
+        border: none;
+        background: #000;
+        color: #FFF;
+        padding: 16px;
+    }
+}

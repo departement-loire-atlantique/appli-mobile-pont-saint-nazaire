@@ -1,0 +1,34 @@
+
+<ion-content fullscreen>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <img src="/assets/img/cd44-fond@2x.png" class="background-illustration">
+  <button (click)="openWebcam()">Webcam</button>
+
+  <div class="cupertino-pane">
+    <h1>Panel</h1>
+    <div class="content">
+      <h2>Status {{ count }}</h2>
+      <pre>{{ status | json }}</pre>
+    
+      <div class="events">
+        <h2>Événements</h2>
+        <p *ngIf="eventsList && !eventsList.length">
+          Il n’y a actuellement aucune perturbation
+        </p>
+        <pre>{{ eventsList | json }}</pre>
+      </div>
+
+      Texte
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus cumque quidem vero nulla iusto, labore beatae neque reprehenderit, necessitatibus officia voluptatibus. Soluta excepturi consequatur dolorum eligendi autem repudiandae aspernatur commodi?</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus cumque quidem vero nulla iusto, labore beatae neque reprehenderit, necessitatibus officia voluptatibus. Soluta excepturi consequatur dolorum eligendi autem repudiandae aspernatur commodi?</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus cumque quidem vero nulla iusto, labore beatae neque reprehenderit, necessitatibus officia voluptatibus. Soluta excepturi consequatur dolorum eligendi autem repudiandae aspernatur commodi?</p>
+    </div>
+  </div>
+</ion-content>
