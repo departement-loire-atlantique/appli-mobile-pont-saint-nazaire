@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { SvgMapComponent } from '../../components/svg-map/svg-map.component';
+import { TrafficDirectionComponent } from '../../components/traffic-direction/traffic-direction.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { SvgMapComponent } from '../../components/svg-map/svg-map.component';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, SvgMapComponent],
-  exports: [SvgMapComponent]
+  declarations: [HomePage, SvgMapComponent, TrafficDirectionComponent],
+  exports: [SvgMapComponent, TrafficDirectionComponent]
 })
 export class HomePageModule {}

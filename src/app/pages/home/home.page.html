@@ -13,18 +13,32 @@
   <button (click)="openWebcam()">Webcam</button>
 
   <div class="cupertino-pane">
-    <h1>Panel</h1>
-    <div class="content">
-      <h2>Status {{ count }}</h2>
-      <pre>{{ status | json }}</pre>
-    
-      <div class="events">
-        <h2>Événements</h2>
+    <div class="content" *ngIf="status">
+
+      <!-- Directions -->
+      <div class="ds44--l-padding-lr ds44--l-padding-b">
+        <h2 class="h2-like">Sens de circulation</h2>
+  
+        <section class="ds44-app-tuile">
+          <h3 class="h3-like">En cours</h3>
+          <app-traffic-direction [mode]="status"></app-traffic-direction>
+        </section>
+  
+        <section class="ds44-app-tuile">
+          <h3 class="h3-like">À venir</h3>
+          <app-traffic-direction *ngFor="let mode of status.next" [mode]="mode"></app-traffic-direction>
+        </section>
+      </div>
+
+      <!-- Events -->
+      <div class="ds44--l-padding ds44-lightBG">
+        <h2 class="h2-like">Événements</h2>
         <p *ngIf="eventsList && !eventsList.length">
           Il n’y a actuellement aucune perturbation
         </p>
         <pre>{{ eventsList | json }}</pre>
       </div>
+
     </div>
   </div>
 </ion-content>
