@@ -32,6 +32,6 @@ export class UtilsService {
 
   getColor(time: any) {
     time = parseInt(time, 10);
-    return time > 7 ? (time > 15 ? 'rouge' : 'orange')  : 'vert';
+    return time >= 7 ? (time > 15 ? 'rouge' : 'orange')  : 'vert';
   }
 }
