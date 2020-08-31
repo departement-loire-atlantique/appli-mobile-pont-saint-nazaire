@@ -9,27 +9,27 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'webcam',
-    loadChildren: () => import('./webcam/webcam.module').then( m => m.WebcamPageModule)
+    loadChildren: () => import('./pages/webcam/webcam.module').then( m => m.WebcamPageModule)
   },
   {
     path: 'informations',
-    loadChildren: () => import('./informations/informations.module').then( m => m.InformationsPageModule)
+    loadChildren: () => import('./pages/informations/informations.module').then( m => m.InformationsPageModule)
   },
   {
     path: 'other-apps',
-    loadChildren: () => import('./other-apps/other-apps.module').then( m => m.OtherAppsPageModule)
+    loadChildren: () => import('./pages/other-apps/other-apps.module').then( m => m.OtherAppsPageModule)
   },
   {
     path: 'departement',
-    loadChildren: () => import('./departement/departement.module').then( m => m.DepartementPageModule)
+    loadChildren: () => import('./pages/departement/departement.module').then( m => m.DepartementPageModule)
   },
   {
     path: 'content-page',
-    loadChildren: () => import('./content-page/content-page.module').then( m => m.ContentPagePageModule)
+    loadChildren: () => import('./pages/content-page/content-page.module').then( m => m.ContentPagePageModule)
   }
 ];
 

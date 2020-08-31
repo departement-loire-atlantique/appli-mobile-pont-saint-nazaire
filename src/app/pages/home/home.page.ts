@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../../services/api.service';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
-import { UtilsService } from '../services/utils.service';
+import { UtilsService } from '../../services/utils.service';
 import { AppState } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 import { ModalController } from '@ionic/angular';
@@ -18,6 +18,10 @@ export class HomePage implements OnInit, OnDestroy {
   public status: any;
   public eventsList: any;
   public stateSub: Subscription;
+
+  public currentMode = 'm112';
+  public north = 'vert';
+  public south = 'vert';
 
   constructor(private api: ApiService, private utils: UtilsService, private modalController: ModalController) { }
 
@@ -61,7 +65,9 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   async getData() {
-    this.status = await this.api.getPSNStatus();
+    const status = await this.api.getPSNStatus();
+    this.status = this.utils.formatStatus(status);
+
     this.eventsList = await this.api.getEvents();
   }
 
