@@ -24,7 +24,9 @@ export class WebcamPage implements OnInit, OnDestroy {
 
   getWebcam() {
     this.api.getLatestWebcam().then(image => {
-      this.image = image;
+      if (image) {
+        this.image = image;
+      }
     });
   }
 

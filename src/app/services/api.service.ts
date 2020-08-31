@@ -7,6 +7,7 @@ const { Http, Filesystem } = Plugins;
 
 import { HTTP } from '@ionic-native/http/ngx';
 import { Platform } from '@ionic/angular';
+import { HttpDownloadFileResult } from '@capacitor-community/http';
 
 @Injectable({
   providedIn: 'root'
@@ -52,37 +53,42 @@ export class ApiService {
   }
 
   async getLatestWebcam() {
-    if (this.platform.is('capacitor')) {
-      const folder = await Filesystem.getUri({
-        directory: FilesystemDirectory.Data,
-        path: ''
+    const download: HttpDownloadFileResult = await Http.downloadFile({
+      url: environment.apiUrl + '/webcam?id=psn',
+      filePath: 'webcam.jpg',
+      fileDirectory: FilesystemDirectory.Data
+    });
+
+    // On a device the file will be written and will return a path
+    if (download.path) {
+      // This will return a base64 !
+      const read = await Filesystem.readFile({
+        path: 'webcam.jpg',
+        directory: FilesystemDirectory.Data
       });
 
-      const path = folder + '/webcam.jpg';
-      await this.httpNative.downloadFile(environment.apiUrl + '/webcam?id=psn', null, null, path);
-      const image = ( window as any).Ionic.WebView.convertFileSrc(path);
-      return image + '?date=' + new Date().getTime();
-    } else {
+      return 'data:image/jpg;base64,' + read.data;
+    }
+
+    // On desktop the function will return a blob
+    if (download.blob) {
       let result = null;
-      const ret = await Http.downloadFile({
-        url: environment.apiUrl + '/webcam?id=psn',
-        filePath: 'webcam.jpg',
-        fileDirectory: FilesystemDirectory.Data
-      });
 
       await new Promise((resolve, reject) => {
-        if (ret.blob) {
+        if (download.blob) {
           const reader = new FileReader();
           reader.onload = () => {
             result = reader.result;
             resolve();
           };
-          reader.readAsDataURL(ret.blob);
+          reader.readAsDataURL(download.blob);
         } else {
           reject();
         }
       });
       return result;
     }
+
+    return;
   }
 }
