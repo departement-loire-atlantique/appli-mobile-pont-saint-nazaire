@@ -18,4 +18,20 @@ export class UtilsService {
       });
     });
   }
+
+  formatStatus(apiStatus: any) {
+    return {
+      code: apiStatus.code_current_mode.toLowerCase(),
+      status: {
+        north: this.getColor(apiStatus['TIME-CERTE-STBREVIN']),
+        south: this.getColor(apiStatus['TIME-STBREVIN-CERTE'])
+      },
+      next: apiStatus.next_mode
+    };
+  }
+
+  getColor(time: any) {
+    time = parseInt(time, 10);
+    return time > 7 ? (time > 15 ? 'rouge' : 'orange')  : 'vert';
+  }
 }
