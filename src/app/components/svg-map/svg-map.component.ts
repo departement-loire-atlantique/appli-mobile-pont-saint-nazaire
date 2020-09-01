@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, OnChanges, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnChanges, ViewChild, ElementRef, OnInit, Output, EventEmitter } from '@angular/core';
 import { Event } from '../../models/event';
 import { Status } from '../../models/status';
 
@@ -19,6 +19,9 @@ export class SvgMapComponent implements OnInit, OnChanges {
 
   @Input() data: Status;
   @Input() events: Event[];
+
+  @Output() clickEvent: EventEmitter<Event> = new EventEmitter();
+
   @ViewChild('svg') svg: ElementRef;
 
   ngOnInit() {
@@ -40,28 +43,41 @@ export class SvgMapComponent implements OnInit, OnChanges {
 
     if (this.events && this.events.length) {
       this.events.forEach((event: Event) => {
-        if (event.type === 'vent') {
-          const vent = this.svg.nativeElement.querySelector('#perturbation-vent');
-          vent.style.display = 'block';
-          this.displayedElements.push(vent);
-        } else {
-          const zone = this.svg.nativeElement.querySelector('#perturbation-' + event.zone);
-          zone.style.display = 'block';
-          this.displayedElements.push(zone);
+        const zone = this.svg.nativeElement.querySelector('#perturbation-' + (event.type === 'vent' ? 'vent' : event.zone));
+        const clickHandler = () => {
+          this.handleEventClick(event);
+        };
 
+        zone.style.display = 'block';
+
+        if (event.type === 'vent') {
+          zone._clickHandler = clickHandler;
+          zone.addEventListener('click', zone._clickHandler);
+        } else {
           const icon = zone.querySelector('[data-name=' + event.type + ']');
           icon.style.display = 'block';
+          icon._clickHandler = clickHandler;
+          icon.addEventListener('click', icon._clickHandler);
+
           this.displayedElements.push(icon);
         }
+
+        this.displayedElements.push(zone);
       });
     }
 
     this.isFirstChange = false;
   }
 
+  handleEventClick(event: Event) {
+    this.clickEvent.emit(event);
+  }
+
   hidePreviousevents() {
-    this.displayedElements.forEach(element => {
+    this.displayedElements.forEach((element: any) => {
       element.style.display = 'none';
+      element.removeEventListener('click', element._clickHandler);
+      element._clickHandler = undefined;
     });
 
     this.displayedElements = [];

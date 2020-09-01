@@ -1,10 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-avatar><img src="/assets/icon/{{evenement.icon}}.svg" alt="" /></ion-avatar>
+      <ion-avatar><img src="/assets/icon/{{event.icon}}.svg" alt="" /></ion-avatar>
     </ion-buttons>
     <ion-title>
-      <h3 class="h3-like">{{ evenement ? evenement.type : "" }}</h3>
+      <h3 class="h3-like">{{ event ? event.type : "" }}</h3>
     </ion-title>
     <ion-buttons slot="end">
       <button type="button" (click)="dismiss()" class="ds44-noPdg">
@@ -17,25 +17,25 @@
 
 <ion-content class="padding">
   <section class="ds44-contenuArticle d-pertubation" id="section2">
-    <h3 class="h3-like">{{ evenement ? evenement.ligne1 : "" }}</h3>
+    <h3 class="h3-like">{{ event ? event.ligne1 : "" }}</h3>
     
     <p>
       <i class="icon icon-date" aria-hidden="true"></i>
-      <span class="ds44-iconInnerText">{{ evenement.datePublication | date: "dd/MM/yyyy" }}</span>
+      <span class="ds44-iconInnerText">{{ event.datePublication | date: "dd/MM/yyyy" }}</span>
     </p>
 
     <p>
       <i class="icon icon-time" aria-hidden="true"></i>
-      <span class="ds44-iconInnerText">Mis à jour à {{ evenement.datePublication | date: "HH:MM":"fr" }}</span>
+      <span class="ds44-iconInnerText">Mis à jour à {{ event.datePublication | date: "HH:mm":"fr" }}</span>
     </p>
 
-    <p>{{ evenement ? evenement.ligne2 : "" }}</p>
+    <p>{{ event ? event.ligne2 : "" }}</p>
     
-    <ul *ngIf="evenement">
-      <li *ngIf="evenement.ligne3">{{ evenement.ligne3}}</li>
-      <li *ngIf="evenement.ligne4">{{ evenement.ligne4 }}</li>
-      <li *ngIf="evenement.ligne5">{{ evenement.ligne5 }}</li>
-      <li *ngIf="evenement.ligne6">{{ evenement.ligne6 }}</li>
+    <ul *ngIf="event">
+      <li *ngIf="event.ligne3">{{ event.ligne3}}</li>
+      <li *ngIf="event.ligne4">{{ event.ligne4 }}</li>
+      <li *ngIf="event.ligne5">{{ event.ligne5 }}</li>
+      <li *ngIf="event.ligne6">{{ event.ligne6 }}</li>
     </ul>
   </section>
 

@@ -108,10 +108,11 @@ export class HomePage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  async openDetailPertubation(evenement: Event) {
+  async openEventDetail(event: Event) {
     const modal = await this.modalController.create({
       component: DetailspertubationComponent,
-      componentProps: { evenement },
+      componentProps: { event },
+      cssClass: 'event-modal'
     });
     modal.onDidDismiss().then(() => this.getData());
     return await modal.present();
