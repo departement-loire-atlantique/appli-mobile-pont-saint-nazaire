@@ -30,7 +30,6 @@ export class HomePage implements OnInit, OnDestroy {
       this.count = this.count + 1;
     }, 1000);
 
-    this.getData();
     this.addAppStateChangeSubscription();
 
     const panelSettings: CupertinoSettings = {
@@ -56,6 +55,10 @@ export class HomePage implements OnInit, OnDestroy {
     bottomPanel.present({ animate: true });
   }
 
+  ionViewWillEnter() {
+    this.getData();
+  }
+
   addAppStateChangeSubscription() {
     this.stateSub = this.utils.appStateChangeDetector().subscribe((state: AppState) => {
       if (state.isActive) {
@@ -76,6 +79,7 @@ export class HomePage implements OnInit, OnDestroy {
       component: WebcamPage,
       cssClass: 'webcam-page'
     });
+    modal.onDidDismiss().then(() => this.getData());
     return await modal.present();
   }
 
