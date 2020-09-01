@@ -1,30 +1,33 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ApiService } from '../../services/api.service';
-import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
-import { UtilsService } from '../../services/utils.service';
-import { AppState } from '@capacitor/core';
-import { Subscription } from 'rxjs';
-import { ModalController } from '@ionic/angular';
-import { WebcamPage } from '../webcam/webcam.page';
-import { DetailspertubationComponent } from 'src/app/components/detailspertubation/detailspertubation.component';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ApiService } from "../../services/api.service";
+import { CupertinoPane, CupertinoSettings } from "cupertino-pane";
+import { UtilsService } from "../../services/utils.service";
+import { AppState } from "@capacitor/core";
+import { Subscription } from "rxjs";
+import { ModalController } from "@ionic/angular";
+import { WebcamPage } from "../webcam/webcam.page";
+import { DetailspertubationComponent } from "src/app/components/detailspertubation/detailspertubation.component";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: "app-home",
+  templateUrl: "./home.page.html",
+  styleUrls: ["./home.page.scss"],
 })
 export class HomePage implements OnInit, OnDestroy {
-
   public count = 0;
   public status: any;
   public eventsList: any;
   public stateSub: Subscription;
 
-  public currentMode = 'm112';
-  public north = 'vert';
-  public south = 'vert';
+  public currentMode = "m112";
+  public north = "vert";
+  public south = "vert";
 
-  constructor(private api: ApiService, private utils: UtilsService, private modalController: ModalController) { }
+  constructor(
+    private api: ApiService,
+    private utils: UtilsService,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
     setInterval(() => {
@@ -35,34 +38,36 @@ export class HomePage implements OnInit, OnDestroy {
     this.addAppStateChangeSubscription();
 
     const panelSettings: CupertinoSettings = {
-      initialBreak: 'bottom',
+      initialBreak: "bottom",
       buttonClose: false,
       topperOverflow: true,
       bottomOffset: 0,
-      parentElement: 'app-home',
+      parentElement: "app-home",
       breaks: {
         bottom: {
           enabled: true,
-          height: 40
+          height: 40,
         },
         top: {
           enabled: true,
-          height: window.innerHeight - 56
-        }
-      }
+          height: window.innerHeight - 56,
+        },
+      },
     };
 
-    const bottomPanel = new CupertinoPane('.cupertino-pane', panelSettings);
+    const bottomPanel = new CupertinoPane(".cupertino-pane", panelSettings);
 
     bottomPanel.present({ animate: true });
   }
 
   addAppStateChangeSubscription() {
-    this.stateSub = this.utils.appStateChangeDetector().subscribe((state: AppState) => {
-      if (state.isActive) {
-        this.getData();
-      }
-    });
+    this.stateSub = this.utils
+      .appStateChangeDetector()
+      .subscribe((state: AppState) => {
+        if (state.isActive) {
+          this.getData();
+        }
+      });
   }
 
   async getData() {
@@ -71,18 +76,34 @@ export class HomePage implements OnInit, OnDestroy {
 
     const eventsList = await this.api.getEvents();
 
-    this.eventsList = this.utils.formatPertubation([{nature: 'Accident', status: 'en cours', datePublication: Date.now(), 
-    ligne1:'Vent fort < 100KM/H',ligne2:'Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr',
-    ligne3:'Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr',ligne4:'Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr'
-  }])
-                        //eventsList.length > 0 ? this.utils.formatPertubation(eventsList) : {}
-    console.log( this.eventsList)
+     this.eventsList = this.utils.formatPertubation([
+      {
+        nature: "Accident",
+        status: "en cours",
+        datePublication: Date.now(),
+        ligne1: "Vent fort < 100KM/H",
+        ligne2: "Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr",
+        ligne3: "Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr",
+        ligne4: "Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr",
+      },
+      {
+        nature: "VL en panne",
+        status: "prévisionnel",
+        datePublication: Date.now(),
+        ligne1: "Vent fort < 100KM/H",
+        ligne2: "Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr",
+        ligne3: "Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr",
+        ligne4: "Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr",
+      },
+    ]); 
+    //this.eventsList = []
+    console.log(this.eventsList);
   }
 
   async openWebcam() {
     const modal = await this.modalController.create({
       component: WebcamPage,
-      cssClass: 'webcam-page'
+      cssClass: "webcam-page",
     });
     return await modal.present();
   }
@@ -90,7 +111,7 @@ export class HomePage implements OnInit, OnDestroy {
   async openDetailPertubation(evenement) {
     const modal = await this.modalController.create({
       component: DetailspertubationComponent,
-      componentProps: {evenement}
+      componentProps: { evenement },
     });
     return await modal.present();
   }
@@ -98,5 +119,4 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.stateSub.unsubscribe();
   }
-
 }

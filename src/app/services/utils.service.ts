@@ -40,22 +40,8 @@ export class UtilsService {
       p.infosPertubation = this.getNameSvg(p.nature)
       return p; 
    })
-   console.log('eventListMap', eventListMap);
-   
+   console.log('eventListMap', eventListMap);  
    return eventListMap;
-    /*const enCours = eventsList.filter(el => el.status == 'en cours').map(p => {
-       p.infosPertubation = this.getNameSvg(p.nature)
-       return p; 
-    })
-    const aVenir = eventsList.filter(el => el.status == 'prévisionnel').map(p => {
-      p.infosPertubation = this.getNameSvg(p.nature)
-      return p;
-    })
-    console.log('enCours', enCours, 'aVenir', aVenir)
-    return {
-      enCours,
-      aVenir
-    }*/
   }
 
   getNameSvg(nature){
