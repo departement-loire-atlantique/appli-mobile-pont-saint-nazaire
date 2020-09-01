@@ -8,6 +8,8 @@ import { ModalController, Platform, IonRouterOutlet } from '@ionic/angular';
 import { WebcamPage } from '../webcam/webcam.page';
 
 import { Plugins } from '@capacitor/core';
+import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
+import { Event } from '../../models/event';
 const { App } = Plugins;
 
 @Component({
@@ -16,7 +18,6 @@ const { App } = Plugins;
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
-
   public count = 0;
   public status: any;
   public eventsList: any;
@@ -56,13 +57,13 @@ export class HomePage implements OnInit, OnDestroy {
       breaks: {
         bottom: {
           enabled: true,
-          height: 40
+          height: 40,
         },
         top: {
           enabled: true,
-          height: window.innerHeight - 56
-        }
-      }
+          height: window.innerHeight - 56,
+        },
+      },
     };
 
     this.bottomPanel = new CupertinoPane('.cupertino-pane', panelSettings);
@@ -75,11 +76,13 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   addAppStateChangeSubscription() {
-    this.stateSub = this.utils.appStateChangeDetector().subscribe((state: AppState) => {
-      if (state.isActive) {
-        this.getData();
-      }
-    });
+    this.stateSub = this.utils
+      .appStateChangeDetector()
+      .subscribe((state: AppState) => {
+        if (state.isActive) {
+          this.getData();
+        }
+      });
   }
 
   async getData() {
@@ -100,7 +103,15 @@ export class HomePage implements OnInit, OnDestroy {
   async openWebcam() {
     const modal = await this.modalController.create({
       component: WebcamPage,
-      cssClass: 'webcam-page'
+      cssClass: 'webcam-page',
+    });
+    return await modal.present();
+  }
+
+  async openDetailPertubation(evenement: Event) {
+    const modal = await this.modalController.create({
+      component: DetailspertubationComponent,
+      componentProps: { evenement },
     });
     modal.onDidDismiss().then(() => this.getData());
     return await modal.present();
@@ -121,5 +132,4 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.stateSub.unsubscribe();
   }
-
 }
