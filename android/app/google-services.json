@@ -1,35 +1,43 @@
 {
   "project_info": {
-    "project_number": "415165890581",
-    "firebase_url": "https://psnapp-71c64.firebaseio.com",
-    "project_id": "psnapp-71c64",
-    "storage_bucket": "psnapp-71c64.appspot.com"
+    "project_number": "1073742037461",
+    "firebase_url": "https://appli-pont-de-saint-nazaire.firebaseio.com",
+    "project_id": "appli-pont-de-saint-nazaire",
+    "storage_bucket": "appli-pont-de-saint-nazaire.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:415165890581:android:c517eeec89870475014e1c",
+        "mobilesdk_app_id": "1:1073742037461:android:85c228053521f7b4",
         "android_client_info": {
-          "package_name": "com.cg44.pontsaintnazaire"
+          "package_name": "com.cg44.PontSaintNazaire"
         }
       },
       "oauth_client": [
         {
-          "client_id": "415165890581-2t1a0ik5kajf28gn8uo0t55b5oqtv6kh.apps.googleusercontent.com",
+          "client_id": "1073742037461-otan9bb8avfmhpqle1dq4i65aruj6s0b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDfWwmCuLHHWPJukdbgnpOfHGc4RzxVVFw"
+          "current_key": "AIzaSyCbxe45AnnbnnZk1WlrUv0Ru2wcgxCV5vU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "415165890581-2t1a0ik5kajf28gn8uo0t55b5oqtv6kh.apps.googleusercontent.com",
+              "client_id": "1073742037461-otan9bb8avfmhpqle1dq4i65aruj6s0b.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1073742037461-82c9hmkohkuetp717t0vgavfvfmkc9uh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cg44.PontSaintNazaire",
+                "app_store_id": "816287920"
+              }
             }
           ]
         }
