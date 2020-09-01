@@ -7,31 +7,25 @@ import { ApiService } from '../../services/api.service';
   templateUrl: './webcam.page.html',
   styleUrls: ['./webcam.page.scss'],
 })
-export class WebcamPage implements OnInit, OnDestroy {
+export class WebcamPage implements OnInit {
 
   public image: any;
-  private interval: any;
+  public date: Date;
 
   constructor(private modalController: ModalController, private api: ApiService) { }
 
   ngOnInit() {
     this.getWebcam();
-
-    this.interval = setInterval(() => {
-      this.getWebcam();
-    }, 5000);
   }
 
   getWebcam() {
     this.api.getLatestWebcam().then(image => {
+      this.date = new Date();
+
       if (image) {
         this.image = image;
       }
     });
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.interval);
   }
 
   dismiss() {

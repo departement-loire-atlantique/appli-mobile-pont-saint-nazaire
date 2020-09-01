@@ -10,6 +10,7 @@
 </ion-header>
 
 <ion-content class="padding">
-    <p>It works !</p>
-    <img [src]="image" >
+  <p *ngIf="date">{{ date | date:'shortDate' }}</p>
+  <p *ngIf="date">{{ date | date:'HH:mm' }}</p>
+  <img [src]="image" >
 </ion-content>
