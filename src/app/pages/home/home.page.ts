@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
 import { UtilsService } from '../../services/utils.service';
-import { AppState } from '@capacitor/core';
+import { AppState, SplashScreen } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { WebcamPage } from '../webcam/webcam.page';
@@ -22,6 +22,7 @@ export class HomePage implements OnInit, OnDestroy {
   public currentMode = 'm112';
   public north = 'vert';
   public south = 'vert';
+  public isFirstCall = true;
 
   constructor(private api: ApiService, private utils: UtilsService, private modalController: ModalController) { }
 
@@ -73,6 +74,11 @@ export class HomePage implements OnInit, OnDestroy {
     this.status.from = new Date();
 
     this.eventsList = await this.api.getEvents();
+
+    if (this.isFirstCall) {
+      SplashScreen.hide();
+      this.isFirstCall = false;
+    }
   }
 
   async openWebcam() {
