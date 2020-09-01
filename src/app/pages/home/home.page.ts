@@ -4,8 +4,11 @@ import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
 import { UtilsService } from '../../services/utils.service';
 import { AppState, SplashScreen } from '@capacitor/core';
 import { Subscription } from 'rxjs';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform, IonRouterOutlet } from '@ionic/angular';
 import { WebcamPage } from '../webcam/webcam.page';
+
+import { Plugins } from '@capacitor/core';
+const { App } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -24,7 +27,18 @@ export class HomePage implements OnInit, OnDestroy {
   public south = 'vert';
   public isFirstCall = true;
 
-  constructor(private api: ApiService, private utils: UtilsService, private modalController: ModalController) { }
+  private bottomPanel: CupertinoPane;
+
+  constructor(
+    private platform: Platform,
+    private api: ApiService,
+    private utils: UtilsService,
+    private routerOutlet: IonRouterOutlet,
+    private modalController: ModalController) {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.handleBackButton();
+    });
+  }
 
   ngOnInit() {
     setInterval(() => {
@@ -51,9 +65,9 @@ export class HomePage implements OnInit, OnDestroy {
       }
     };
 
-    const bottomPanel = new CupertinoPane('.cupertino-pane', panelSettings);
+    this.bottomPanel = new CupertinoPane('.cupertino-pane', panelSettings);
 
-    bottomPanel.present({ animate: true });
+    this.bottomPanel.present({ animate: true });
   }
 
   ionViewWillEnter() {
@@ -88,6 +102,18 @@ export class HomePage implements OnInit, OnDestroy {
     });
     modal.onDidDismiss().then(() => this.getData());
     return await modal.present();
+  }
+
+  handleBackButton() {
+    const currentPanelPosition = this.bottomPanel.currentBreak();
+
+    if (currentPanelPosition !== 'bottom') {
+      this.bottomPanel.moveToBreak('bottom');
+    } else {
+      if (!this.routerOutlet.canGoBack()) {
+        App.exitApp();
+      }
+    }
   }
 
   ngOnDestroy() {
