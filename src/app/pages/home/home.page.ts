@@ -70,6 +70,7 @@ export class HomePage implements OnInit, OnDestroy {
   async getData() {
     const status = await this.api.getPSNStatus();
     this.status = this.utils.formatStatus(status);
+    this.status.from = new Date();
 
     this.eventsList = await this.api.getEvents();
   }
