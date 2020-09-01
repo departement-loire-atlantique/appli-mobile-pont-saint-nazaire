@@ -1,4 +1,4 @@
-package com.cg44.pontsaintnazaire;
+package com.cg44.PontSaintNazaire;
 
 import android.os.Bundle;
 

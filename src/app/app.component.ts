@@ -64,12 +64,17 @@ export class AppComponent implements OnInit {
 
     PushNotifications.addListener('registration',
       (token: PushNotificationToken) => {
+        console.log(token);
+
+        fcm.getToken().then(t => console.log(t));
         // alert('Push registration success, token: ' + token.value);
       }
     );
 
     PushNotifications.addListener('registrationError',
       (error: any) => {
+        console.log(error);
+
         // alert('Error on registration: ' + JSON.stringify(error));
       }
     );

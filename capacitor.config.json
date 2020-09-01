@@ -1,6 +1,6 @@
 {
-  "appId": "com.cg44.pontsaintnazaire",
-  "appName": "psn",
+  "appId": "com.cg44.PontSaintNazaire",
+  "appName": "Pont de Saint-Nazaire",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
