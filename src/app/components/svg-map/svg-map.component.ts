@@ -44,6 +44,7 @@ export class SvgMapComponent implements OnInit, OnChanges {
     if (this.events && this.events.length) {
       this.events.forEach((event: Event) => {
         const zone = this.svg.nativeElement.querySelector('#perturbation-' + (event.type === 'vent' ? 'vent' : event.zone));
+
         const clickHandler = () => {
           this.handleEventClick(event);
         };

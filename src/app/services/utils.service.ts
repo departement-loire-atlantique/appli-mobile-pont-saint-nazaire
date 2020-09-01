@@ -12,7 +12,9 @@ const { App } = Plugins;
 export class UtilsService {
   generateRandomEvent(): Event[] {
     const events = [];
-    const rand = Math.round(Math.random() * 5);
+    const allEvents = [];
+
+    const rand = Math.round(Math.random() * 12);
 
     for (let index = 0; index < rand; index++) {
       const apiEvent: ApiEvent = {
@@ -27,8 +29,22 @@ export class UtilsService {
         ligne6: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?'
       };
       const event = this.formatEvent(apiEvent);
-      events.push(event);
+      allEvents.push(event);
     }
+
+    allEvents.forEach(event => {
+      const exists = events.findIndex(item => {
+        if (event.type === 'vent') {
+          return item.type === 'vent';
+        } else {
+          return item.zone === event.zone;
+        }
+      }) !== -1;
+
+      if (!exists) {
+        events.push(event);
+      }
+    });
 
     return events;
   }
