@@ -6,6 +6,7 @@ import { AppState } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { WebcamPage } from '../webcam/webcam.page';
+import { DetailspertubationComponent } from 'src/app/components/detailspertubation/detailspertubation.component';
 
 @Component({
   selector: 'app-home',
@@ -68,13 +69,28 @@ export class HomePage implements OnInit, OnDestroy {
     const status = await this.api.getPSNStatus();
     this.status = this.utils.formatStatus(status);
 
-    this.eventsList = await this.api.getEvents();
+    const eventsList = await this.api.getEvents();
+
+    this.eventsList = this.utils.formatPertubation([{nature: 'Accident', status: 'en cours', datePublication: Date.now(), 
+    ligne1:'Vent fort < 100KM/H',ligne2:'Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr',
+    ligne3:'Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr',ligne4:'Pourquoi un PEAN sur le secteur Cens/Gesvres/Erdr'
+  }])
+                        //eventsList.length > 0 ? this.utils.formatPertubation(eventsList) : {}
+    console.log( this.eventsList)
   }
 
   async openWebcam() {
     const modal = await this.modalController.create({
       component: WebcamPage,
       cssClass: 'webcam-page'
+    });
+    return await modal.present();
+  }
+
+  async openDetailPertubation(evenement) {
+    const modal = await this.modalController.create({
+      component: DetailspertubationComponent,
+      componentProps: {evenement}
     });
     return await modal.present();
   }

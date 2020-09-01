@@ -34,4 +34,51 @@ export class UtilsService {
     time = parseInt(time, 10);
     return time >= 7 ? (time > 15 ? 'rouge' : 'orange')  : 'vert';
   }
+
+  formatPertubation(eventsList: any){
+    const eventListMap =  eventsList.map(p => {
+      p.infosPertubation = this.getNameSvg(p.nature)
+      return p; 
+   })
+   console.log('eventListMap', eventListMap);
+   
+   return eventListMap;
+    /*const enCours = eventsList.filter(el => el.status == 'en cours').map(p => {
+       p.infosPertubation = this.getNameSvg(p.nature)
+       return p; 
+    })
+    const aVenir = eventsList.filter(el => el.status == 'prévisionnel').map(p => {
+      p.infosPertubation = this.getNameSvg(p.nature)
+      return p;
+    })
+    console.log('enCours', enCours, 'aVenir', aVenir)
+    return {
+      enCours,
+      aVenir
+    }*/
+  }
+
+  getNameSvg(nature){
+    let imgSvg = ''
+    let libellePertubation = ''
+    let typePertubation = ''
+    if (nature == 'Accident') {
+      imgSvg = 'accident'
+      libellePertubation = 'Accident'
+      typePertubation = 'accident'
+    } else if(nature == 'Vent'){
+      imgSvg ='vent-fort'
+      libellePertubation = 'Vents violents'
+      typePertubation = 'vent'
+    }else if(nature == 'VL en panne'){
+      imgSvg = 'particulier'
+      libellePertubation = 'Véhicule en panne'
+      typePertubation = 'panne'
+    }
+    return {
+      imgSvg,
+      libellePertubation,
+      typePertubation
+    }
+  }
 }

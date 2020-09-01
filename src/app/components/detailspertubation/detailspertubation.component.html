@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      
+        <img src="/assets/icon/{{evenement.infosPertubation.imgSvg}}.svg" alt=""  />
+      
+    </ion-buttons>
+    <ion-title>{{ evenement ? evenement.nature : "" }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()"> Fermer </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+  <section class="ds44-contenuArticle" id="section2">
+    <h3 class="h3-like">{{ evenement ? evenement.ligne1 : "" }}</h3>
+    <p> <i class="icon icon-date" aria-hidden="true"></i
+      ><span class="ds44-iconInnerText">{{
+        evenement.datePublication | date: "dd/MM/yyyy" }}</span></p>
+    <p><i class="icon icon-time" aria-hidden="true"></i
+      ><span class="ds44-iconInnerText"
+        >Mis à jour à
+        {{ evenement.datePublication | date: "HH:MM":"fr" }}</span></p>   
+    <p>{{ evenement ? evenement.ligne2 : "" }}</p>
+    <ul>
+      <li>{{ evenement ? evenement.ligne3 : "" }}</li>
+      <li>{{ evenement ? evenement.ligne4 : "" }}</li>
+      <li>{{ evenement ? evenement.ligne5 : "" }}</li>
+      <li>{{ evenement ? evenement.ligne6 : "" }}</li>
+    </ul>
+  </section>
+</ion-content>

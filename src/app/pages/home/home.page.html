@@ -1,29 +1,33 @@
 
 <ion-content fullscreen>
-  <ion-header class="ion-no-border">
+ <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="end">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-
+  
   <app-svg-map *ngIf="status" [data]="status"></app-svg-map>
 
   <button (click)="openWebcam()">Webcam</button>
 
   <div class="cupertino-pane">
-    <h1>Panel</h1>
     <div class="content">
-      <h2>Status {{ count }}</h2>
-      <pre>{{ status | json }}</pre>
-    
       <div class="events">
         <h2>Événements</h2>
         <p *ngIf="eventsList && !eventsList.length">
-          Il n’y a actuellement aucune perturbation
-        </p>
-        <pre>{{ eventsList | json }}</pre>
+          Il n’y a actuellement aucune perturbation.
+        </p>      
+          <section class="ds44-app-tuile" *ngIf="eventsList && eventsList.length > 0">
+            <h3 class="h3-like">En cours</h3>
+            <app-pertubations *ngFor="let evenement of (eventsList | filterByProperty:'status':'en cours')" [pertubation]="evenement" (click)="openDetailPertubation(evenement)"></app-pertubations >
+          </section>
+          <section class="ds44-app-tuile" *ngIf="eventsList && (eventsList | filterByProperty:'status':'prévisionnel').length > 0">
+            <h3 class="h3-like">À venir</h3>
+            <app-pertubations *ngFor="let evenement of (eventsList | filterByProperty:'status':'prévisionnel')" [pertubation]="evenement" (click)="openDetailPertubation(evenement)"></app-pertubations >
+          </section>
+        
       </div>
     </div>
   </div>

@@ -8,6 +8,9 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { SvgMapComponent } from '../../components/svg-map/svg-map.component';
+import { PertubationsComponent } from 'src/app/components/pertubations/pertubations.component';
+import { FilterByPropertyPipe } from 'src/app/shared/filter-by-property.pipe';
+import { DetailspertubationComponent } from 'src/app/components/detailspertubation/detailspertubation.component';
 
 @NgModule({
   imports: [
@@ -16,7 +19,7 @@ import { SvgMapComponent } from '../../components/svg-map/svg-map.component';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, SvgMapComponent],
+  declarations: [HomePage, SvgMapComponent, PertubationsComponent, FilterByPropertyPipe, DetailspertubationComponent],
   exports: [SvgMapComponent]
 })
 export class HomePageModule {}
