@@ -20,13 +20,19 @@ export class UtilsService {
   }
 
   formatStatus(apiStatus: any) {
+    const next = apiStatus.next_mode.map(element => {
+      element.from = element.from.split(' ')[0];
+      element.code = element.code_mode.toLowerCase();
+      return element;
+    });
     return {
       code: apiStatus.code_current_mode.toLowerCase(),
+      lib_mode: apiStatus.lib_current_mode,
       status: {
         north: this.getColor(apiStatus['TIME-CERTE-STBREVIN']),
         south: this.getColor(apiStatus['TIME-STBREVIN-CERTE'])
       },
-      next: apiStatus.next_mode
+      next
     };
   }
 

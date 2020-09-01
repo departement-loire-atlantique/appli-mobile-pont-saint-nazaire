@@ -13,6 +13,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
+
 registerLocaleData(localeFr);
 
 @NgModule({
