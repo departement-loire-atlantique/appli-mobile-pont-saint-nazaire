@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Plugins, AppState } from '@capacitor/core';
 import { Observable } from 'rxjs';
+import { Status, ApiStatus } from '../models/status';
 
 const { App } = Plugins;
 
@@ -8,6 +9,25 @@ const { App } = Plugins;
   providedIn: 'root'
 })
 export class UtilsService {
+  generateRandomEvent(): any {
+    const events = [];
+    const rand = Math.round(Math.random() * 6);
+
+    for (let index = 0; index < rand; index++) {
+      events.push({
+        type: ['accident', 'panne', 'deviation'][Math.round(Math.random() * 2)],
+        zone: ['a', 'b', 'c', 'd', 'e', 'nord', 'sud'][Math.round(Math.random() * 6)]
+      });
+    }
+
+    if (Math.round(Math.random())) {
+      events.push({
+        type: 'vent'
+      });
+    }
+
+    return events;
+  }
 
   constructor() { }
 
@@ -19,20 +39,21 @@ export class UtilsService {
     });
   }
 
-  formatStatus(apiStatus: any) {
-    const next = apiStatus.next_mode.map(element => {
-      element.from = element.from.split(' ')[0];
-      element.code = element.code_mode.toLowerCase();
-      return element;
-    });
+  formatStatus(apiStatus: ApiStatus): Status {
     return {
       code: apiStatus.code_current_mode.toLowerCase(),
-      lib_mode: apiStatus.lib_current_mode,
-      status: {
+      label: apiStatus.lib_current_mode,
+      colorStatus: {
         north: this.getColor(apiStatus['TIME-CERTE-STBREVIN']),
         south: this.getColor(apiStatus['TIME-STBREVIN-CERTE'])
       },
-      next
+      next: apiStatus.next_mode.map((element: ApiStatus) => {
+        return {
+          from: element.from.split(' ')[0],
+          code: element.code_mode.toLowerCase(),
+          label: element.lib_mode
+        };
+      })
     };
   }
 

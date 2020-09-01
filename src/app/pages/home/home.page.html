@@ -8,7 +8,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-svg-map *ngIf="status" [data]="status"></app-svg-map>
+  <app-svg-map *ngIf="status" [data]="status" [events]="eventsList"></app-svg-map>
 
   <button (click)="openWebcam()">Webcam</button>
 

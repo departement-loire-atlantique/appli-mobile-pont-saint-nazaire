@@ -89,6 +89,8 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.eventsList = await this.api.getEvents();
 
+    this.eventsList = this.utils.generateRandomEvent();
+
     if (this.isFirstCall) {
       SplashScreen.hide();
       this.isFirstCall = false;
