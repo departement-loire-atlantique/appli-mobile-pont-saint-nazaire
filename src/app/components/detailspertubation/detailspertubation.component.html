@@ -1,30 +1,36 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-avatar><img src="/assets/icon/{{evenement.infosPertubation.imgSvg}}.svg" alt=""  /></ion-avatar>     
+      <ion-avatar><img src="/assets/icon/{{evenement.icon}}.svg" alt="" /></ion-avatar>
     </ion-buttons>
-    <ion-title><h3 class="h3-like">{{ evenement ? evenement.nature : "" }}</h3></ion-title>
+    <ion-title>
+      <h3 class="h3-like">{{ evenement ? evenement.type : "" }}</h3>
+    </ion-title>
     <ion-buttons slot="end">
-      <button type="button" (click)="dismiss()"  class="ds44-noPdg">
-        <i class="icon icon-cross icon--xlarge" aria-hidden="true"></i><span class="ds44-btnInnerText--bottom">Fermer</span>
-    </button>
-     <!--  <ion-button (click)="dismiss()"> Fermer </ion-button> -->
+      <button type="button" (click)="dismiss()" class="ds44-noPdg">
+        <i class="icon icon-cross icon--xlarge" aria-hidden="true"></i>
+        <span class="ds44-btnInnerText--bottom">Fermer</span>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content class="padding">
   <section class="ds44-contenuArticle d-pertubation" id="section2">
     <h3 class="h3-like">{{ evenement ? evenement.ligne1 : "" }}</h3>
-    <p> <i class="icon icon-date" aria-hidden="true"></i
-      ><span class="ds44-iconInnerText">{{
-        evenement.datePublication | date: "dd/MM/yyyy" }}</span></p>
-    <p><i class="icon icon-time" aria-hidden="true"></i
-      ><span class="ds44-iconInnerText"
-        >Mis à jour à
-        {{ evenement.datePublication | date: "HH:MM":"fr" }}</span></p>   
+    
+    <p>
+      <i class="icon icon-date" aria-hidden="true"></i>
+      <span class="ds44-iconInnerText">{{ evenement.datePublication | date: "dd/MM/yyyy" }}</span>
+    </p>
+
+    <p>
+      <i class="icon icon-time" aria-hidden="true"></i>
+      <span class="ds44-iconInnerText">Mis à jour à {{ evenement.datePublication | date: "HH:MM":"fr" }}</span>
+    </p>
+
     <p>{{ evenement ? evenement.ligne2 : "" }}</p>
+    
     <ul *ngIf="evenement">
       <li *ngIf="evenement.ligne3">{{ evenement.ligne3}}</li>
       <li *ngIf="evenement.ligne4">{{ evenement.ligne4 }}</li>
@@ -32,5 +38,5 @@
       <li *ngIf="evenement.ligne6">{{ evenement.ligne6 }}</li>
     </ul>
   </section>
-  
+
 </ion-content>

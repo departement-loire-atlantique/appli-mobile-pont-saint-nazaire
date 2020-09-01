@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Plugins, AppState } from '@capacitor/core';
 import { Observable } from 'rxjs';
 import { Status, ApiStatus } from '../models/status';
+import { Event, ApiEvent } from '../models/event';
 
 const { App } = Plugins;
 
@@ -9,21 +10,24 @@ const { App } = Plugins;
   providedIn: 'root'
 })
 export class UtilsService {
-  generateRandomEvent(): any {
+  generateRandomEvent(): Event[] {
     const events = [];
-    const rand = Math.round(Math.random() * 6);
+    const rand = Math.round(Math.random() * 5);
 
     for (let index = 0; index < rand; index++) {
-      events.push({
-        type: ['accident', 'panne', 'deviation'][Math.round(Math.random() * 2)],
-        zone: ['a', 'b', 'c', 'd', 'e', 'nord', 'sud'][Math.round(Math.random() * 6)]
-      });
-    }
-
-    if (Math.round(Math.random())) {
-      events.push({
-        type: 'vent'
-      });
+      const apiEvent: ApiEvent = {
+        nature: ['Accident', 'VL en panne', 'Vent'][Math.round(Math.random() * 2)],
+        statut: ['en cours', 'prévisionnel'][Math.round(Math.random())],
+        datePublication: new Date(),
+        ligne1: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
+        ligne2: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
+        ligne3: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
+        ligne4: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
+        ligne5: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
+        ligne6: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?'
+      };
+      const event = this.formatEvent(apiEvent);
+      events.push(event);
     }
 
     return events;
@@ -62,36 +66,38 @@ export class UtilsService {
     return time >= 7 ? (time > 15 ? 'rouge' : 'orange')  : 'vert';
   }
 
-  formatPertubation(eventsList: any){
-    const eventListMap =  eventsList.map(p => {
-      p.infosPertubation = this.getNameSvg(p.nature)
-      return p; 
-   })
-   console.log('eventListMap', eventListMap);  
-   return eventListMap;
-  }
+  formatEvent(apiEvent: ApiEvent): Event {
+    let icon: string;
+    let label: string;
+    let type: string;
 
-  getNameSvg(nature){
-    let imgSvg = ''
-    let libellePertubation = ''
-    let typePertubation = ''
-    if (nature == 'Accident') {
-      imgSvg = 'accident'
-      libellePertubation = 'Accident'
-      typePertubation = 'accident'
-    } else if(nature == 'Vent'){
-      imgSvg ='vent-fort'
-      libellePertubation = 'Vents violents'
-      typePertubation = 'vent'
-    }else if(nature == 'VL en panne'){
-      imgSvg = 'particulier'
-      libellePertubation = 'Véhicule en panne'
-      typePertubation = 'panne'
+    if (apiEvent.nature === 'Accident') {
+      icon = 'accident';
+      label = 'Accident';
+      type = 'accident';
+    } else if (apiEvent.nature === 'Vent'){
+      icon = 'vent-fort';
+      label = 'Vents violents';
+      type = 'vent';
+    }else if (apiEvent.nature === 'VL en panne'){
+      icon = 'particulier';
+      label = 'Véhicule en panne';
+      type = 'panne';
     }
+
     return {
-      imgSvg,
-      libellePertubation,
-      typePertubation
-    }
+      type,
+      label,
+      icon,
+      zone: ['a', 'b', 'c', 'd', 'e', 'nord', 'sud'][Math.round(Math.random() * 6)],
+      status: apiEvent.statut,
+      datePublication: apiEvent.datePublication,
+      ligne1: apiEvent.ligne1,
+      ligne2: apiEvent.ligne2,
+      ligne3: apiEvent.ligne3,
+      ligne4: apiEvent.ligne4,
+      ligne5: apiEvent.ligne5,
+      ligne6: apiEvent.ligne6
+    };
   }
 }
