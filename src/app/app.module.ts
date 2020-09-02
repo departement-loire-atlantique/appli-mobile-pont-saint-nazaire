@@ -12,14 +12,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
 
 import localeFr from '@angular/common/locales/fr';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, CommonModule } from '@angular/common';
+import { PushModalComponent } from './components/push-modal/push-modal.component';
 
 registerLocaleData(localeFr);
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, PushModalComponent],
+  entryComponents: [
+    PushModalComponent
+  ],
   imports: [
+    CommonModule,
     BrowserModule,
     IonicModule.forRoot(),
     HttpClientModule,
