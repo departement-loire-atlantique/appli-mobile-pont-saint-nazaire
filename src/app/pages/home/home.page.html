@@ -1,6 +1,6 @@
 
 <ion-content fullscreen>
-  <ion-header class="ion-no-border">
+ <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="end">
         <ion-menu-button></ion-menu-button>
@@ -8,12 +8,12 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-svg-map *ngIf="status" [data]="status"></app-svg-map>
+  <app-svg-map *ngIf="status" [data]="status" [events]="eventsList" (clickEvent)="openEventDetail($event)"></app-svg-map>
 
   <button (click)="openWebcam()">Webcam</button>
 
   <div class="cupertino-pane">
-    <div class="content" *ngIf="status" hide-on-bottom>
+    <div class="content" *ngIf="status">
 
       <!-- Directions -->
       <div class="ds44--l-padding-lr ds44--l-padding-b">
@@ -33,10 +33,17 @@
       <!-- Events -->
       <div class="ds44--l-padding ds44-lightBG">
         <h2 class="h2-like">Événements</h2>
-        <p *ngIf="eventsList && !eventsList.length">
-          Il n’y a actuellement aucune perturbation
-        </p>
-        <pre>{{ eventsList | json }}</pre>
+        <p *ngIf="!eventsList.length">
+          Il n’y a actuellement aucune perturbation.
+        </p>      
+        <section class="ds44-app-tuile" *ngIf="currentEvents.length">
+          <h3 class="h3-like">En cours</h3>
+          <app-pertubations *ngFor="let evenement of currentEvents" [pertubation]="evenement" (click)="openEventDetail(evenement)"></app-pertubations >
+        </section>
+        <section class="ds44-app-tuile" *ngIf="upcomingEvents.length">
+          <h3 class="h3-like">À venir</h3>
+          <app-pertubations *ngFor="let evenement of upcomingEvents" [pertubation]="evenement" (click)="openEventDetail(evenement)"></app-pertubations >
+        </section>
       </div>
 
     </div>

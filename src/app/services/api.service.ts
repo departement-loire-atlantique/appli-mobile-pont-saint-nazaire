@@ -5,18 +5,18 @@ import '@capacitor-community/http';
 import { Plugins, FilesystemDirectory } from '@capacitor/core';
 const { Http, Filesystem } = Plugins;
 
-import { HTTP } from '@ionic-native/http/ngx';
-import { Platform } from '@ionic/angular';
 import { HttpDownloadFileResult } from '@capacitor-community/http';
+import { ApiEvent } from '../models/event';
+import { ApiStatus } from '../models/status';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private httpNative: HTTP, private platform: Platform) {}
+  constructor() {}
 
-  async getPSNStatus() {
+  async getPSNStatus(): Promise<ApiStatus> {
     const response = await Http.request({
       method: 'GET',
       url: environment.apiUrl + '/psnstatus',
@@ -28,7 +28,7 @@ export class ApiService {
     return response.data;
   }
 
-  async getEvents() {
+  async getEvents(): Promise<ApiEvent[]> {
     const response = await Http.request({
       method: 'GET',
       url: environment.apiUrl + '/traficevents?filter=Pont%20de%20Saint-Nazaire',
@@ -40,7 +40,7 @@ export class ApiService {
     return response.data;
   }
 
-  async getEvent(id: number) {
+  async getEvent(id: number): Promise<ApiEvent> {
     const response = await Http.request({
       method: 'GET',
       url: environment.apiUrl + '/event/' + id,
@@ -52,7 +52,7 @@ export class ApiService {
     return response.data;
   }
 
-  async getLatestWebcam() {
+  async getLatestWebcam(): Promise<string> {
     const download: HttpDownloadFileResult = await Http.downloadFile({
       url: environment.apiUrl + '/webcam?id=psn',
       filePath: 'webcam.jpg',
