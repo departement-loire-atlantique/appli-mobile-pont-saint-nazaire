@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Platform, ModalController, AlertController } from '@ionic/angular';
-
-import { Plugins, PushNotificationToken, PushNotification, PushNotificationActionPerformed } from '@capacitor/core';
-const { PushNotifications } = Plugins;
-
-import { FCM } from '@capacitor-community/fcm';
-import { PushModalComponent } from './components/push-modal/push-modal.component';
+import { AlertController } from '@ionic/angular';
 import { StorageService } from './services/storage.service';
-const fcm = new FCM();
+import { NotificationsService } from './services/notifications.service';
 
 @Component({
   selector: 'app-root',
@@ -30,22 +23,23 @@ export class AppComponent implements OnInit {
     {
       title: 'Le département',
       url: '/departement'
+    },
+    {
+      title: 'Notifications',
+      url: '/notifications'
     }
   ];
 
   constructor(
-    private platform: Platform,
-    private modalController: ModalController,
+    private notificationService: NotificationsService,
     private storageService: StorageService,
     private alertController: AlertController
   ) {}
 
   ngOnInit() {
-    this.storageService.get('is-subscribed').then(value => {
-      console.log(value);
-
+    this.storageService.get(this.notificationService.STORAGEKEY).then(value => {
       if (value) {
-        this.enableNotifications();
+        this.notificationService.register();
       }
       if (value === null) {
         this.askForSubscription();
@@ -63,56 +57,11 @@ export class AppComponent implements OnInit {
       }, {
         text: 'Ok',
         handler: () => {
-          this.storageService.set('is-subscribed', true);
-          this.enableNotifications();
+          this.storageService.set(this.notificationService.STORAGEKEY, true);
+          this.notificationService.register();
         }
       }]
     });
     return await askAlert.present();
-  }
-
-  enableNotifications() {
-    if (!this.platform.is('capacitor')) {
-      return;
-    }
-
-    // Only for IOS, android will always return granted
-    PushNotifications.requestPermission().then((result) => {
-      if (result.granted) {
-        PushNotifications.register();
-      }
-    });
-
-    // Subsribe to topic if registration succeeded
-    PushNotifications.addListener('registration', (token: PushNotificationToken) => {
-      fcm.subscribeTo({topic: 'psn'});
-      console.log(token);
-    });
-
-    PushNotifications.addListener('registrationError', (error: any) => {
-      // TODO: Handle subscription error
-      console.log(error);
-    });
-
-    // Received while in foreground
-    PushNotifications.addListener('pushNotificationReceived', (notification: PushNotification) => {
-      this.openNotificationModal(notification);
-    });
-
-    // Received while in background
-    PushNotifications.addListener('pushNotificationActionPerformed', (event: PushNotificationActionPerformed) => {
-      this.openNotificationModal(event.notification);
-    });
-  }
-
-  async openNotificationModal(notification: PushNotification) {
-    const modal = await this.modalController.create({
-      component: PushModalComponent,
-      cssClass: 'notification-modal',
-      componentProps: {
-        notification
-      }
-    });
-    modal.present();
   }
 }

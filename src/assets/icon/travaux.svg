@@ -1,1 +1,22 @@
-<svg id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480"><rect width="480" height="480" style="fill:#ffc134"/><polygon points="273.462 47.191 354.421 432.809 125.579 432.809 206.538 47.191 273.462 47.191" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:12.5px"/><line x1="67.74374" y1="432.80935" x2="412.25626" y2="432.80935" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:12.5px"/><polygon points="153.782 298.474 125.579 432.809 354.421 432.809 326.218 298.474 153.782 298.474" style="fill:#fff;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:12.5px"/><polygon points="206.538 47.191 178.738 179.606 301.262 179.606 273.462 47.191 206.538 47.191" style="fill:#fff;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:12.5px"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFC134;}
+	.st1{fill:#FFFFFF;}
+	.st2{display:none;opacity:0.33;fill:#FFFFFF;}
+</style>
+<rect y="0" class="st0" width="480" height="480"/>
+<g>
+	<path class="st1" d="M109.7,392c-3.4,0-6.2-2.8-6.2-6.2s2.8-6.2,6.2-6.2h38.7l39.1-186.4v-0.1l0-0.2l21-100.1
+		c0.6-2.9,3.2-4.9,6.1-4.9h50.6c2.9,0,5.5,2.1,6.1,4.9l60.2,286.7h38.7c3.4,0,6.2,2.8,6.2,6.2s-2.8,6.2-6.2,6.2H109.7z M297.5,278
+		l-16.3-77.4h-82.6L182.5,278H297.5z"/>
+	<path class="st1" d="M265.3,89.5c2.2,0,4.2,1.6,4.6,3.8l60.4,287.9h39.9c2.6,0,4.7,2.1,4.7,4.7s-2.1,4.7-4.7,4.7H109.7
+		c-2.6,0-4.7-2.1-4.7-4.7s2.1-4.7,4.7-4.7h39.9L189,193.4c0,0,0,0,0,0l21-100.1c0.5-2.2,2.4-3.8,4.6-3.8H265.3 M180.6,279.5h118.8
+		l-16.9-80.4h-85L180.6,279.5 M265.3,86.5h-50.6c-3.6,0-6.8,2.6-7.6,6.1l-21,100.1l0,0.1l0,0l-38.9,185.2h-37.5
+		c-4.3,0-7.7,3.5-7.7,7.7c0,4.3,3.5,7.7,7.7,7.7h260.5c4.3,0,7.7-3.5,7.7-7.7c0-4.3-3.5-7.7-7.7-7.7h-37.5L272.9,92.6
+		C272.1,89,268.9,86.5,265.3,86.5L265.3,86.5z M199.9,202.1h80.1l15.6,74.4H184.3L199.9,202.1L199.9,202.1z"/>
+</g>
+<circle class="st2" cx="240" cy="240" r="240"/>
+</svg>

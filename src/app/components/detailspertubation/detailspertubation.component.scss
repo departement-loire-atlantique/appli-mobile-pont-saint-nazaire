@@ -1,3 +1,11 @@
-.d-pertubation{
-    padding: 2rem;
+:host {
+  ion-header {
+    &::after {
+      content: none;
+    }
+  }
+
+  .ds44-modal-gab {
+    margin-top: 0;
+  }
 }

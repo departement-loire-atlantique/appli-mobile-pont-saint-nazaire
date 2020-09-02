@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label class="ion-text-wrap">Je désire recevoir les notifications push "Pont de Saint-Nazaire"</ion-label>
+      <ion-toggle [(ngModel)]="isSubscribed" (ionChange)="changeSubscription()"></ion-toggle>
+    </ion-item>
+  </ion-list>
+</ion-content>
