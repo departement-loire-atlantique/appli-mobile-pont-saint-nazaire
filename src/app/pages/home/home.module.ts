@@ -27,6 +27,12 @@ import { DetailspertubationComponent } from 'src/app/components/detailspertubati
     PertubationsComponent,
     FilterByPropertyPipe,
     DetailspertubationComponent
+  ],
+  exports: [
+    FilterByPropertyPipe
+  ],
+  providers: [
+    FilterByPropertyPipe
   ]
 })
 export class HomePageModule {}

@@ -10,6 +10,7 @@ import { WebcamPage } from '../webcam/webcam.page';
 import { Plugins } from '@capacitor/core';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
 import { Event } from '../../models/event';
+import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
 const { App } = Plugins;
 
 @Component({
@@ -20,7 +21,9 @@ const { App } = Plugins;
 export class HomePage implements OnInit, OnDestroy {
   public count = 0;
   public status: any;
-  public eventsList: any;
+  public eventsList: Event[] = [];
+  public currentEvents: Event[] = [];
+  public upcomingEvents: Event[] = [];
   public stateSub: Subscription;
 
   public currentMode = 'm112';
@@ -35,7 +38,8 @@ export class HomePage implements OnInit, OnDestroy {
     private api: ApiService,
     private utils: UtilsService,
     private routerOutlet: IonRouterOutlet,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private filterPipe: FilterByPropertyPipe) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.handleBackButton();
     });
@@ -93,6 +97,9 @@ export class HomePage implements OnInit, OnDestroy {
     this.eventsList = await this.api.getEvents();
 
     this.eventsList = this.utils.generateRandomEvent();
+
+    this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
+    this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
 
     if (this.isFirstCall) {
       SplashScreen.hide();

@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterByPropertyPipe implements PipeTransform {
 
-  transform(arrayToFilter: [], prop: string, value: string): unknown {
-    return arrayToFilter.filter(el => el[prop] === value);
+  transform(arrayToFilter: any[], prop: string, value: string): any[] {
+    return (arrayToFilter || []).filter(el => el[prop] === value);
   }
 
 }
