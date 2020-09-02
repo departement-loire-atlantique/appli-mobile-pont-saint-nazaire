@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, ModalController } from '@ionic/angular';
 
 import { Plugins, PushNotificationToken, PushNotification, PushNotificationActionPerformed } from '@capacitor/core';
 const { PushNotifications } = Plugins;
 
 import { FCM } from '@capacitor-community/fcm';
+import { PushModalComponent } from './components/push-modal/push-modal.component';
 const fcm = new FCM();
 
 @Component({
@@ -31,10 +32,9 @@ export class AppComponent implements OnInit {
     }
   ];
 
-  constructor(private platform: Platform) {}
+  constructor(private platform: Platform, private modalController: ModalController) {}
 
   ngOnInit() {
-
     if (!this.platform.is('capacitor')) {
       return;
     }
@@ -47,33 +47,33 @@ export class AppComponent implements OnInit {
       }
     });
 
-    PushNotifications.addListener('registration',
-      (token: PushNotificationToken) => {
-        console.log(token);
+    PushNotifications.addListener('registration', (token: PushNotificationToken) => {
+      console.log(token);
+    });
 
-        fcm.getToken().then(t => console.log(t));
-        // alert('Push registration success, token: ' + token.value);
+    PushNotifications.addListener('registrationError', (error: any) => {
+      console.log(error);
+    });
+
+    // Received while in foreground
+    PushNotifications.addListener('pushNotificationReceived', (notification: PushNotification) => {
+      this.openNotificationModal(notification);
+    });
+
+    // Received while in background
+    PushNotifications.addListener('pushNotificationActionPerformed', (notification: PushNotificationActionPerformed) => {
+      this.openNotificationModal(notification);
+    });
+  }
+
+  async openNotificationModal(notification: PushNotification|PushNotificationActionPerformed) {
+    const modal = await this.modalController.create({
+      component: PushModalComponent,
+      cssClass: 'notification-modal',
+      componentProps: {
+        notification
       }
-    );
-
-    PushNotifications.addListener('registrationError',
-      (error: any) => {
-        console.log(error);
-
-        // alert('Error on registration: ' + JSON.stringify(error));
-      }
-    );
-
-    PushNotifications.addListener('pushNotificationReceived',
-      (notification: PushNotification) => {
-        alert('Push received: ' + JSON.stringify(notification));
-      }
-    );
-
-    PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification: PushNotificationActionPerformed) => {
-        alert('Push action performed: ' + JSON.stringify(notification));
-      }
-    );
+    });
+    modal.present();
   }
 }
