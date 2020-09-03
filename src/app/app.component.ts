@@ -17,19 +17,7 @@ export class AppComponent {
 
   public socialNetworks: SocialNetwork[] = [];
 
-  public appPages = [
-    {
-      title: 'Informations',
-      url: '/informations'
-    },
-    {
-      title: 'Les autres applis',
-      url: '/other-apps'
-    },
-    {
-      title: 'Le département',
-      url: '/departement'
-    },
+  public pages: any = [
     {
       title: 'Notifications',
       url: '/notifications'
@@ -61,6 +49,19 @@ export class AppComponent {
       });
 
       this.socialNetworks = await this.remoteConfigService.get('social_networks');
+      const configPages = await this.remoteConfigService.get('pages');
+
+      const remotePages = configPages.map(page => {
+        return {
+          title: page.title,
+          url: '/content-page',
+          params: {
+            id: page.id
+          }
+        };
+      });
+
+      this.pages = [...remotePages, ...this.pages];
     });
   }
 

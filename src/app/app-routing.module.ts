@@ -16,16 +16,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/webcam/webcam.module').then( m => m.WebcamPageModule)
   },
   {
-    path: 'informations',
-    loadChildren: () => import('./pages/informations/informations.module').then( m => m.InformationsPageModule)
-  },
-  {
     path: 'other-apps',
     loadChildren: () => import('./pages/other-apps/other-apps.module').then( m => m.OtherAppsPageModule)
-  },
-  {
-    path: 'departement',
-    loadChildren: () => import('./pages/departement/departement.module').then( m => m.DepartementPageModule)
   },
   {
     path: 'content-page',

@@ -1,9 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>content-page</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ page.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div [innerHtml]="page.content"></div>
 </ion-content>

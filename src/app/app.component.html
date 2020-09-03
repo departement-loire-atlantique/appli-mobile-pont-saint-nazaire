@@ -4,6 +4,7 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content [scrollEvents]="false">
         
+        
         <section id="menu" role="dialog" aria-label="Menu de navigation de l'appli" class="ds44-menu-app ds44-flex-container--column ds44-fsb ds44--l-padding ds44-wave-grey-app">
 
           <div class="ds44-flex-container ds44-flex-valign-center">
@@ -24,8 +25,8 @@
           <nav class="ds44-fg1 ds44-flex-container--column ds44-flex-align-center" role="navigation">
             <ul class="ds44-list ds4-fse">
               <ion-menu-toggle auto-hide="false">
-                <li *ngFor="let page of appPages">
-                  <a [routerLink]="[page.url]" class="ds44-linkMenuApp">{{page.title}}<i class="icon icon-arrow-right icon--sizeM ds44-posRi ds44-posAbs ds44-mt1" aria-hidden="true"></i></a>
+                <li *ngFor="let page of pages">
+                  <a [routerLink]="[page.url]" [queryParams]="page.params" class="ds44-linkMenuApp">{{page.title}}<i class="icon icon-arrow-right icon--sizeM ds44-posRi ds44-posAbs ds44-mt1" aria-hidden="true"></i></a>
                 </li>
               </ion-menu-toggle>
             </ul>
