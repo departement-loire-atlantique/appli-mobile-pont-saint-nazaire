@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { AlertController, Platform } from '@ionic/angular';
 import { StorageService } from './services/storage.service';
 import { NotificationsService } from './services/notifications.service';
+
+import { SocialNetwork } from './models/social-network';
+
+import { RemoteConfigService } from './services/remote-config.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit {
-  public selectedIndex = null;
+export class AppComponent {
+
+  public socialNetworks: SocialNetwork[] = [];
 
   public appPages = [
     {
@@ -33,17 +39,28 @@ export class AppComponent implements OnInit {
   constructor(
     private notificationService: NotificationsService,
     private storageService: StorageService,
-    private alertController: AlertController
-  ) {}
+    private alertController: AlertController,
+    private remoteConfigService: RemoteConfigService,
+    private router: Router,
+    private platform: Platform
+  ) {
+    this.initializeApp();
+  }
 
-  ngOnInit() {
-    this.storageService.get(this.notificationService.STORAGEKEY).then(value => {
-      if (value) {
-        this.notificationService.register();
-      }
-      if (value === null) {
-        this.askForSubscription();
-      }
+  initializeApp() {
+    this.platform.ready().then(async () => {
+      this.router.navigateByUrl('/');
+
+      this.storageService.get(this.notificationService.STORAGEKEY).then(value => {
+        if (value) {
+          this.notificationService.register();
+        }
+        if (value === null) {
+          this.askForSubscription();
+        }
+      });
+
+      this.socialNetworks = await this.remoteConfigService.get('social_networks');
     });
   }
 

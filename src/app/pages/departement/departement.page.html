@@ -3,10 +3,10 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>departement</ion-title>
+    <ion-title>{{ pageContent.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="padding">
+  <div [innerHtml]="pageContent.content"></div>
 </ion-content>
