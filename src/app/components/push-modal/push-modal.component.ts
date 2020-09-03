@@ -10,11 +10,25 @@ import { ModalController } from '@ionic/angular';
 export class PushModalComponent implements OnInit {
 
   public notification: PushNotification;
+  public icon: string;
 
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {
-    console.log(this.notification);
+    switch (this.notification.data.type.toLowerCase()) {
+      case 'accident':
+        this.icon = 'accident';
+        break;
+      case 'travaux':
+        this.icon = 'travaux';
+        break;
+      case 'vent':
+        this.icon = 'vent-fort';
+        break;
+      default:
+        this.icon = 'particulier';
+        break;
+    }
   }
 
   dismiss() {

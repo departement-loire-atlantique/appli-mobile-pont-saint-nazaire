@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "415165890581",
-    "firebase_url": "https://psnapp-71c64.firebaseio.com",
-    "project_id": "psnapp-71c64",
-    "storage_bucket": "psnapp-71c64.appspot.com"
+    "project_number": "164961539837",
+    "firebase_url": "https://hybride-pont-de-saint-nazaire.firebaseio.com",
+    "project_id": "hybride-pont-de-saint-nazaire",
+    "storage_bucket": "hybride-pont-de-saint-nazaire.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:415165890581:android:c517eeec89870475014e1c",
+        "mobilesdk_app_id": "1:164961539837:android:adbbf038f2205e081a9094",
         "android_client_info": {
           "package_name": "com.cg44.pontsaintnazaire"
         }
       },
       "oauth_client": [
         {
-          "client_id": "415165890581-2t1a0ik5kajf28gn8uo0t55b5oqtv6kh.apps.googleusercontent.com",
+          "client_id": "164961539837-06jigr12cq733pfgpt4hhgfdjp2qrbb7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDfWwmCuLHHWPJukdbgnpOfHGc4RzxVVFw"
+          "current_key": "AIzaSyC4uKE3Tk7VpshZOvi3FAJIJrfaYiO6pUM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "415165890581-2t1a0ik5kajf28gn8uo0t55b5oqtv6kh.apps.googleusercontent.com",
+              "client_id": "164961539837-06jigr12cq733pfgpt4hhgfdjp2qrbb7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

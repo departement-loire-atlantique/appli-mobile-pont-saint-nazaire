@@ -11,7 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
+      <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_notification_icon" />
+      <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/primary" />
+      
+      <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name="com.cg44.pontsaintnazaire.MainActivity"
             android:label="@string/title_activity_main"
@@ -63,6 +66,4 @@
     <!-- Audio -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-
-    <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_stat_name" />
 </manifest>
