@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Status, ApiStatus } from '../models/status';
 import { Event, ApiEvent } from '../models/event';
 
-const { App } = Plugins;
+const { App, Network } = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +55,14 @@ export class UtilsService {
     return new Observable(observer => {
       App.addListener('appStateChange', (state: AppState) => {
         observer.next(state);
+      });
+    });
+  }
+
+  networkChangeDetector() {
+    return new Observable(observer => {
+      Network.addListener('networkStatusChange', status => {
+        observer.next(status);
       });
     });
   }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RemoteConfigService } from '../../services/remote-config.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-departement',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DepartementPage implements OnInit {
 
-  constructor() { }
+  public pageContent: any = {
+    title: '',
+    content: ''
+  };
 
-  ngOnInit() {
+  constructor(private remoteConfigService: RemoteConfigService, private navController: NavController) {}
+
+  async ngOnInit() {
+    if (this.remoteConfigService.isInitialized) {
+      this.pageContent = await this.remoteConfigService.get('departement_page_content');
+    }
   }
-
 }
