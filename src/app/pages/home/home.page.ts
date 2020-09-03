@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
 import { UtilsService } from '../../services/utils.service';
-import { AppState, SplashScreen } from '@capacitor/core';
+import { AppState, SplashScreen, NetworkStatus } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 import { ModalController, Platform, IonRouterOutlet } from '@ionic/angular';
 import { WebcamPage } from '../webcam/webcam.page';
@@ -11,7 +11,7 @@ import { Plugins } from '@capacitor/core';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
 import { Event } from '../../models/event';
 import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
-const { App } = Plugins;
+const { App, Network } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -32,6 +32,8 @@ export class HomePage implements OnInit, OnDestroy {
   public isFirstCall = true;
 
   private bottomPanel: CupertinoPane;
+
+  private subs = [];
 
   constructor(
     private platform: Platform,
@@ -80,13 +82,23 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   addAppStateChangeSubscription() {
-    this.stateSub = this.utils
-      .appStateChangeDetector()
-      .subscribe((state: AppState) => {
-        if (state.isActive) {
+    this.subs.push(
+      this.utils
+        .appStateChangeDetector()
+        .subscribe((state: AppState) => {
+          if (state.isActive) {
+            this.getData();
+          }
+        })
+    );
+
+    this.subs.push(
+      this.utils.networkChangeDetector().subscribe((status: NetworkStatus) => {
+        if (status.connected) {
           this.getData();
         }
-      });
+      })
+    );
   }
 
   async getData() {
@@ -138,6 +150,8 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.stateSub.unsubscribe();
+    this.subs.forEach(sub => {
+      sub.unsubscribe();
+    });
   }
 }
