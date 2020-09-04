@@ -25,17 +25,47 @@
 // @import "~@ionic/angular/css/text-transformation.css";
 // @import "~@ionic/angular/css/flex-utils.css";
 
-.event-modal {
-  .modal-wrapper {
-    width: 95%;
-    height: 70%;
-  }
-}
-
+.event-modal,
 .notification-modal {
+  --height: auto;
+
+  ion-header {
+    overflow: hidden;
+
+    &::after {
+      content: none;
+    }
+  }
+
+  app-back-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .h2-app-like {
+    margin-right: 52px;
+    display: flex;
+    align-items: center;
+
+    img {
+      flex-shrink: 0;
+    }
+  }
+
+  .ion-page {
+    position: relative;
+    display: block;
+    contain: content;
+
+    .inner-content {
+      max-height: 60vh;
+      overflow: auto;
+    }
+  }
+
   .modal-wrapper {
     width: 95%;
-    height: 50%;
   }
 }
 

@@ -76,6 +76,10 @@ export class NotificationsService {
   }
 
   async openNotificationModal(notification: CG44Notification) {
+    const current = await this.modalController.getTop();
+    if (current) {
+      await current.dismiss();
+    }
     const modal = await this.modalController.create({
       component: PushModalComponent,
       cssClass: 'notification-modal',

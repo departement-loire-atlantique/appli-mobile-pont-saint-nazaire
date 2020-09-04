@@ -1,9 +1,12 @@
 <ion-header>
   <app-back-button type="modal"></app-back-button>
-  <h1 class="h2-app-like ds44-mt1 ds44--m-padding-lr"><img src="/assets/icon/{{ event.icon }}.svg" alt=""
-      class="ds44-app-pictoOverlay"> {{ event.label }}</h1>
+  <h1 class="h2-app-like ds44-mt1 ds44--m-padding-lr ds44-flex-container ds44-flex-valign-center">
+    <img src="/assets/icon/{{ event.icon }}.svg" alt="" class="ds44-app-pictoOverlay ds44-mr1">
+    <span>{{ event.label }}</span>
+  </h1>
 </ion-header>
-<ion-content>
+
+<div class="inner-content">
   <div class="ds44-modal-gab">
     <h2 class="h3-like">{{ event.ligne1 }}</h2>
     <p class="ds44-app-time"><i class="icon icon-date icon--medium ds44-valignTop" aria-hidden="true"></i>&nbsp;Mis à
@@ -12,11 +15,11 @@
     <p>{{ event ? event.ligne2 : "" }}</p>
 
     <ul *ngIf="event">
-      <li *ngIf="event.ligne3">{{ event.ligne3}}</li>
+      <li *ngIf="event.ligne3">{{ event.ligne3 }}</li>
       <li *ngIf="event.ligne4">{{ event.ligne4 }}</li>
       <li *ngIf="event.ligne5">{{ event.ligne5 }}</li>
       <li *ngIf="event.ligne6">{{ event.ligne6 }}</li>
     </ul>
 
   </div>
-</ion-content>
+</div>

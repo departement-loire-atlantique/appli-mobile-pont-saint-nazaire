@@ -6,6 +6,6 @@ export interface CG44Notification extends PushNotification {
     body: string,
     type: string,
     linkUrl: string,
-    linkTitle: string
+    linkText: string
   };
 }
