@@ -4,10 +4,11 @@ import { Plugins, PushNotification, PushNotificationActionPerformed, PushNotific
 import { ModalController, Platform } from '@ionic/angular';
 
 import { PushModalComponent } from '../components/push-modal/push-modal.component';
+import { CG44Notification } from '../models/notification';
 
 import { StorageService } from './storage.service';
-const { PushNotifications } = Plugins;
 
+const { PushNotifications } = Plugins;
 const fcm = new FCM();
 
 @Injectable({
@@ -74,7 +75,7 @@ export class NotificationsService {
     });
   }
 
-  async openNotificationModal(notification: PushNotification) {
+  async openNotificationModal(notification: CG44Notification) {
     const modal = await this.modalController.create({
       component: PushModalComponent,
       cssClass: 'notification-modal',

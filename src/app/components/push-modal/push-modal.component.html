@@ -5,5 +5,12 @@
   <div class="ds44-modal-gab">
     <h2 class="h3-like">{{ notification.data.title }}</h2>
     <p>{{ notification.data.body }}</p>
+
+    <div class="ds44-mt3" *ngIf="notification.data.linkUrl">
+      <a href="{{ notification.data.linkUrl }}" target="_system" class="ds44-btnStd ds44-btn--invert"
+        title="Réessayer de recharger la page">
+        {{ notification.data.linkText || 'En savoir +' }}
+      </a>
+    </div>
   </div>
 </ion-content>
