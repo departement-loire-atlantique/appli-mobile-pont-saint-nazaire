@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 
 import { SocialNetwork } from './models/social-network';
+import { AnalyticsService } from './services/analytics.service';
 import { NotificationsService } from './services/notifications.service';
 import { RemoteConfigService } from './services/remote-config.service';
 import { StorageService } from './services/storage.service';
@@ -29,15 +30,19 @@ export class AppComponent {
     private alertController: AlertController,
     private remoteConfigService: RemoteConfigService,
     private router: Router,
-    private platform: Platform
+    private platform: Platform,
+    private analyticsService: AnalyticsService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(async () => {
+
+      // Always reset app navigation to root page
       this.router.navigateByUrl('/');
 
+      // Check if notification agreement has been asked
       this.storageService.get(this.notificationService.STORAGEKEY).then(value => {
         if (value) {
           this.notificationService.register();
@@ -47,21 +52,29 @@ export class AppComponent {
         }
       });
 
+      // Get remote config from firebase
       this.socialNetworks = await this.remoteConfigService.get('social_networks');
       const configPages = await this.remoteConfigService.get('pages');
+      this.setPages(configPages);
 
-      const remotePages = configPages.map(page => {
-        return {
-          title: page.title,
-          url: '/content-page',
-          params: {
-            id: page.id
-          }
-        };
-      });
-
-      this.pages = [...remotePages, ...this.pages];
+      // Enable analytics
+      this.analyticsService.enableAnalytics();
+      this.analyticsService.enableCrashlytics();
     });
+  }
+
+  setPages(pages) {
+    const remotePages = pages.map(page => {
+      return {
+        title: page.title,
+        url: '/content-page',
+        params: {
+          id: page.id
+        }
+      };
+    });
+
+    this.pages = [...remotePages, ...this.pages];
   }
 
   async askForSubscription() {

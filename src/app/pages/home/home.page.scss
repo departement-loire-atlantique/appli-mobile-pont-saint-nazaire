@@ -16,21 +16,20 @@
   }
 
   .menu-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 8px;
+    font-size: 1.6em;
 
     i {
-      font-size: 1.6em;
       width: 1em;
       height: 1em;
-      display: block;
-      line-height: 1em;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      &:before {
+      &::before {
+        line-height: 1;
         font-size: 1em;
-        display: block;
-        line-height: 1em;
       }
     }
   }

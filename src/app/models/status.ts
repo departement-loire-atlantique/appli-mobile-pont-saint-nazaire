@@ -1,11 +1,11 @@
 export class Status {
-  public code: string;
-  public label: string;
+  public code?: string;
+  public label?: string;
   public colorStatus?: {
     north: string
     south: string
   };
-  public from?: string|Date;
+  public from?: string | Date;
   public next?: Status[];
 }
 

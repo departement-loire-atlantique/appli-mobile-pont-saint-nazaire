@@ -2,14 +2,14 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="end">
-        <button class="menu-button" (click)="toggleMenu()">
-          <i class="icon icon-option"></i>
-        </button>
+        <ion-button class="menu-button" (click)="toggleMenu()">
+          <i slot="icon-only" class="icon icon-option"></i>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <app-svg-map *ngIf="status" [data]="status" [events]="eventsList" (clickEvent)="openEventDetail($event)">
+  <app-svg-map [data]="status" [events]="eventsList" (clickEvent)="openEventDetail($event)">
   </app-svg-map>
 
   <button class="webcam-button" (click)="openWebcam()"><i class="icon icon-webcam"></i></button>
