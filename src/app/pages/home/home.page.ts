@@ -11,6 +11,8 @@ import { Plugins } from '@capacitor/core';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
 import { Event } from '../../models/event';
 import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
+import { ErrorService } from 'src/app/services/error.service';
+import { langFr } from 'src/app/models/constantesCD44';
 const { App } = Plugins;
 
 @Component({
@@ -39,7 +41,8 @@ export class HomePage implements OnInit, OnDestroy {
     private utils: UtilsService,
     private routerOutlet: IonRouterOutlet,
     private modalController: ModalController,
-    private filterPipe: FilterByPropertyPipe) {
+    private filterPipe: FilterByPropertyPipe,
+    private errorService: ErrorService) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.handleBackButton();
     });
@@ -96,8 +99,10 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.eventsList = await this.api.getEvents();
 
-    this.eventsList = this.utils.generateRandomEvent();
+    //this.eventsList = this.utils.generateRandomEvent();
 
+    this.eventsList = this.utils.getEventsList();
+    console.log('this.eventsList ', this.eventsList)
     this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
     this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
 

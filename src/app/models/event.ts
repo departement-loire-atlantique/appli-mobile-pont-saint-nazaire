@@ -22,6 +22,6 @@ export class ApiEvent extends CommonEvent {
   public nature?: string;
   public type?: string;
   public statut?: string;
-  public longitude?: number;
-  public latitude?: number;
+  public longitude?: string;
+  public latitude?: string;
 }
