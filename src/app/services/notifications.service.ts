@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Plugins, PushNotificationToken, PushNotification, PushNotificationActionPerformed } from '@capacitor/core';
-const { PushNotifications } = Plugins;
-
 import { FCM } from '@capacitor-community/fcm';
-import { Platform, ModalController } from '@ionic/angular';
+import { Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
+import { ModalController, Platform } from '@ionic/angular';
+
 import { PushModalComponent } from '../components/push-modal/push-modal.component';
+import { CG44Notification } from '../models/notification';
+
 import { StorageService } from './storage.service';
+
+const { PushNotifications } = Plugins;
 const fcm = new FCM();
 
 @Injectable({
@@ -23,7 +26,7 @@ export class NotificationsService {
       return;
     }
 
-    fcm.subscribeTo({topic: 'psn'}).then(() => {
+    fcm.subscribeTo({ topic: 'psn' }).then(() => {
       this.storageService.set(this.STORAGEKEY, true);
     });
   }
@@ -34,7 +37,7 @@ export class NotificationsService {
       return;
     }
 
-    fcm.unsubscribeFrom({topic: 'psn'}).then(() => {
+    fcm.unsubscribeFrom({ topic: 'psn' }).then(() => {
       this.storageService.set(this.STORAGEKEY, false);
     });
   }
@@ -54,7 +57,6 @@ export class NotificationsService {
     // Subsribe to topic if registration succeeded
     PushNotifications.addListener('registration', (token: PushNotificationToken) => {
       this.subscribe();
-      console.log(token);
     });
 
     PushNotifications.addListener('registrationError', (error: any) => {
@@ -73,7 +75,11 @@ export class NotificationsService {
     });
   }
 
-  async openNotificationModal(notification: PushNotification) {
+  async openNotificationModal(notification: CG44Notification) {
+    const current = await this.modalController.getTop();
+    if (current) {
+      await current.dismiss();
+    }
     const modal = await this.modalController.create({
       component: PushModalComponent,
       cssClass: 'notification-modal',

@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
 
-import { NotificationsPageRoutingModule } from './notifications-routing.module';
+import { SharedComponentsModule } from '../../shared/shared-components.module';
 
+import { NotificationsPageRoutingModule } from './notifications-routing.module';
 import { NotificationsPage } from './notifications.page';
 
 @NgModule({
@@ -13,8 +13,9 @@ import { NotificationsPage } from './notifications.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    NotificationsPageRoutingModule
+    NotificationsPageRoutingModule,
+    SharedComponentsModule
   ],
   declarations: [NotificationsPage]
 })
-export class NotificationsPageModule {}
+export class NotificationsPageModule { }

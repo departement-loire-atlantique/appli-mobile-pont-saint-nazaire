@@ -1,17 +1,19 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Notifications</ion-title>
-  </ion-toolbar>
+  <div class="ds44-flex-container ds44-flex-valign-center ds44-m1">
+    <div class="ds44-flex ds44-fg1 ds44-flex-valign-center">
+      <h1 class="ds44-fg1">Notifications</h1>
+      <app-back-button></app-back-button>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list lines="none">
     <ion-item>
-      <ion-label class="ion-text-wrap">Je désire recevoir les notifications push "Pont de Saint-Nazaire"</ion-label>
-      <ion-toggle [(ngModel)]="isSubscribed" (ionChange)="changeSubscription()"></ion-toggle>
+      <ion-label (click)="subscribeToggle.checked = !subscribeToggle.checked" class="ion-text-wrap">
+        Je désire recevoir les notifications push "Pont de Saint-Nazaire"
+      </ion-label>
+      <ion-toggle #subscribeToggle [(ngModel)]="isSubscribed" (ionChange)="changeSubscription()"></ion-toggle>
     </ion-item>
   </ion-list>
 </ion-content>

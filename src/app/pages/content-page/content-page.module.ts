@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
 
-import { ContentPagePageRoutingModule } from './content-page-routing.module';
+import { SharedComponentsModule } from '../../shared/shared-components.module';
 
+import { ContentPagePageRoutingModule } from './content-page-routing.module';
 import { ContentPagePage } from './content-page.page';
 
 @NgModule({
@@ -13,8 +13,9 @@ import { ContentPagePage } from './content-page.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ContentPagePageRoutingModule
+    ContentPagePageRoutingModule,
+    SharedComponentsModule
   ],
   declarations: [ContentPagePage]
 })
-export class ContentPagePageModule {}
+export class ContentPagePageModule { }

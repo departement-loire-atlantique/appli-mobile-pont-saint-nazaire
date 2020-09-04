@@ -1,6 +1,9 @@
-<div id="main-container" [attr.data-mode-circulation]="data.code" [attr.data-trafic-nord]="data.colorStatus.north" [attr.data-trafic-sud]="data.colorStatus.south">
+<div id="main-container" [attr.data-mode-circulation]="data?.code || ''"
+  [attr.data-trafic-nord]="data?.colorStatus?.north || 'vert'"
+  [attr.data-trafic-sud]="data?.colorStatus?.south || 'vert'">
   <div id="map-container">
-    <svg #svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="530" viewBox="0 0 320 530">
+    <svg #svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="530"
+      viewBox="0 0 320 530">
       <defs>
         <style>
           .cls-1 {

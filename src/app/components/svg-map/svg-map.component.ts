@@ -1,4 +1,5 @@
-import { Component, Input, ChangeDetectionStrategy, OnChanges, ViewChild, ElementRef, OnInit, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+
 import { Event } from '../../models/event';
 import { Status } from '../../models/status';
 
@@ -9,9 +10,6 @@ import { Status } from '../../models/status';
   styleUrls: ['./svg-map.component.scss'],
 })
 export class SvgMapComponent implements OnInit, OnChanges {
-
-  public stateNorth = 'vert';
-  public stateSouth = 'vert';
 
   private isFirstChange = false;
 

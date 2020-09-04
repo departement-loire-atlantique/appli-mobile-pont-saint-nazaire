@@ -1,0 +1,16 @@
+:host {
+  ion-header::after {
+    content: none;
+  }
+
+  ion-content {
+    --padding-top: 2rem;
+    --padding-bottom: 2rem;
+    --padding-start: 2rem;
+    --padding-end: 2rem;
+  }
+
+  img {
+    width: 100%;
+  }
+}

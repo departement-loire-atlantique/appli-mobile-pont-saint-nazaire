@@ -1,16 +1,22 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Webcam</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">
-        close
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+  <div class="ds44-flex-container ds44-flex-valign-center ds44-m1">
+    <div class="ds44-flex ds44-fg1 ds44-flex-valign-center">
+      <h1 class="ds44-fg1">Webcam</h1>
+      <app-back-button type="modal"></app-back-button>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content class="padding">
-  <p *ngIf="date">{{ date | date:'shortDate' }}</p>
-  <p *ngIf="date">{{ date | date:'HH:mm' }}</p>
-  <img [src]="image" >
+
+  <div class="ds44-flex-container ds44-flex-valign-center">
+    <div class="ds44-flex-container ds44-flex-valign-center ds44-mr2">
+      <i class="icon icon-date ds44-mr1"></i> {{ date | date:'shortDate' }}
+    </div>
+    <div class="ds44-flex-container ds44-flex-valign-center">
+      <i class="icon icon-time ds44-mr1"></i> {{ date | date:'HH:mm' }}
+    </div>
+  </div>
+
+  <img [src]="image">
 </ion-content>

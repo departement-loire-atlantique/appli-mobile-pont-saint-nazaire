@@ -1,0 +1,8 @@
+:host {
+  background: #fff;
+  overflow: hidden;
+
+  ion-header::after {
+    content: none;
+  }
+}

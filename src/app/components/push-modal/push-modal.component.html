@@ -1,8 +1,21 @@
-<ion-content>
-  <button class="ds44-btnOverlay--modale ds44-btnOverlay--closeOverlay" (click)="dismiss()" type="button" title="Fermer la boîte de dialogue : [titre de la modale]" data-js="ds44-modal-action-close"><i class="icon icon-cross icon--xlarge" aria-hidden="true"></i><span class="ds44-btnInnerText--bottom">Fermer</span></button>
-  <h1 class="h2-app-like ds44-mt1 ds44--m-padding-lr"><img src="/assets/icon/travaux.svg" alt="" class="ds44-app-pictoOverlay"> {{ notification.data.type }}</h1>
-  <div class="ds44-modal-gab">            
+<ion-header>
+  <app-back-button type="modal"></app-back-button>
+  <h1 class="h2-app-like ds44-mt1 ds44--m-padding-lr">
+    <img src="/assets/icon/{{ icon }}.svg" alt="" class="ds44-app-pictoOverlay ds44-mr1">{{ notification.data.type }}
+  </h1>
+</ion-header>
+
+<div class="inner-content">
+  <div class="ds44-modal-gab">
     <h2 class="h3-like">{{ notification.data.title }}</h2>
     <p>{{ notification.data.body }}</p>
+
+    <div class="ds44-mt3" *ngIf="notification.data.linkUrl">
+      <a href="{{ notification.data.linkUrl }}" target="_system" class="ds44-btnStd ds44-btn--invert"
+        title="Réessayer de recharger la page">
+        <span class="ds44-btnInnerText">{{ notification.data.linkText || 'En savoir +' }}</span>
+        <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+      </a>
+    </div>
   </div>
-</ion-content>
+</div>

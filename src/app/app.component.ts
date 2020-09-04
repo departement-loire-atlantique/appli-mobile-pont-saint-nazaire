@@ -1,29 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { StorageService } from './services/storage.service';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertController, Platform } from '@ionic/angular';
+
+import { SocialNetwork } from './models/social-network';
+import { AnalyticsService } from './services/analytics.service';
 import { NotificationsService } from './services/notifications.service';
+import { RemoteConfigService } from './services/remote-config.service';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit {
-  public selectedIndex = null;
+export class AppComponent {
 
-  public appPages = [
-    {
-      title: 'Informations',
-      url: '/informations'
-    },
-    {
-      title: 'Les autres applis',
-      url: '/other-apps'
-    },
-    {
-      title: 'Le département',
-      url: '/departement'
-    },
+  public socialNetworks: SocialNetwork[] = [];
+
+  public pages: any = [
     {
       title: 'Notifications',
       url: '/notifications'
@@ -33,18 +27,54 @@ export class AppComponent implements OnInit {
   constructor(
     private notificationService: NotificationsService,
     private storageService: StorageService,
-    private alertController: AlertController
-  ) {}
+    private alertController: AlertController,
+    private remoteConfigService: RemoteConfigService,
+    private router: Router,
+    private platform: Platform,
+    private analyticsService: AnalyticsService
+  ) {
+    this.initializeApp();
+  }
 
-  ngOnInit() {
-    this.storageService.get(this.notificationService.STORAGEKEY).then(value => {
-      if (value) {
-        this.notificationService.register();
-      }
-      if (value === null) {
-        this.askForSubscription();
-      }
+  initializeApp() {
+    this.platform.ready().then(async () => {
+
+      // Always reset app navigation to root page
+      this.router.navigateByUrl('/');
+
+      // Check if notification agreement has been asked
+      this.storageService.get(this.notificationService.STORAGEKEY).then(value => {
+        if (value) {
+          this.notificationService.register();
+        }
+        if (value === null) {
+          this.askForSubscription();
+        }
+      });
+
+      // Get remote config from firebase
+      this.socialNetworks = await this.remoteConfigService.get('social_networks');
+      const configPages = await this.remoteConfigService.get('pages');
+      this.setPages(configPages);
+
+      // Enable analytics
+      this.analyticsService.enableAnalytics();
+      this.analyticsService.enableCrashlytics();
     });
+  }
+
+  setPages(pages) {
+    const remotePages = pages.map(page => {
+      return {
+        title: page.title,
+        url: '/content-page',
+        params: {
+          id: page.id
+        }
+      };
+    });
+
+    this.pages = [...remotePages, ...this.pages];
   }
 
   async askForSubscription() {
