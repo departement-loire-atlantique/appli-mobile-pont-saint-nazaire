@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Pont de Saint-Nazaire</string>
-    <string name="title_activity_main">psn</string>
+    <string name="title_activity_main">Pont de Saint-Nazaire</string>
     <string name="package_name">com.cg44.pontsaintnazaire</string>
     <string name="custom_url_scheme">com.cg44.pontsaintnazaire</string>
 </resources>

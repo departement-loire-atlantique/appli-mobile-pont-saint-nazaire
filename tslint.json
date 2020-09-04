@@ -13,7 +13,11 @@
     "deprecation": {
       "severity": "warning"
     },
-    "component-class-suffix": [true, "Page", "Component"],
+    "component-class-suffix": [
+      true,
+      "Page",
+      "Component"
+    ],
     "contextual-lifecycle": true,
     "directive-class-suffix": true,
     "directive-selector": [
@@ -34,6 +38,14 @@
       "rxjs/Rx"
     ],
     "import-spacing": true,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-first",
+        "grouped-imports": true
+      }
+    ],
     "indent": {
       "options": [
         "spaces"

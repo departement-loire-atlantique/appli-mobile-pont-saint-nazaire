@@ -38,3 +38,33 @@
     height: 50%;
   }
 }
+
+.pane {
+  padding-top: 40px !important;
+
+  .draggable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+      content: "\E047";
+      font-family: "ds44-icons";
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 1.6em;
+
+      width: 1em;
+      height: 1em;
+
+      line-height: 1em;
+      text-align: center;
+
+      display: block;
+    }
+  }
+
+  .move {
+    display: none !important;
+  }
+}

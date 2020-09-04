@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { AlertController, Platform } from '@ionic/angular';
-import { StorageService } from './services/storage.service';
-import { NotificationsService } from './services/notifications.service';
+import { Router } from '@angular/router';
+import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 
 import { SocialNetwork } from './models/social-network';
-
+import { NotificationsService } from './services/notifications.service';
 import { RemoteConfigService } from './services/remote-config.service';
-import { Router } from '@angular/router';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',

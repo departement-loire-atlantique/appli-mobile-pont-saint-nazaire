@@ -1,16 +1,18 @@
-
 <ion-content fullscreen [scrollEvents]="false">
- <ion-header class="ion-no-border">
+  <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="end">
-        <ion-menu-button></ion-menu-button>
+        <button class="menu-button" (click)="toggleMenu()">
+          <i class="icon icon-option"></i>
+        </button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <app-svg-map *ngIf="status" [data]="status" [events]="eventsList" (clickEvent)="openEventDetail($event)"></app-svg-map>
+  <app-svg-map *ngIf="status" [data]="status" [events]="eventsList" (clickEvent)="openEventDetail($event)">
+  </app-svg-map>
 
-  <button (click)="openWebcam()">Webcam</button>
+  <button class="webcam-button" (click)="openWebcam()"><i class="icon icon-webcam"></i></button>
 
   <div class="cupertino-pane">
     <div class="content" *ngIf="status">
@@ -18,12 +20,12 @@
       <!-- Directions -->
       <div class="ds44--l-padding-lr ds44--l-padding-b">
         <h2 class="h2-like">Sens de circulation</h2>
-  
+
         <section class="ds44-app-tuile">
           <h3 class="h3-like">En cours</h3>
           <app-traffic-direction [mode]="status"></app-traffic-direction>
         </section>
-  
+
         <section class="ds44-app-tuile">
           <h3 class="h3-like">À venir</h3>
           <app-traffic-direction *ngFor="let mode of status.next" [mode]="mode"></app-traffic-direction>
@@ -35,14 +37,16 @@
         <h2 class="h2-like">Événements</h2>
         <p *ngIf="!eventsList.length">
           Il n’y a actuellement aucune perturbation.
-        </p>      
+        </p>
         <section class="ds44-app-tuile" *ngIf="currentEvents.length">
           <h3 class="h3-like">En cours</h3>
-          <app-pertubations *ngFor="let evenement of currentEvents" [pertubation]="evenement" (click)="openEventDetail(evenement)"></app-pertubations >
+          <app-pertubations *ngFor="let evenement of currentEvents" [pertubation]="evenement"
+            (click)="openEventDetail(evenement)"></app-pertubations>
         </section>
         <section class="ds44-app-tuile" *ngIf="upcomingEvents.length">
           <h3 class="h3-like">À venir</h3>
-          <app-pertubations *ngFor="let evenement of upcomingEvents" [pertubation]="evenement" (click)="openEventDetail(evenement)"></app-pertubations >
+          <app-pertubations *ngFor="let evenement of upcomingEvents" [pertubation]="evenement"
+            (click)="openEventDetail(evenement)"></app-pertubations>
         </section>
       </div>
 

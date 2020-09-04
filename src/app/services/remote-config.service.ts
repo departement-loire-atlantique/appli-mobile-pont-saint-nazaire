@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
-
 import '@capacitor-community/firebase-remote-config';
 import { Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
+
 import { environment } from '../../environments/environment';
 
 const { FirebaseRemoteConfig } = Plugins;
-
-interface MyWindow extends Window {
-  firebase: {apps: any[]};
-}
-
-declare var window: MyWindow;
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +14,7 @@ export class RemoteConfigService {
 
   public isInitialized = false;
 
-  constructor(private platform: Platform) {}
+  constructor(private platform: Platform) { }
 
   async setWebConfig() {
     console.log('Setup Firebase Remote Config');

@@ -1,17 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ApiService } from '../../services/api.service';
-import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
-import { UtilsService } from '../../services/utils.service';
-import { AppState, SplashScreen, NetworkStatus } from '@capacitor/core';
-import { Subscription } from 'rxjs';
-import { ModalController, Platform, IonRouterOutlet } from '@ionic/angular';
-import { WebcamPage } from '../webcam/webcam.page';
-
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AppState, NetworkStatus, SplashScreen } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
+import { IonRouterOutlet, MenuController, ModalController, Platform } from '@ionic/angular';
+import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
+import { Subscription } from 'rxjs';
+
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
 import { Event } from '../../models/event';
+import { ApiService } from '../../services/api.service';
+import { UtilsService } from '../../services/utils.service';
 import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
-const { App, Network } = Plugins;
+import { WebcamPage } from '../webcam/webcam.page';
+const { App } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -41,6 +41,7 @@ export class HomePage implements OnInit, OnDestroy {
     private utils: UtilsService,
     private routerOutlet: IonRouterOutlet,
     private modalController: ModalController,
+    private menuController: MenuController,
     private filterPipe: FilterByPropertyPipe) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.handleBackButton();
@@ -59,7 +60,9 @@ export class HomePage implements OnInit, OnDestroy {
       buttonClose: false,
       topperOverflow: true,
       bottomOffset: 0,
+      touchAngle: 45,
       parentElement: 'app-home',
+      passiveListeners: false,
       breaks: {
         bottom: {
           enabled: true,
@@ -83,13 +86,11 @@ export class HomePage implements OnInit, OnDestroy {
 
   addAppStateChangeSubscription() {
     this.subs.push(
-      this.utils
-        .appStateChangeDetector()
-        .subscribe((state: AppState) => {
-          if (state.isActive) {
-            this.getData();
-          }
-        })
+      this.utils.appStateChangeDetector().subscribe((state: AppState) => {
+        if (state.isActive) {
+          this.getData();
+        }
+      })
     );
 
     this.subs.push(
@@ -108,6 +109,7 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.eventsList = await this.api.getEvents();
 
+    // TODO: remove for prod
     this.eventsList = this.utils.generateRandomEvent();
 
     this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
@@ -147,6 +149,10 @@ export class HomePage implements OnInit, OnDestroy {
         App.exitApp();
       }
     }
+  }
+
+  toggleMenu() {
+    this.menuController.toggle();
   }
 
   ngOnDestroy() {

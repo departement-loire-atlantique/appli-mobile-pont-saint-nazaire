@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
 
-import { WebcamPageRoutingModule } from './webcam-routing.module';
+import { SharedComponentsModule } from '../../shared/shared-components.module';
 
+import { WebcamPageRoutingModule } from './webcam-routing.module';
 import { WebcamPage } from './webcam.page';
 
 @NgModule({
@@ -13,8 +13,9 @@ import { WebcamPage } from './webcam.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    WebcamPageRoutingModule
+    WebcamPageRoutingModule,
+    SharedComponentsModule
   ],
   declarations: [WebcamPage]
 })
-export class WebcamPageModule {}
+export class WebcamPageModule { }
