@@ -8,7 +8,7 @@ The app is made using :
 - [Capacitor](https://capacitorjs.com/)
 
 Data comes from 2 sources : 
-- https://api.loire-atlantique.com
+- https://api.loire-atlantique.fr
 - Firebase
 
 ## App structure
