@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from '../../services/storage.service';
+
 import { NotificationsService } from '../../services/notifications.service';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-notifications',

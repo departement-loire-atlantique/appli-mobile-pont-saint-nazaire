@@ -18,11 +18,14 @@ export class WebcamPage implements OnInit, OnDestroy {
   constructor(private modalController: ModalController, private api: ApiService) { }
 
   ngOnInit() {
+    this.setUpdateInterval();
+    this.getWebcam();
+  }
+
+  setUpdateInterval() {
     this.updateInterval = setInterval(() => {
       this.getWebcam();
     }, environment.webcamUpdateInterval);
-
-    this.getWebcam();
   }
 
   getWebcam() {
