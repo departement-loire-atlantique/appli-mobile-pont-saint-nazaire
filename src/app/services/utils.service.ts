@@ -3,6 +3,7 @@ import { Plugins, AppState } from '@capacitor/core';
 import { Observable } from 'rxjs';
 import { Status, ApiStatus } from '../models/status';
 import { Event, ApiEvent } from '../models/event';
+import { DECOUPAGE_ZONE, EVENTS_MOCK } from '../models/constantesCD44';
 
 const { App, Network } = Plugins;
 
@@ -10,6 +11,7 @@ const { App, Network } = Plugins;
   providedIn: 'root'
 })
 export class UtilsService {
+
   generateRandomEvent(): Event[] {
     const events = [];
     const allEvents = [];
@@ -20,7 +22,7 @@ export class UtilsService {
       const apiEvent: ApiEvent = {
         nature: ['Accident', 'VL en panne', 'Vent'][Math.round(Math.random() * 2)],
         statut: ['en cours', 'prévisionnel'][Math.round(Math.random())],
-        datePublication: new Date(),
+        //datePublication: new Date(),
         ligne1: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
         ligne2: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
         ligne3: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
@@ -45,7 +47,7 @@ export class UtilsService {
         events.push(event);
       }
     });
-
+    console.log('events ', events)
     return events;
   }
 
@@ -90,10 +92,19 @@ export class UtilsService {
     return time >= 7 ? (time > 15 ? 'rouge' : 'orange')  : 'vert';
   }
 
+  getEventsList(apiEvents?: ApiEvent[]): Event[]{
+    // TODO : Remplacer EVENT_MOCK par apiEvents
+    return EVENTS_MOCK.map(event => {
+      return this.formatEvent(event);
+    });
+  }
+
   formatEvent(apiEvent: ApiEvent): Event {
     let icon: string;
     let label: string;
     let type: string;
+    let zone: string;
+    let datePublication: Date;
 
     if (apiEvent.nature === 'Accident') {
       icon = 'accident';
@@ -109,13 +120,26 @@ export class UtilsService {
       type = 'panne';
     }
 
+    const long = parseFloat(apiEvent.longitude);
+
+    zone =  long > DECOUPAGE_ZONE.LONGMAX_NORD ? 'nord' :
+            long < DECOUPAGE_ZONE.LONGMAX_NORD && long >= DECOUPAGE_ZONE.LONGMAX_A ? 'a' :
+            long < DECOUPAGE_ZONE.LONGMAX_A && long >= DECOUPAGE_ZONE.LONGMAX_B ? 'b' :
+            long < DECOUPAGE_ZONE.LONGMAX_B && long >= DECOUPAGE_ZONE.LONGMAX_C ? 'c' :
+            long < DECOUPAGE_ZONE.LONGMAX_C && long >= DECOUPAGE_ZONE.LONGMAX_D ? 'd' :
+            long < DECOUPAGE_ZONE.LONGMAX_D && long >= DECOUPAGE_ZONE.LONGMAX_E ? 'e' :
+            long < DECOUPAGE_ZONE.LONGMAX_E ? 'sud' : 'nord';
+
+
+    datePublication = new Date(apiEvent.datePublication.toString().split(' ')[0]);
+    //datePublication = new Date('2013-12-06T16:45:11 +0200'.split(' ')[0]);
     return {
       type,
       label,
       icon,
-      zone: ['a', 'b', 'c', 'd', 'e', 'nord', 'sud'][Math.round(Math.random() * 6)],
+      zone,
+      datePublication,
       status: apiEvent.statut,
-      datePublication: apiEvent.datePublication,
       ligne1: apiEvent.ligne1,
       ligne2: apiEvent.ligne2,
       ligne3: apiEvent.ligne3,
