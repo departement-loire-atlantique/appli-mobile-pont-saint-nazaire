@@ -49,10 +49,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    setInterval(() => {
-      this.count = this.count + 1;
-    }, 1000);
-
     this.addAppStateChangeSubscription();
 
     const panelSettings: CupertinoSettings = {
@@ -76,7 +72,6 @@ export class HomePage implements OnInit, OnDestroy {
     };
 
     this.bottomPanel = new CupertinoPane('.cupertino-pane', panelSettings);
-
     this.bottomPanel.present({ animate: true });
   }
 
