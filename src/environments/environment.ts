@@ -14,7 +14,8 @@ export const environment = {
     messagingSenderId: '164961539837',
     appId: '1:164961539837:web:cb2bbe3c47a25bf41a9094',
     measurementId: 'G-2PGV24S87K'
-  }
+  },
+  webcamUpdateInterval: 5000
 };
 
 /*

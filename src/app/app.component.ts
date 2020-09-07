@@ -42,25 +42,32 @@ export class AppComponent {
       // Always reset app navigation to root page
       this.router.navigateByUrl('/');
 
-      // Check if notification agreement has been asked
-      this.storageService.get(this.notificationService.STORAGEKEY).then(value => {
-        if (value) {
-          this.notificationService.register();
-        }
-        if (value === null) {
-          this.askForSubscription();
-        }
-      });
+      this.checkNotificationPermission();
 
-      // Get remote config from firebase
-      this.socialNetworks = await this.remoteConfigService.get('social_networks');
-      const configPages = await this.remoteConfigService.get('pages');
-      this.setPages(configPages);
+      await this.getRemoteContent();
 
       // Enable analytics
       this.analyticsService.enableAnalytics();
       this.analyticsService.enableCrashlytics();
     });
+  }
+
+  async checkNotificationPermission() {
+    // Check if notification agreement has been asked
+    const stored = await this.storageService.get(this.notificationService.STORAGEKEY);
+    if (stored) {
+      this.notificationService.register();
+    }
+    if (stored === null) {
+      this.askForSubscription();
+    }
+  }
+
+  async getRemoteContent() {
+    // Get remote config from firebase
+    this.socialNetworks = await this.remoteConfigService.get('social_networks');
+    const configPages = await this.remoteConfigService.get('pages');
+    this.setPages(configPages);
   }
 
   setPages(pages) {
