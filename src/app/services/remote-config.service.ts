@@ -21,6 +21,9 @@ export class RemoteConfigService {
     return await FirebaseRemoteConfig.initializeFirebase(environment.firebaseConfig);
   }
 
+  /**
+   * Check if the firebase plugin is up and ready
+   */
   async checkInitialization() {
     if (!this.isInitialized) {
       if (!this.platform.is('capacitor')) {

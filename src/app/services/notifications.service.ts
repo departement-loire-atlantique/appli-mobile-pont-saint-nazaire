@@ -20,6 +20,9 @@ export class NotificationsService {
 
   constructor(private platform: Platform, private modalController: ModalController, private storageService: StorageService) { }
 
+  /**
+   * Subscribes to push notification in the "psn" topic
+   */
   subscribe() {
     console.log('Subscribe to notifications');
     if (!this.platform.is('capacitor')) {
@@ -31,6 +34,9 @@ export class NotificationsService {
     });
   }
 
+  /**
+   * Unsubscribes for the "psn" topic
+   */
   unsubscribe() {
     console.log('Unsubscribe from notifications');
     if (!this.platform.is('capacitor')) {
@@ -42,6 +48,9 @@ export class NotificationsService {
     });
   }
 
+  /**
+   * Subscribes to push notifications
+   */
   register() {
     if (!this.platform.is('capacitor')) {
       return;
@@ -75,6 +84,10 @@ export class NotificationsService {
     });
   }
 
+  /**
+   * Opens the notification detail modal
+   * @param notification notification received from firebase
+   */
   async openNotificationModal(notification: CG44Notification) {
     const current = await this.modalController.getTop();
     if (current) {

@@ -36,6 +36,13 @@ export class AppComponent {
     this.initializeApp();
   }
 
+  /**
+   * Setup the app by:
+   *  - Going back to the root url
+   *  - Checking notification permissions
+   *  - getting remote content
+   *  - enabling analytics
+   */
   initializeApp() {
     this.platform.ready().then(async () => {
 
@@ -52,6 +59,9 @@ export class AppComponent {
     });
   }
 
+  /**
+   * Check that we've asked the user for notifications display
+   */
   async checkNotificationPermission() {
     // Check if notification agreement has been asked
     const stored = await this.storageService.get(this.notificationService.STORAGEKEY);
@@ -63,6 +73,9 @@ export class AppComponent {
     }
   }
 
+  /**
+   * Call Firebase remote-config to get social networks config and content pages
+   */
   async getRemoteContent() {
     // Get remote config from firebase
     this.socialNetworks = await this.remoteConfigService.get('social_networks');
@@ -70,6 +83,10 @@ export class AppComponent {
     this.setPages(configPages);
   }
 
+  /**
+   * Add remote config pages in front of local pages
+   * @param pages pages defined in firebase remote config
+   */
   setPages(pages) {
     const remotePages = pages.map(page => {
       return {
@@ -84,6 +101,9 @@ export class AppComponent {
     this.pages = [...remotePages, ...this.pages];
   }
 
+  /**
+   * Open an alert that ask the user if they want to subscribe to push notifications
+   */
   async askForSubscription() {
     const askAlert = await this.alertController.create({
       header: 'Notifications',
