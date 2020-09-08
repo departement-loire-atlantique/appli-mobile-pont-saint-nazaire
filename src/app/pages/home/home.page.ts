@@ -110,12 +110,11 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.eventsList = await this.api.getEvents();
 
-    // this.eventsList = this.utils.generateRandomEvent();
     // TODO: remove for prod
     // this.eventsList = this.utils.generateRandomEvent();
 
     this.eventsList = this.utils.getEventsList();
-    console.log('this.eventsList ', this.eventsList);
+
     this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
     this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
 

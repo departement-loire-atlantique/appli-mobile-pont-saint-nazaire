@@ -48,7 +48,6 @@ export class UtilsService {
         events.push(event);
       }
     });
-    console.log('events ', events);
     return events;
   }
 

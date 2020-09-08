@@ -49,7 +49,8 @@ export class AppComponent {
       // Always reset app navigation to root page
       this.router.navigateByUrl('/');
 
-      this.checkNotificationPermission();
+      // Setup notifications
+      this.notificationService.setup();
 
       await this.getRemoteContent();
 
@@ -57,20 +58,6 @@ export class AppComponent {
       this.analyticsService.enableAnalytics();
       this.analyticsService.enableCrashlytics();
     });
-  }
-
-  /**
-   * Check that we've asked the user for notifications display
-   */
-  async checkNotificationPermission() {
-    // Check if notification agreement has been asked
-    const stored = await this.storageService.get(this.notificationService.STORAGEKEY);
-    if (stored) {
-      this.notificationService.register();
-    }
-    if (stored === null) {
-      this.askForSubscription();
-    }
   }
 
   /**
@@ -99,26 +86,5 @@ export class AppComponent {
     });
 
     this.pages = [...remotePages, ...this.pages];
-  }
-
-  /**
-   * Open an alert that ask the user if they want to subscribe to push notifications
-   */
-  async askForSubscription() {
-    const askAlert = await this.alertController.create({
-      header: 'Notifications',
-      message: 'Souhaitez-vous activer les notifications ?',
-      buttons: [{
-        text: 'Non merci',
-        role: 'cancel'
-      }, {
-        text: 'Ok',
-        handler: () => {
-          this.storageService.set(this.notificationService.STORAGEKEY, true);
-          this.notificationService.register();
-        }
-      }]
-    });
-    return await askAlert.present();
   }
 }
