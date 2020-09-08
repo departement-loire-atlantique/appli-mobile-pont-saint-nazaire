@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
       <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_notification_icon" />
-      <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/primary" />
+      <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/colorPrimary" />
       
       <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
