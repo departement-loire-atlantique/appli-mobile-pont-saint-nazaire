@@ -13,7 +13,7 @@ export const environment = {
   },
   adMobId: {
     android: 'ca-app-pub-9103443525270445/1682232318',
-    ios: ''
+    ios: 'ca-app-pub-9103443525270445/1666754591'
   },
   webcamUpdateInterval: 5000
 };
