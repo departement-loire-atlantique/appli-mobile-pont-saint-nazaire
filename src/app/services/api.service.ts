@@ -6,6 +6,7 @@ import { FilesystemDirectory, Plugins } from '@capacitor/core';
 import { environment } from '../../environments/environment';
 import { ApiEvent } from '../models/event';
 import { ApiStatus } from '../models/status';
+import { Platform } from '@ionic/angular';
 
 const { Http, Filesystem } = Plugins;
 
@@ -14,7 +15,7 @@ const { Http, Filesystem } = Plugins;
 })
 export class ApiService {
 
-  constructor() { }
+  constructor(private platform: Platform) { }
 
   async getPSNStatus(): Promise<ApiStatus> {
     const response = await Http.request({
@@ -53,10 +54,18 @@ export class ApiService {
   }
 
   async getLatestWebcam(): Promise<string> {
+
+    if (this.platform.is('ios')) {
+      await Filesystem.deleteFile({
+        path: 'webcam.jpg',
+        directory: FilesystemDirectory.Cache
+      });
+    }
+
     const download: HttpDownloadFileResult = await Http.downloadFile({
       url: environment.apiUrl + '/webcam?id=psn',
       filePath: 'webcam.jpg',
-      fileDirectory: FilesystemDirectory.Data
+      fileDirectory: FilesystemDirectory.Cache
     });
 
     // On a device the file will be written and will return a path
@@ -64,7 +73,7 @@ export class ApiService {
       // This will return a base64 !
       const read = await Filesystem.readFile({
         path: 'webcam.jpg',
-        directory: FilesystemDirectory.Data
+        directory: FilesystemDirectory.Cache
       });
 
       return 'data:image/jpg;base64,' + read.data;

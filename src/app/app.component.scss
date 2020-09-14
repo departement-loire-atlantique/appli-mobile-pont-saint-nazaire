@@ -1,7 +1,13 @@
 ion-menu {
   --width: 100vw;
 
+  ion-content {
+    width: 100%;
+    top: var(--ion-statusbar-padding) !important;
+  }
+
   #menu {
-    height: calc(100vh - 4rem);
+    box-sizing: border-box;
+    height: 100%;
   }
 }
