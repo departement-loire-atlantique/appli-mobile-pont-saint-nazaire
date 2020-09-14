@@ -3,14 +3,16 @@ import { AppState, NetworkStatus, SplashScreen } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
 import { IonRouterOutlet, MenuController, ModalController, Platform } from '@ionic/angular';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
+import { env } from 'process';
 
+import { environment } from '../../../environments/environment';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
 import { Event } from '../../models/event';
 import { ApiService } from '../../services/api.service';
 import { UtilsService } from '../../services/utils.service';
 import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
 import { WebcamPage } from '../webcam/webcam.page';
-const { App } = Plugins;
+const { App, AdMob } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -40,6 +42,8 @@ export class HomePage implements OnInit, OnDestroy {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.handleBackButton();
     });
+
+    this.showInterstitial();
   }
 
   ngOnInit() {
@@ -49,6 +53,23 @@ export class HomePage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.getData();
+  }
+
+  showInterstitial() {
+    if (this.platform.is('capacitor')) {
+      AdMob.prepareInterstitial({
+        adId: this.platform.is('ios') ? environment.adMobId.ios : environment.adMobId.android,
+        autoshow: true
+      });
+
+      AdMob.addListener('onAdLoaded', () => {
+        AdMob.showInterstitial();
+      });
+
+      AdMob.addListener('onAdFailedToLoad', (info: boolean) => {
+        console.log(info);
+      });
+    }
   }
 
   /**

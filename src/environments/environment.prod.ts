@@ -11,5 +11,9 @@ export const environment = {
     appId: '1:164961539837:web:cb2bbe3c47a25bf41a9094',
     measurementId: 'G-2PGV24S87K'
   },
+  adMobId: {
+    android: 'ca-app-pub-9103443525270445/1682232318',
+    ios: ''
+  },
   webcamUpdateInterval: 5000
 };
