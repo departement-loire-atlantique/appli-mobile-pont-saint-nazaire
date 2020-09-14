@@ -29,6 +29,10 @@ button {
   outline: none;
 }
 
+ion-header {
+  padding-top: env(safe-area-inset-top);
+}
+
 .event-modal,
 .notification-modal {
   --height: auto;
@@ -101,4 +105,9 @@ button {
   .move {
     display: none !important;
   }
+}
+
+.webcam-page {
+  --width: 100%;
+  --height: 100%;
 }
