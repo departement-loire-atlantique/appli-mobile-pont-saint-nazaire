@@ -54,11 +54,14 @@ export class SvgMapComponent implements OnInit, OnChanges {
           zone.addEventListener('click', zone._clickHandler);
         } else {
           const icon = zone.querySelector('[data-name=' + event.type + ']');
-          icon.style.display = 'block';
-          icon._clickHandler = clickHandler;
-          icon.addEventListener('click', icon._clickHandler);
 
-          this.displayedElements.push(icon);
+          if (icon) {
+            icon.style.display = 'block';
+            icon._clickHandler = clickHandler;
+            icon.addEventListener('click', icon._clickHandler);
+
+            this.displayedElements.push(icon);
+          }
         }
 
         this.displayedElements.push(zone);
