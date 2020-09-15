@@ -21,9 +21,11 @@ export class AnalyticsService {
   }
 
   enableAnalytics() {
-    FirebaseAnalytics.setCollectionEnabled({
-      enabled: true
-    });
+    if (this.platform.is('capacitor')) {
+      FirebaseAnalytics.setCollectionEnabled({
+        enabled: true
+      });
+    }
   }
 
 }

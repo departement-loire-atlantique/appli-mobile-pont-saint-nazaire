@@ -30,7 +30,9 @@ export class RemoteConfigService {
         await this.setWebConfig();
       }
 
-      FirebaseRemoteConfig.initialize();
+      FirebaseRemoteConfig.initialize({
+        minimumFetchIntervalInSeconds: 3600
+      });
       await FirebaseRemoteConfig.fetchAndActivate();
 
       this.isInitialized = true;
