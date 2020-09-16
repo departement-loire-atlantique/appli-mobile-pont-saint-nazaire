@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import '@capacitor-community/http';
 import { HttpDownloadFileResult } from '@capacitor-community/http';
 import { FilesystemDirectory, Plugins } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 
 import { environment } from '../../environments/environment';
 import { ApiEvent } from '../models/event';
 import { ApiStatus } from '../models/status';
-import { Platform } from '@ionic/angular';
 
 const { Http, Filesystem } = Plugins;
 
