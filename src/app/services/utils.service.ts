@@ -132,7 +132,7 @@ export class UtilsService {
 
 
     datePublication = new Date(apiEvent.datePublication.toString().split(' ')[0]);
-    //datePublication = new Date('2013-12-06T16:45:11 +0200'.split(' ')[0]);
+    // datePublication = new Date('2013-12-06T16:45:11 +0200'.split(' ')[0]);
     return {
       type,
       label,

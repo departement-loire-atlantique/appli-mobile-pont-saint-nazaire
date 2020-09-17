@@ -11,6 +11,7 @@ import { ApiService } from '../../services/api.service';
 import { UtilsService } from '../../services/utils.service';
 import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
 import { WebcamPage } from '../webcam/webcam.page';
+
 const { App } = Plugins;
 
 @Component({
@@ -109,7 +110,7 @@ export class HomePage implements OnInit, OnDestroy {
     // this.eventsList = this.utils.generateRandomEvent();
 
     this.eventsList = this.utils.getEventsList();
-    console.log('this.eventsList ', this.eventsList)
+    console.log('this.eventsList ', this.eventsList);
     this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
     this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
 

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-
 import '@capacitor-community/http';
-import { Plugins, FilesystemDirectory } from '@capacitor/core';
-const { Http, Filesystem } = Plugins;
-
 import { HttpDownloadFileResult } from '@capacitor-community/http';
+import { FilesystemDirectory, Plugins } from '@capacitor/core';
+
+import { environment } from '../../environments/environment';
 import { ApiEvent } from '../models/event';
 import { ApiStatus } from '../models/status';
+const { Http, Filesystem } = Plugins;
+
 
 @Injectable({
   providedIn: 'root'

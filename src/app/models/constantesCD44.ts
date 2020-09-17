@@ -15,7 +15,9 @@ export const langFr = {
     titleCamera: 'ERREUR WEBCAM',
     bodyCamera: 'Webcam temporairement indiponible. Veuillez réessayer ultérieurement.',
     titleEvent: 'ERREUR EVENEMENT',
-    bodyEvent: 'Evènement temporairement indiponible. Veuillez réessayer ultérieurement.'
+    bodyEvent: 'Evènement temporairement indiponible. Veuillez réessayer ultérieurement.',
+    titleNotif: 'ERREUR NOTIFICATION',
+    bodyNotif: 'Veuillez renouveller votre choix de notification'
   }
 };
 
