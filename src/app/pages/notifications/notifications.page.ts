@@ -14,9 +14,11 @@ export class NotificationsPage implements OnInit {
 
   public isSubscribed: boolean;
 
-  constructor(private storageService: StorageService,
-              private notificationService: NotificationsService,
-              private erroService: ErrorService) { }
+  constructor(
+    private storageService: StorageService,
+    private notificationService: NotificationsService,
+    private erroService: ErrorService
+  ) { }
 
   ngOnInit() {
     this.storageService.get(this.notificationService.STORAGEKEY).then((value: boolean) => {

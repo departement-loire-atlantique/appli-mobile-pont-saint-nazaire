@@ -30,9 +30,15 @@ export class ApiService {
   }
 
   async getEvents(): Promise<ApiEvent[]> {
+    let args = 'pont de saint-nazaire';
+
+    if (this.platform.is('ios')) {
+      args = encodeURI(args);
+    }
+
     const response = await Http.request({
       method: 'GET',
-      url: environment.apiUrl + '/traficevents?filter=Pont%20de%20Saint-Nazaire',
+      url: environment.apiUrl + `/traficevents?filter=${args}`,
       params: {
         mode: 'no-cors'
       }

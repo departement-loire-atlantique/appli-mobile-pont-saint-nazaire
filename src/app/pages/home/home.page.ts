@@ -3,7 +3,6 @@ import { AppState, NetworkStatus, SplashScreen } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
 import { IonRouterOutlet, MenuController, ModalController, Platform } from '@ionic/angular';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
-import { env } from 'process';
 
 import { environment } from '../../../environments/environment';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
@@ -11,7 +10,6 @@ import { Event } from '../../models/event';
 import { ApiService } from '../../services/api.service';
 import { UtilsService } from '../../services/utils.service';
 import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
-import { WebcamPage } from '../webcam/webcam.page';
 const { App, AdMob } = Plugins;
 
 @Component({
@@ -76,6 +74,8 @@ export class HomePage implements OnInit, OnDestroy {
    * Init cupertino pane (bottom panel)
    */
   setupBottomPanel() {
+    const bottomSafeArea: string = getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-bottom');
+
     const panelSettings: CupertinoSettings = {
       initialBreak: 'bottom',
       buttonClose: false,
@@ -87,7 +87,7 @@ export class HomePage implements OnInit, OnDestroy {
       breaks: {
         bottom: {
           enabled: true,
-          height: 40,
+          height: 40 + parseInt(bottomSafeArea, 10),
         },
         top: {
           enabled: true,
@@ -142,17 +142,6 @@ export class HomePage implements OnInit, OnDestroy {
       SplashScreen.hide();
       this.isFirstCall = false;
     }
-  }
-
-  /**
-   * Open the Webcam page in a modal
-   */
-  async openWebcam() {
-    const modal = await this.modalController.create({
-      component: WebcamPage,
-      cssClass: 'webcam-page',
-    });
-    return await modal.present();
   }
 
   /**
