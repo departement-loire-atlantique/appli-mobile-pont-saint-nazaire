@@ -74,6 +74,8 @@ export class HomePage implements OnInit, OnDestroy {
    * Init cupertino pane (bottom panel)
    */
   setupBottomPanel() {
+    const bottomSafeArea: string = getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-bottom');
+
     const panelSettings: CupertinoSettings = {
       initialBreak: 'bottom',
       buttonClose: false,
@@ -85,7 +87,7 @@ export class HomePage implements OnInit, OnDestroy {
       breaks: {
         bottom: {
           enabled: true,
-          height: 40,
+          height: 40 + parseInt(bottomSafeArea, 10),
         },
         top: {
           enabled: true,
