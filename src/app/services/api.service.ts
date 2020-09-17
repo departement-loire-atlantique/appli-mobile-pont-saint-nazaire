@@ -7,8 +7,8 @@ import { Platform } from '@ionic/angular';
 import { environment } from '../../environments/environment';
 import { ApiEvent } from '../models/event';
 import { ApiStatus } from '../models/status';
-
 const { Http, Filesystem } = Plugins;
+
 
 @Injectable({
   providedIn: 'root'

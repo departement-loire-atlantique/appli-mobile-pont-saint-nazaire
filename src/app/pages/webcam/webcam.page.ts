@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 
 import { environment } from '../../../environments/environment';
 import { ApiService } from '../../services/api.service';
+import { ErrorService } from 'src/app/services/error.service';
+import { langFr } from 'src/app/models/constantesCD44';
 
 @Component({
   selector: 'app-webcam',
@@ -15,7 +17,9 @@ export class WebcamPage implements OnInit, OnDestroy {
   public date: Date;
   public updateInterval: any;
 
-  constructor(private modalController: ModalController, private api: ApiService) { }
+  constructor(private modalController: ModalController,
+              private api: ApiService,
+              private errorService: ErrorService) { }
 
   ngOnInit() {
     this.setUpdateInterval();
@@ -35,7 +39,7 @@ export class WebcamPage implements OnInit, OnDestroy {
       if (image) {
         this.image = image;
       }
-    });
+    }).catch( err => this.errorService.openModalError(langFr.error.titleCamera, langFr.error.bodyCamera));
   }
 
   dismiss() {
