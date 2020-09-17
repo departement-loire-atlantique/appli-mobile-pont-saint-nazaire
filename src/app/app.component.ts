@@ -19,6 +19,10 @@ export class AppComponent {
 
   public pages: any = [
     {
+      title: 'Webcam',
+      url: '/webcam'
+    },
+    {
       title: 'Notifications',
       url: '/notifications'
     }

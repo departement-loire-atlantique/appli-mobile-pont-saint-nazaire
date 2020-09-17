@@ -12,8 +12,6 @@
   <app-svg-map [data]="status" [events]="eventsList" (clickEvent)="openEventDetail($event)">
   </app-svg-map>
 
-  <button class="webcam-button" (click)="openWebcam()"><i class="icon icon-webcam"></i></button>
-
   <div class="cupertino-pane">
     <div class="content" *ngIf="status">
 
