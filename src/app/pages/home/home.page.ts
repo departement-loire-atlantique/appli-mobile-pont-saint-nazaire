@@ -3,16 +3,16 @@ import { AppState, NetworkStatus, SplashScreen } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
 import { IonRouterOutlet, MenuController, ModalController, Platform } from '@ionic/angular';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
-import { Subscription } from 'rxjs';
+import { env } from 'process';
 
+import { environment } from '../../../environments/environment';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
 import { Event } from '../../models/event';
 import { ApiService } from '../../services/api.service';
 import { UtilsService } from '../../services/utils.service';
 import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
 import { WebcamPage } from '../webcam/webcam.page';
-
-const { App } = Plugins;
+const { App, AdMob } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -20,16 +20,11 @@ const { App } = Plugins;
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
-  public count = 0;
   public status: any;
   public eventsList: Event[] = [];
   public currentEvents: Event[] = [];
   public upcomingEvents: Event[] = [];
-  public stateSub: Subscription;
 
-  public currentMode = 'm112';
-  public north = 'vert';
-  public south = 'vert';
   public isFirstCall = true;
 
   private bottomPanel: CupertinoPane;
@@ -47,11 +42,40 @@ export class HomePage implements OnInit, OnDestroy {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.handleBackButton();
     });
+
+    this.showInterstitial();
   }
 
   ngOnInit() {
     this.addAppStateChangeSubscription();
+    this.setupBottomPanel();
+  }
 
+  ionViewWillEnter() {
+    this.getData();
+  }
+
+  showInterstitial() {
+    if (this.platform.is('capacitor')) {
+      AdMob.prepareInterstitial({
+        adId: this.platform.is('ios') ? environment.adMobId.ios : environment.adMobId.android,
+        autoshow: true
+      });
+
+      AdMob.addListener('onAdLoaded', () => {
+        AdMob.showInterstitial();
+      });
+
+      AdMob.addListener('onAdFailedToLoad', (info: boolean) => {
+        console.log(info);
+      });
+    }
+  }
+
+  /**
+   * Init cupertino pane (bottom panel)
+   */
+  setupBottomPanel() {
     const panelSettings: CupertinoSettings = {
       initialBreak: 'bottom',
       buttonClose: false,
@@ -76,10 +100,9 @@ export class HomePage implements OnInit, OnDestroy {
     this.bottomPanel.present({ animate: true });
   }
 
-  ionViewWillEnter() {
-    this.getData();
-  }
-
+  /**
+   * Subscribes to AppStateChange & networkStatusChange events to update data
+   */
   addAppStateChangeSubscription() {
     this.subs.push(
       this.utils.appStateChangeDetector().subscribe((state: AppState) => {
@@ -98,6 +121,9 @@ export class HomePage implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Calls the API to retrieve the current status and events
+   */
   async getData() {
     const status = await this.api.getPSNStatus();
     this.status = this.utils.formatStatus(status);
@@ -105,12 +131,10 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.eventsList = await this.api.getEvents();
 
-    // this.eventsList = this.utils.generateRandomEvent();
     // TODO: remove for prod
     // this.eventsList = this.utils.generateRandomEvent();
 
     this.eventsList = this.utils.getEventsList();
-    console.log('this.eventsList ', this.eventsList);
     this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
     this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
 
@@ -120,6 +144,9 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Open the Webcam page in a modal
+   */
   async openWebcam() {
     const modal = await this.modalController.create({
       component: WebcamPage,
@@ -128,6 +155,10 @@ export class HomePage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  /**
+   * Open the event detail modal
+   * @param event an event
+   */
   async openEventDetail(event: Event) {
     const modal = await this.modalController.create({
       component: DetailspertubationComponent,
@@ -138,6 +169,9 @@ export class HomePage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  /**
+   * Close the bottom panel or exit the app on back button press
+   */
   handleBackButton() {
     const currentPanelPosition = this.bottomPanel.currentBreak();
 

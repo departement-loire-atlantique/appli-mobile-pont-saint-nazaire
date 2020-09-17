@@ -36,13 +36,21 @@ export class AppComponent {
     this.initializeApp();
   }
 
+  /**
+   * Setup the app by:
+   *  - Going back to the root url
+   *  - Checking notification permissions
+   *  - getting remote content
+   *  - enabling analytics
+   */
   initializeApp() {
     this.platform.ready().then(async () => {
 
       // Always reset app navigation to root page
       this.router.navigateByUrl('/');
 
-      this.checkNotificationPermission();
+      // Setup notifications
+      this.notificationService.setup();
 
       await this.getRemoteContent();
 
@@ -52,17 +60,9 @@ export class AppComponent {
     });
   }
 
-  async checkNotificationPermission() {
-    // Check if notification agreement has been asked
-    const stored = await this.storageService.get(this.notificationService.STORAGEKEY);
-    if (stored) {
-      this.notificationService.register();
-    }
-    if (stored === null) {
-      this.askForSubscription();
-    }
-  }
-
+  /**
+   * Call Firebase remote-config to get social networks config and content pages
+   */
   async getRemoteContent() {
     // Get remote config from firebase
     this.socialNetworks = await this.remoteConfigService.get('social_networks');
@@ -70,6 +70,10 @@ export class AppComponent {
     this.setPages(configPages);
   }
 
+  /**
+   * Add remote config pages in front of local pages
+   * @param pages pages defined in firebase remote config
+   */
   setPages(pages) {
     const remotePages = pages.map(page => {
       return {
@@ -82,23 +86,5 @@ export class AppComponent {
     });
 
     this.pages = [...remotePages, ...this.pages];
-  }
-
-  async askForSubscription() {
-    const askAlert = await this.alertController.create({
-      header: 'Notifications',
-      message: 'Souhaitez-vous activer les notifications ?',
-      buttons: [{
-        text: 'Non merci',
-        role: 'cancel'
-      }, {
-        text: 'Ok',
-        handler: () => {
-          this.storageService.set(this.notificationService.STORAGEKEY, true);
-          this.notificationService.register();
-        }
-      }]
-    });
-    return await askAlert.present();
   }
 }

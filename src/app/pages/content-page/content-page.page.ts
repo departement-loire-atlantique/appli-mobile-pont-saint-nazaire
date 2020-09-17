@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RemoteConfigService } from '../../services/remote-config.service';
 import { ActivatedRoute } from '@angular/router';
+
+import { RemoteConfigService } from '../../services/remote-config.service';
 
 @Component({
   selector: 'app-content-page',
@@ -14,9 +15,13 @@ export class ContentPagePage implements OnInit {
     content: ''
   };
 
-  constructor(private remoteConfigService: RemoteConfigService, private route: ActivatedRoute) {}
+  constructor(private remoteConfigService: RemoteConfigService, private route: ActivatedRoute) { }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.getPageContent();
+  }
+
+  getPageContent() {
     this.route.queryParams.subscribe(async (params) => {
       if (params.id) {
         if (this.remoteConfigService.isInitialized) {

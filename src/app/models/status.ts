@@ -1,24 +1,24 @@
-export class Status {
-  public code?: string;
-  public label?: string;
-  public colorStatus?: {
+export interface Status {
+  code?: string;
+  label?: string;
+  colorStatus?: {
     north: string
     south: string
   };
-  public from?: string | Date;
-  public next?: Status[];
+  from?: string | Date;
+  next?: Status[];
 }
 
-export class ApiStatus {
+export interface ApiStatus {
   // tslint:disable-next-line: variable-name
-  public code_mode?: string;
+  code_mode?: string;
   // tslint:disable-next-line: variable-name
-  public code_current_mode?: string;
+  code_current_mode?: string;
   // tslint:disable-next-line: variable-name
-  public lib_mode?: string;
+  lib_mode?: string;
   // tslint:disable-next-line: variable-name
-  public lib_current_mode?: string;
+  lib_current_mode?: string;
   // tslint:disable-next-line: variable-name
-  public next_mode?: ApiStatus[];
-  public from?: string;
+  next_mode?: ApiStatus[];
+  from?: string;
 }

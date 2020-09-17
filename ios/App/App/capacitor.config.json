@@ -1,0 +1,15 @@
+{
+  "appId": "com.cg44.pontsaintnazaire",
+  "appName": "Pont de Saint-Nazaire",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "showSpinner": true,
+      "spinnerColor": "#FFFFFF",
+      "androidScaleType": "CENTER_CROP"
+    }
+  },
+  "cordova": {}
+}

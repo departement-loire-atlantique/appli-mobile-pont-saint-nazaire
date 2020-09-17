@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FCM } from '@capacitor-community/fcm';
 import { Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken } from '@capacitor/core';
-import { ModalController, Platform } from '@ionic/angular';
+import { AlertController, ModalController, Platform } from '@ionic/angular';
 
 import { PushModalComponent } from '../components/push-modal/push-modal.component';
 import { CG44Notification } from '../models/notification';
@@ -18,8 +18,52 @@ export class NotificationsService {
 
   public readonly STORAGEKEY = 'is-subscribed';
 
-  constructor(private platform: Platform, private modalController: ModalController, private storageService: StorageService) { }
+  constructor(
+    private platform: Platform,
+    private modalController: ModalController,
+    private storageService: StorageService,
+    private alertController: AlertController
+  ) { }
 
+  /**
+   * Check that we've asked the user for notifications display
+   */
+  async setup() {
+    // Check if notification agreement has been asked
+    const stored = await this.storageService.get(this.STORAGEKEY);
+
+    if (stored) {
+      this.register();
+    }
+    if (stored === null) {
+      this.askForSubscription();
+    }
+  }
+
+  /**
+   * Open an alert that ask the user if they want to subscribe to push notifications
+   */
+  async askForSubscription() {
+    const askAlert = await this.alertController.create({
+      header: 'Notifications',
+      message: 'Souhaitez-vous activer les notifications ?',
+      buttons: [{
+        text: 'Non merci',
+        role: 'cancel'
+      }, {
+        text: 'Ok',
+        handler: () => {
+          this.storageService.set(this.STORAGEKEY, true);
+          this.register();
+        }
+      }]
+    });
+    return await askAlert.present();
+  }
+
+  /**
+   * Subscribes to push notification in the "psn" topic
+   */
   subscribe() {
     console.log('Subscribe to notifications');
     if (!this.platform.is('capacitor')) {
@@ -31,6 +75,9 @@ export class NotificationsService {
     });
   }
 
+  /**
+   * Unsubscribes for the "psn" topic
+   */
   unsubscribe() {
     console.log('Unsubscribe from notifications');
     if (!this.platform.is('capacitor')) {
@@ -42,6 +89,9 @@ export class NotificationsService {
     });
   }
 
+  /**
+   * Subscribes to push notifications
+   */
   register() {
     if (!this.platform.is('capacitor')) {
       return;
@@ -75,6 +125,10 @@ export class NotificationsService {
     });
   }
 
+  /**
+   * Opens the notification detail modal
+   * @param notification notification received from firebase
+   */
   async openNotificationModal(notification: CG44Notification) {
     const current = await this.modalController.getTop();
     if (current) {

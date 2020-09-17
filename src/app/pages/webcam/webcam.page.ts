@@ -22,11 +22,14 @@ export class WebcamPage implements OnInit, OnDestroy {
               private errorService: ErrorService) { }
 
   ngOnInit() {
+    this.setUpdateInterval();
+    this.getWebcam();
+  }
+
+  setUpdateInterval() {
     this.updateInterval = setInterval(() => {
       this.getWebcam();
     }, environment.webcamUpdateInterval);
-
-    this.getWebcam();
   }
 
   getWebcam() {

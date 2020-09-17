@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Plugins, AppState } from '@capacitor/core';
+import { AppState, Plugins } from '@capacitor/core';
 import { Observable } from 'rxjs';
-import { Status, ApiStatus } from '../models/status';
-import { Event, ApiEvent } from '../models/event';
+
 import { DECOUPAGE_ZONE, EVENTS_MOCK } from '../models/constantesCD44';
+import { ApiEvent, Event } from '../models/event';
+import { ApiStatus, Status } from '../models/status';
 
 const { App, Network } = Plugins;
 
@@ -22,7 +23,7 @@ export class UtilsService {
       const apiEvent: ApiEvent = {
         nature: ['Accident', 'VL en panne', 'Vent'][Math.round(Math.random() * 2)],
         statut: ['en cours', 'prévisionnel'][Math.round(Math.random())],
-        //datePublication: new Date(),
+        // datePublication: new Date(),
         ligne1: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
         ligne2: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
         ligne3: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem?',
@@ -47,12 +48,15 @@ export class UtilsService {
         events.push(event);
       }
     });
-    console.log('events ', events)
     return events;
   }
 
   constructor() { }
 
+
+  /**
+   * Hook the appStateChange event
+   */
   appStateChangeDetector() {
     return new Observable(observer => {
       App.addListener('appStateChange', (state: AppState) => {
@@ -61,6 +65,9 @@ export class UtilsService {
     });
   }
 
+  /**
+   * Hook to the networkStatusChange event
+   */
   networkChangeDetector() {
     return new Observable(observer => {
       Network.addListener('networkStatusChange', status => {
@@ -69,6 +76,10 @@ export class UtilsService {
     });
   }
 
+  /**
+   * Formats the api response to a more readable object
+   * @param apiStatus Response from the api /psnstatus
+   */
   formatStatus(apiStatus: ApiStatus): Status {
     return {
       code: apiStatus.code_current_mode.toLowerCase(),
@@ -87,12 +98,20 @@ export class UtilsService {
     };
   }
 
-  getColor(time: any) {
-    time = parseInt(time, 10);
-    return time >= 7 ? (time > 15 ? 'rouge' : 'orange')  : 'vert';
+  /**
+   * Returns a color code for a given travel time
+   * @param time travel time from on end of the bridge to the other
+   */
+  getColor(time: string) {
+    const numberTime = parseInt(time, 10);
+    return numberTime >= 7 ? (numberTime > 15 ? 'rouge' : 'orange') : 'vert';
   }
 
-  getEventsList(apiEvents?: ApiEvent[]): Event[]{
+  /**
+   * Formats the api events to a more readable object
+   * @param apiEvents Events sent by the api
+   */
+  getEventsList(apiEvents?: ApiEvent[]): Event[] {
     // TODO : Remplacer EVENT_MOCK par apiEvents
     return EVENTS_MOCK.map(event => {
       return this.formatEvent(event);
@@ -110,11 +129,11 @@ export class UtilsService {
       icon = 'accident';
       label = 'Accident';
       type = 'accident';
-    } else if (apiEvent.nature === 'Vent'){
+    } else if (apiEvent.nature === 'Vent') {
       icon = 'vent-fort';
       label = 'Vents violents';
       type = 'vent';
-    }else if (apiEvent.nature === 'VL en panne'){
+    } else if (apiEvent.nature === 'VL en panne') {
       icon = 'particulier';
       label = 'Véhicule en panne';
       type = 'panne';
@@ -122,13 +141,13 @@ export class UtilsService {
 
     const long = parseFloat(apiEvent.longitude);
 
-    zone =  long > DECOUPAGE_ZONE.LONGMAX_NORD ? 'nord' :
-            long < DECOUPAGE_ZONE.LONGMAX_NORD && long >= DECOUPAGE_ZONE.LONGMAX_A ? 'a' :
-            long < DECOUPAGE_ZONE.LONGMAX_A && long >= DECOUPAGE_ZONE.LONGMAX_B ? 'b' :
-            long < DECOUPAGE_ZONE.LONGMAX_B && long >= DECOUPAGE_ZONE.LONGMAX_C ? 'c' :
+    zone = long > DECOUPAGE_ZONE.LONGMAX_NORD ? 'nord' :
+      long < DECOUPAGE_ZONE.LONGMAX_NORD && long >= DECOUPAGE_ZONE.LONGMAX_A ? 'a' :
+        long < DECOUPAGE_ZONE.LONGMAX_A && long >= DECOUPAGE_ZONE.LONGMAX_B ? 'b' :
+          long < DECOUPAGE_ZONE.LONGMAX_B && long >= DECOUPAGE_ZONE.LONGMAX_C ? 'c' :
             long < DECOUPAGE_ZONE.LONGMAX_C && long >= DECOUPAGE_ZONE.LONGMAX_D ? 'd' :
-            long < DECOUPAGE_ZONE.LONGMAX_D && long >= DECOUPAGE_ZONE.LONGMAX_E ? 'e' :
-            long < DECOUPAGE_ZONE.LONGMAX_E ? 'sud' : 'nord';
+              long < DECOUPAGE_ZONE.LONGMAX_D && long >= DECOUPAGE_ZONE.LONGMAX_E ? 'e' :
+                long < DECOUPAGE_ZONE.LONGMAX_E ? 'sud' : 'nord';
 
 
     datePublication = new Date(apiEvent.datePublication.toString().split(' ')[0]);

@@ -21,13 +21,18 @@ export class RemoteConfigService {
     return await FirebaseRemoteConfig.initializeFirebase(environment.firebaseConfig);
   }
 
+  /**
+   * Check if the firebase plugin is up and ready
+   */
   async checkInitialization() {
     if (!this.isInitialized) {
       if (!this.platform.is('capacitor')) {
         await this.setWebConfig();
       }
 
-      FirebaseRemoteConfig.initialize();
+      FirebaseRemoteConfig.initialize({
+        minimumFetchIntervalInSeconds: 3600
+      });
       await FirebaseRemoteConfig.fetchAndActivate();
 
       this.isInitialized = true;
