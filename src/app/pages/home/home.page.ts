@@ -24,6 +24,8 @@ export class HomePage implements OnInit, OnDestroy {
   public upcomingEvents: Event[] = [];
 
   public isFirstCall = true;
+  public isFetching = true;
+  public hasError = false;
 
   private bottomPanel: CupertinoPane;
 
@@ -75,8 +77,6 @@ export class HomePage implements OnInit, OnDestroy {
   setupBottomPanel() {
     const bottomSafeArea: string = getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-bottom');
 
-    console.log(bottomSafeArea);
-
     const panelSettings: CupertinoSettings = {
       initialBreak: 'bottom',
       buttonClose: false,
@@ -126,24 +126,33 @@ export class HomePage implements OnInit, OnDestroy {
    * Calls the API to retrieve the current status and events
    */
   async getData() {
-    const status = await this.api.getPSNStatus();
-    this.status = this.utils.formatStatus(status);
-    this.status.from = new Date();
+    this.isFetching = true;
+    this.hasError = false;
 
-    this.eventsList = await this.api.getEvents();
+    try {
+      const status = await this.api.getPSNStatus();
+      this.status = this.utils.formatStatus(status);
+      this.status.from = new Date();
+    } catch (error) {
+      this.hasError = true;
+    }
 
-    // TODO: remove for prod
-    // this.eventsList = this.utils.generateRandomEvent();
-
-    this.eventsList = this.utils.getEventsList();
-    this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
-    this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
+    try {
+      const events = await this.api.getEvents();
+      this.eventsList = this.utils.getEventsList(events);
+      this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
+      this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
+    } catch (error) {
+      this.hasError = true;
+    }
 
     if (this.isFirstCall) {
       SplashScreen.hide();
       this.isFirstCall = false;
       this.setupBottomPanel();
     }
+
+    this.isFetching = false;
   }
 
   /**
