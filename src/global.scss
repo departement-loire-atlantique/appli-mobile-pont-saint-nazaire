@@ -27,6 +27,12 @@ ion-header {
   padding-top: env(safe-area-inset-top);
 }
 
+.modal-wrapper {
+  ion-header {
+    padding-top: 0;
+  }
+}
+
 .event-modal,
 .notification-modal {
   --height: auto;
@@ -72,7 +78,7 @@ ion-header {
 }
 
 .pane {
-  padding-top: 40px !important;
+  padding-top: calc(40px + env(safe-area-inset-bottom)) !important;
 
   .draggable {
     display: flex;

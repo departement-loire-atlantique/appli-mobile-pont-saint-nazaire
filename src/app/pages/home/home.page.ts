@@ -46,7 +46,6 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.addAppStateChangeSubscription();
-    this.setupBottomPanel();
   }
 
   ionViewWillEnter() {
@@ -75,6 +74,8 @@ export class HomePage implements OnInit, OnDestroy {
    */
   setupBottomPanel() {
     const bottomSafeArea: string = getComputedStyle(document.documentElement).getPropertyValue('--ion-safe-area-bottom');
+
+    console.log(bottomSafeArea);
 
     const panelSettings: CupertinoSettings = {
       initialBreak: 'bottom',
@@ -141,6 +142,7 @@ export class HomePage implements OnInit, OnDestroy {
     if (this.isFirstCall) {
       SplashScreen.hide();
       this.isFirstCall = false;
+      this.setupBottomPanel();
     }
   }
 
