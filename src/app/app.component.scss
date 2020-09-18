@@ -1,11 +1,12 @@
 :host {
   ion-menu {
     --width: 100vw;
-  
+
     ion-content {
+      --overflow: hidden;
       width: 100%;
     }
-  
+
     #menu {
       box-sizing: border-box;
       height: 100%;
