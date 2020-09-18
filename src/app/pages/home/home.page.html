@@ -15,38 +15,40 @@
   <div class="cupertino-pane">
     <div class="content" *ngIf="status">
 
-      <!-- Directions -->
-      <div class="ds44--l-padding-lr ds44--l-padding-b">
-        <h2 class="h2-like">Sens de circulation</h2>
+      <app-request-feedback [fetching]="isFetching" [error]="hasError" (clickRetry)="getData()">
+        <!-- Directions -->
+        <div class="ds44--l-padding-lr ds44--l-padding-b">
+          <h2 class="h2-like">Sens de circulation</h2>
 
-        <section class="ds44-app-tuile">
-          <h3 class="h3-like">En cours</h3>
-          <app-traffic-direction [mode]="status"></app-traffic-direction>
-        </section>
+          <section class="ds44-app-tuile">
+            <h3 class="h3-like">En cours</h3>
+            <app-traffic-direction [mode]="status"></app-traffic-direction>
+          </section>
 
-        <section class="ds44-app-tuile">
-          <h3 class="h3-like">À venir</h3>
-          <app-traffic-direction *ngFor="let mode of status.next" [mode]="mode"></app-traffic-direction>
-        </section>
-      </div>
+          <section class="ds44-app-tuile">
+            <h3 class="h3-like">À venir</h3>
+            <app-traffic-direction *ngFor="let mode of status.next" [mode]="mode"></app-traffic-direction>
+          </section>
+        </div>
 
-      <!-- Events -->
-      <div class="ds44--l-padding ds44-lightBG bg-color-white">
-        <h2 class="h2-like">Événements</h2>
-        <p *ngIf="!eventsList.length">
-          Il n’y a actuellement aucune perturbation.
-        </p>
-        <section class="ds44-app-tuile" *ngIf="currentEvents.length">
-          <h3 class="h3-like">En cours</h3>
-          <app-pertubations *ngFor="let evenement of currentEvents" [pertubation]="evenement"
-            (click)="openEventDetail(evenement)"></app-pertubations>
-        </section>
-        <section class="ds44-app-tuile" *ngIf="upcomingEvents.length">
-          <h3 class="h3-like">À venir</h3>
-          <app-pertubations *ngFor="let evenement of upcomingEvents" [pertubation]="evenement"
-            (click)="openEventDetail(evenement)"></app-pertubations>
-        </section>
-      </div>
+        <!-- Events -->
+        <div class="ds44--l-padding ds44-lightBG bg-color-white">
+          <h2 class="h2-like">Événements</h2>
+          <p *ngIf="!eventsList.length">
+            Il n’y a actuellement aucune perturbation.
+          </p>
+          <section class="ds44-app-tuile" *ngIf="currentEvents.length">
+            <h3 class="h3-like">En cours</h3>
+            <app-pertubations *ngFor="let evenement of currentEvents" [pertubation]="evenement"
+              (click)="openEventDetail(evenement)"></app-pertubations>
+          </section>
+          <section class="ds44-app-tuile" *ngIf="upcomingEvents.length">
+            <h3 class="h3-like">À venir</h3>
+            <app-pertubations *ngFor="let evenement of upcomingEvents" [pertubation]="evenement"
+              (click)="openEventDetail(evenement)"></app-pertubations>
+          </section>
+        </div>
+      </app-request-feedback>
 
     </div>
   </div>
