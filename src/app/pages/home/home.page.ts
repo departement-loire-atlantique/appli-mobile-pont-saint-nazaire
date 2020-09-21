@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { AppState, NetworkStatus, SplashScreen } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
-import { IonRouterOutlet, MenuController, ModalController, Platform } from '@ionic/angular';
+import { IonRouterOutlet, LoadingController, MenuController, ModalController, Platform } from '@ionic/angular';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
 
 import { environment } from '../../../environments/environment';
@@ -38,7 +38,9 @@ export class HomePage implements OnInit, OnDestroy {
     private routerOutlet: IonRouterOutlet,
     private modalController: ModalController,
     private menuController: MenuController,
-    private filterPipe: FilterByPropertyPipe) {
+    private filterPipe: FilterByPropertyPipe,
+    private loadingController: LoadingController,
+    private zone: NgZone) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.handleBackButton();
     });
@@ -129,6 +131,15 @@ export class HomePage implements OnInit, OnDestroy {
     this.isFetching = true;
     this.hasError = false;
 
+    let loader: HTMLIonLoadingElement;
+
+    const waitTimeout = setTimeout(() => {
+      this.zone.run(async () => {
+        loader = await this.loadingController.create({ message: 'Chargement ...' });
+        await loader.present();
+      });
+    }, 250);
+
     try {
       const status = await this.api.getPSNStatus();
       this.status = this.utils.formatStatus(status);
@@ -153,6 +164,12 @@ export class HomePage implements OnInit, OnDestroy {
     }
 
     this.isFetching = false;
+
+    clearTimeout(waitTimeout);
+
+    if (loader) {
+      loader.dismiss();
+    }
   }
 
   /**

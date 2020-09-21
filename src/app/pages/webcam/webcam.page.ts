@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { environment } from '../../../environments/environment';
+import { langFr } from '../../models/constantesCD44';
 import { ApiService } from '../../services/api.service';
-import { ErrorService } from 'src/app/services/error.service';
-import { langFr } from 'src/app/models/constantesCD44';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-webcam',

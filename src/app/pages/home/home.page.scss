@@ -40,4 +40,33 @@
   .bg-color-white {
     background-color: whitesmoke;
   }
+
+  .loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+
+    background: var(--ion-color-primary);
+    color: #000;
+
+    box-shadow: 0 2px 8px rgba($color: #000000, $alpha: 0.06);
+    z-index: 100;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    transform: translateY(-120%);
+    transition: transform 0.3s ease-in-out;
+
+    &.visible {
+      transform: translateY(0);
+    }
+
+    span {
+      margin-left: 1rem;
+    }
+  }
 }
