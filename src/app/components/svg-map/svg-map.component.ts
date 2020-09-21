@@ -47,24 +47,25 @@ export class SvgMapComponent implements OnInit, OnChanges {
           this.handleEventClick(event);
         };
 
-        zone.style.display = 'block';
+        // Avoid multiple bindings by checking if the zone isn't already visible
+        if (zone.style.display !== 'block') {
+          zone.style.display = 'block';
 
-        if (event.type === 'vent') {
-          zone._clickHandler = clickHandler;
-          zone.addEventListener('click', zone._clickHandler);
-        } else {
-          const icon = zone.querySelector('[data-name=' + event.type + ']');
+          if (event.type === 'vent') {
+            zone.onclick = clickHandler;
+          } else {
+            const icon = zone.querySelector('[data-name=' + event.type + ']');
 
-          if (icon) {
-            icon.style.display = 'block';
-            icon._clickHandler = clickHandler;
-            icon.addEventListener('click', icon._clickHandler);
+            if (icon) {
+              icon.style.display = 'block';
+              icon.onclick = clickHandler;
 
-            this.displayedElements.push(icon);
+              this.displayedElements.push(icon);
+            }
           }
-        }
 
-        this.displayedElements.push(zone);
+          this.displayedElements.push(zone);
+        }
       });
     }
 
@@ -78,8 +79,7 @@ export class SvgMapComponent implements OnInit, OnChanges {
   hidePreviousevents() {
     this.displayedElements.forEach((element: any) => {
       element.style.display = 'none';
-      element.removeEventListener('click', element._clickHandler);
-      element._clickHandler = undefined;
+      element.onclick = undefined;
     });
 
     this.displayedElements = [];

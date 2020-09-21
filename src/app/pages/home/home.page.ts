@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppState, NetworkStatus, SplashScreen } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
 import { IonRouterOutlet, LoadingController, MenuController, ModalController, Platform } from '@ionic/angular';
@@ -39,8 +39,8 @@ export class HomePage implements OnInit, OnDestroy {
     private modalController: ModalController,
     private menuController: MenuController,
     private filterPipe: FilterByPropertyPipe,
-    private loadingController: LoadingController,
-    private zone: NgZone) {
+    private loadingController: LoadingController
+  ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.handleBackButton();
     });
@@ -131,14 +131,8 @@ export class HomePage implements OnInit, OnDestroy {
     this.isFetching = true;
     this.hasError = false;
 
-    let loader: HTMLIonLoadingElement;
-
-    const waitTimeout = setTimeout(() => {
-      this.zone.run(async () => {
-        loader = await this.loadingController.create({ message: 'Chargement ...' });
-        await loader.present();
-      });
-    }, 250);
+    const loader = await this.loadingController.create({ message: 'Chargement ...' });
+    await loader.present();
 
     try {
       const status = await this.api.getPSNStatus();
@@ -165,11 +159,7 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.isFetching = false;
 
-    clearTimeout(waitTimeout);
-
-    if (loader) {
-      loader.dismiss();
-    }
+    loader.dismiss();
   }
 
   /**
