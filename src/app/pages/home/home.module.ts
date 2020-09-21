@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DetailspertubationComponent } from 'src/app/components/detailspertubation/detailspertubation.component';
+import { FermetureComponent } from 'src/app/components/fermeture/fermeture.component';
 import { PertubationsComponent } from 'src/app/components/pertubations/pertubations.component';
 import { FilterByPropertyPipe } from 'src/app/shared/filter-by-property.pipe';
 
@@ -27,7 +28,8 @@ import { HomePage } from './home.page';
     TrafficDirectionComponent,
     PertubationsComponent,
     FilterByPropertyPipe,
-    DetailspertubationComponent
+    DetailspertubationComponent,
+    FermetureComponent
   ],
   exports: [
     FilterByPropertyPipe

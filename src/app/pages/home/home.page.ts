@@ -3,6 +3,7 @@ import { AppState, NetworkStatus, SplashScreen } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
 import { IonRouterOutlet, MenuController, ModalController, Platform } from '@ionic/angular';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
+import { PSN_STATUS } from 'src/app/models/constantesCD44';
 
 import { environment } from '../../../environments/environment';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
@@ -125,16 +126,15 @@ export class HomePage implements OnInit, OnDestroy {
    * Calls the API to retrieve the current status and events
    */
   async getData() {
-    const status = await this.api.getPSNStatus();
-    this.status = this.utils.formatStatus(status);
+    // const status = await this.api.getPSNStatus();
+    // this.status = this.utils.formatStatus(status);
+    // Mock to show "MODE_PARTICULIER" and "Fermeture Component"
+    this.status = this.utils.formatStatus(PSN_STATUS);
     this.status.from = new Date();
 
-    this.eventsList = await this.api.getEvents();
+    const apiEvents = await this.api.getEvents();
+    this.eventsList = this.utils.getEventsList(apiEvents);
 
-    // TODO: remove for prod
-    // this.eventsList = this.utils.generateRandomEvent();
-
-    this.eventsList = this.utils.getEventsList();
     this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
     this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
 

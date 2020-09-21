@@ -7,6 +7,7 @@ export interface Status {
   };
   from?: string | Date;
   next?: Status[];
+  labelFermeture?: string;
 }
 
 export interface ApiStatus {
@@ -21,4 +22,12 @@ export interface ApiStatus {
   // tslint:disable-next-line: variable-name
   next_mode?: ApiStatus[];
   from?: string;
+  close_from?: string;
+  closed_to?: string;
+}
+
+export interface UtilDate {
+  dateFormat: string;
+  timeFormat: string;
+  dateToCompare: number;
 }

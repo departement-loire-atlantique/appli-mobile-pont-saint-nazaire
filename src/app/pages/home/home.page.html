@@ -41,11 +41,14 @@
           <app-pertubations *ngFor="let evenement of currentEvents" [pertubation]="evenement"
             (click)="openEventDetail(evenement)"></app-pertubations>
         </section>
-        <section class="ds44-app-tuile" *ngIf="upcomingEvents.length">
-          <h3 class="h3-like">À venir</h3>
-          <app-pertubations *ngFor="let evenement of upcomingEvents" [pertubation]="evenement"
-            (click)="openEventDetail(evenement)"></app-pertubations>
-        </section>
+          <h3 class="h3-like" *ngIf="status.labelFermeture || upcomingEvents.length">À venir</h3>
+          <section class="ds44-app-tuile" *ngIf="status.labelFermeture">
+            <app-fermeture [status]="status"></app-fermeture>
+          </section>
+          <section class="ds44-app-tuile" *ngIf="upcomingEvents.length">           
+            <app-pertubations *ngFor="let evenement of upcomingEvents" [pertubation]="evenement"
+              (click)="openEventDetail(evenement)"></app-pertubations>
+          </section>
       </div>
 
     </div>

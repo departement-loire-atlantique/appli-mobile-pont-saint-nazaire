@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { DECOUPAGE_ZONE, EVENTS_MOCK } from '../models/constantesCD44';
 import { ApiEvent, Event } from '../models/event';
-import { ApiStatus, Status } from '../models/status';
+import { ApiStatus, Status, UtilDate } from '../models/status';
 
 const { App, Network } = Plugins;
 
@@ -82,8 +82,10 @@ export class UtilsService {
    */
   formatStatus(apiStatus: ApiStatus): Status {
     return {
-      code: apiStatus.code_current_mode.toLowerCase(),
+      code: (apiStatus.code_current_mode === 'MODE_PARTICULIER') ? 'particulier' : apiStatus.code_current_mode.toLowerCase(),
       label: apiStatus.lib_current_mode,
+      labelFermeture: (apiStatus?.close_from && apiStatus.closed_to) ? this.getLabelFermeture(apiStatus.close_from, apiStatus.closed_to)
+                                                                       : '',
       colorStatus: {
         north: this.getColor(apiStatus['TIME-CERTE-STBREVIN']),
         south: this.getColor(apiStatus['TIME-STBREVIN-CERTE'])
@@ -105,6 +107,49 @@ export class UtilsService {
   getColor(time: string) {
     const numberTime = parseInt(time, 10);
     return numberTime >= 7 ? (numberTime > 15 ? 'rouge' : 'orange') : 'vert';
+  }
+
+  /**
+   * Returns Date Object
+   * @param date Date string to transform to Date
+   * @param separator Separator to catch date
+   */
+  getDateOject(date: any, separator: string): Date{
+    return new Date(date.toString().split(separator)[0]);
+  }
+
+  /**
+   * Returns UtilDate format for closing
+   * @param someDate format date for closing
+   */
+  getFermetureDate(someDate: string): UtilDate{
+    const date = this.getDateOject(someDate, ' ');
+    const dateCompare = this.getDateOject(someDate, 'T');
+    return {
+       dateFormat: date.toLocaleDateString(),
+       timeFormat: date.toLocaleTimeString('fr-FR', {hour: 'numeric', minute: 'numeric'}),
+       dateToCompare: dateCompare.getTime()
+     };
+  }
+
+  /**
+   * Return label of closing
+   * @param closeFrom Closing start date
+   * @param closeTo Closing end date
+   */
+  getLabelFermeture(closeFrom: string, closeTo: string): string{
+    let closeFromFormat: UtilDate;
+    let closeToFormat: UtilDate;
+
+    closeFromFormat = this.getFermetureDate(closeFrom);
+    closeToFormat = this.getFermetureDate(closeTo);
+
+    if (closeFromFormat.dateToCompare < closeToFormat.dateToCompare) {
+       return `Du ${closeFromFormat.dateFormat} - ${closeFromFormat.timeFormat} au ${closeToFormat.dateFormat} - ${closeToFormat.timeFormat}`;
+    }
+    if (closeFromFormat.dateToCompare === closeToFormat.dateToCompare) {
+      return `Le ${closeFromFormat.dateFormat}, de ${closeFromFormat.timeFormat} à ${closeToFormat.timeFormat}`;
+    }
   }
 
   /**
@@ -137,6 +182,10 @@ export class UtilsService {
       icon = 'particulier';
       label = 'Véhicule en panne';
       type = 'panne';
+    } else if (apiEvent.nature === 'Deviation') {
+        icon = 'particulier';
+        label = 'Déviation';
+        type = 'deviation';
     }
 
     const long = parseFloat(apiEvent.longitude);
