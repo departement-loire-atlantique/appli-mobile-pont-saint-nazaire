@@ -131,8 +131,16 @@ export class HomePage implements OnInit, OnDestroy {
     this.isFetching = true;
     this.hasError = false;
 
-    const loader = await this.loadingController.create({ message: 'Chargement ...' });
-    await loader.present();
+    let loader: HTMLIonLoadingElement;
+
+    if (this.bottomPanel) {
+      const currentPanelPosition = this.bottomPanel.currentBreak();
+
+      if (currentPanelPosition === 'bottom') {
+        loader = await this.loadingController.create({ message: 'Chargement ...' });
+        await loader.present();
+      }
+    }
 
     try {
       const status = await this.api.getPSNStatus();
@@ -159,7 +167,9 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.isFetching = false;
 
-    loader.dismiss();
+    if (loader) {
+      loader.dismiss();
+    }
   }
 
   /**
