@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { AppState, Plugins } from '@capacitor/core';
 import { Observable } from 'rxjs';
 
@@ -51,7 +51,7 @@ export class UtilsService {
     return events;
   }
 
-  constructor() { }
+  constructor(private zone: NgZone) { }
 
 
   /**
@@ -60,7 +60,9 @@ export class UtilsService {
   appStateChangeDetector() {
     return new Observable(observer => {
       App.addListener('appStateChange', (state: AppState) => {
-        observer.next(state);
+        this.zone.run(() => {
+          observer.next(state);
+        });
       });
     });
   }
@@ -71,7 +73,9 @@ export class UtilsService {
   networkChangeDetector() {
     return new Observable(observer => {
       Network.addListener('networkStatusChange', status => {
-        observer.next(status);
+        this.zone.run(() => {
+          observer.next(status);
+        });
       });
     });
   }

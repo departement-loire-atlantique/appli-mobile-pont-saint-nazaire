@@ -7,16 +7,25 @@
   </div>
 </ion-header>
 
-<ion-content class="padding">
+<ion-content>
 
-  <div class="ds44-flex-container ds44-flex-valign-center">
-    <div class="ds44-flex-container ds44-flex-valign-center ds44-mr2">
-      <i class="icon icon-date ds44-mr1"></i> {{ date | date:'shortDate' }}
-    </div>
-    <div class="ds44-flex-container ds44-flex-valign-center">
-      <i class="icon icon-time ds44-mr1"></i> {{ date | date:'HH:mm' }}
-    </div>
-  </div>
+  <ion-refresher slot="fixed" (ionRefresh)="getWebcam($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-  <img [src]="image">
+  <app-request-feedback [fetching]="isFetching" [error]="hasError" (clickRetry)="getWebcam()">
+    <div class="page-content">
+      <div *ngIf="date" class="ds44-flex-container ds44-flex-valign-center">
+        <div class="ds44-flex-container ds44-flex-valign-center ds44-mr2">
+          <i class="icon icon-date ds44-mr1"></i> {{ date | date:'shortDate' }}
+        </div>
+        <div class="ds44-flex-container ds44-flex-valign-center">
+          <i class="icon icon-time ds44-mr1"></i> {{ date | date:'HH:mm' }}
+        </div>
+      </div>
+
+      <img class="ds44-mt1" [src]="image">
+    </div>
+  </app-request-feedback>
+
 </ion-content>

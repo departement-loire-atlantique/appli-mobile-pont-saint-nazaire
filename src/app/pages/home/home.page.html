@@ -9,12 +9,17 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-refresher slot="fixed" (ionRefresh)="getData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <app-svg-map [data]="status" [events]="eventsList" (clickEvent)="openEventDetail($event)">
   </app-svg-map>
 
   <div class="cupertino-pane">
     <div class="content" *ngIf="status">
 
+      <app-request-feedback [fetching]="isFetching" [error]="hasError" (clickRetry)="getData()">
       <!-- Directions -->
       <div class="ds44--l-padding-lr ds44--l-padding-b">
         <h2 class="h2-like">Sens de circulation</h2>
@@ -50,6 +55,7 @@
               (click)="openEventDetail(evenement)"></app-pertubations>
           </section>
       </div>
+    </app-request-feedback>
 
     </div>
   </div>

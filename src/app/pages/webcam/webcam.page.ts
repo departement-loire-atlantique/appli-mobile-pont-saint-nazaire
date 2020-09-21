@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { environment } from '../../../environments/environment';
+import { langFr } from '../../models/constantesCD44';
 import { ApiService } from '../../services/api.service';
-import { ErrorService } from 'src/app/services/error.service';
-import { langFr } from 'src/app/models/constantesCD44';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-webcam',
@@ -17,9 +17,14 @@ export class WebcamPage implements OnInit, OnDestroy {
   public date: Date;
   public updateInterval: any;
 
-  constructor(private modalController: ModalController,
-              private api: ApiService,
-              private errorService: ErrorService) { }
+  public isFetching = true;
+  public hasError = false;
+
+  constructor(
+    private modalController: ModalController,
+    private api: ApiService,
+    private errorService: ErrorService
+  ) { }
 
   ngOnInit() {
     this.setUpdateInterval();
@@ -32,14 +37,26 @@ export class WebcamPage implements OnInit, OnDestroy {
     }, environment.webcamUpdateInterval);
   }
 
-  getWebcam() {
-    this.api.getLatestWebcam().then(image => {
+  async getWebcam(event?) {
+    this.hasError = false;
+
+    try {
+      const image = await this.api.getLatestWebcam();
       this.date = new Date();
 
       if (image) {
         this.image = image;
       }
-    }).catch( err => this.errorService.openModalError(langFr.error.titleCamera, langFr.error.bodyCamera));
+    } catch (error) {
+      this.hasError = true;
+      this.errorService.openModalError(langFr.error.titleCamera, langFr.error.bodyCamera);
+    }
+
+    this.isFetching = false;
+
+    if (event) {
+      event.target.complete();
+    }
   }
 
   dismiss() {

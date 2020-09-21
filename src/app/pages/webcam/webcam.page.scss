@@ -1,13 +1,12 @@
 :host {
+  background: #fff;
+
   ion-header::after {
     content: none;
   }
 
-  ion-content {
-    --padding-top: 2rem;
-    --padding-bottom: 2rem;
-    --padding-start: 2rem;
-    --padding-end: 2rem;
+  .page-content {
+    padding: 2rem;
   }
 
   img {

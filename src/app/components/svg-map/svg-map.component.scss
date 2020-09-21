@@ -1,20 +1,17 @@
 :host {
-    #main-container {
-        width: 100vw;
-        height: 100vh;
+  #main-container {
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top);
+  }
+  #map-container {
+    position: relative;
+
+    svg {
+      position: absolute;
+      max-width: none;
+      height: calc(100% - (20px + env(safe-area-inset-bottom)));
     }
-    #map-container {
-        position: relative;
-        
-        svg {
-            position: absolute;
-            max-width: none;
-            height: calc(100% - 20px);
-        }
-    }
-    .cupertino-pane {
-        .pane {
-            backface-visibility: hidden;
-        }
-    }
+  }
 }

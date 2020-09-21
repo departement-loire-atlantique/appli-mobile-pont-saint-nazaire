@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppState, NetworkStatus, SplashScreen } from '@capacitor/core';
 import { Plugins } from '@capacitor/core';
-import { IonRouterOutlet, MenuController, ModalController, Platform } from '@ionic/angular';
+import { IonRouterOutlet, LoadingController, MenuController, ModalController, Platform } from '@ionic/angular';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
-import { PSN_STATUS } from 'src/app/models/constantesCD44';
+import { EVENTS_MOCK, PSN_STATUS } from 'src/app/models/constantesCD44';
 
 import { environment } from '../../../environments/environment';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
@@ -25,6 +25,8 @@ export class HomePage implements OnInit, OnDestroy {
   public upcomingEvents: Event[] = [];
 
   public isFirstCall = true;
+  public isFetching = true;
+  public hasError = false;
 
   private bottomPanel: CupertinoPane;
 
@@ -37,7 +39,9 @@ export class HomePage implements OnInit, OnDestroy {
     private routerOutlet: IonRouterOutlet,
     private modalController: ModalController,
     private menuController: MenuController,
-    private filterPipe: FilterByPropertyPipe) {
+    private filterPipe: FilterByPropertyPipe,
+    private loadingController: LoadingController
+  ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.handleBackButton();
     });
@@ -47,7 +51,6 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.addAppStateChangeSubscription();
-    this.setupBottomPanel();
   }
 
   ionViewWillEnter() {
@@ -125,22 +128,57 @@ export class HomePage implements OnInit, OnDestroy {
   /**
    * Calls the API to retrieve the current status and events
    */
-  async getData() {
-    // const status = await this.api.getPSNStatus();
-    // this.status = this.utils.formatStatus(status);
-    // Mock to show "MODE_PARTICULIER" and "Fermeture Component"
-    this.status = this.utils.formatStatus(PSN_STATUS);
-    this.status.from = new Date();
+  async getData(event?: any) {
+    this.isFetching = true;
+    this.hasError = false;
 
-    const apiEvents = await this.api.getEvents();
-    this.eventsList = this.utils.getEventsList(apiEvents);
+    let loader: HTMLIonLoadingElement;
 
-    this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
-    this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
+    if (this.bottomPanel && !event) {
+      const currentPanelPosition = this.bottomPanel.currentBreak();
+
+      if (currentPanelPosition === 'bottom') {
+        loader = await this.loadingController.create({ message: 'Chargement ...' });
+        await loader.present();
+      }
+    }
+
+    try {
+      const status = await this.api.getPSNStatus();
+      this.status = this.utils.formatStatus(status);
+      // Mock to show "MODE_PARTICULIER" and "Fermeture Component"
+      this.status = this.utils.formatStatus(PSN_STATUS);
+      this.status.from = new Date();
+
+    } catch (error) {
+      this.hasError = true;
+    }
+
+    try {
+      const events = await this.api.getEvents();
+      this.eventsList = this.utils.getEventsList(events);
+      // Mock to show "MODE_PARTICULIER" and "Fermeture Component"
+      this.eventsList = this.utils.getEventsList(EVENTS_MOCK);
+      this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
+      this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
+    } catch (error) {
+      this.hasError = true;
+    }
 
     if (this.isFirstCall) {
       SplashScreen.hide();
       this.isFirstCall = false;
+      this.setupBottomPanel();
+    }
+
+    this.isFetching = false;
+
+    if (loader) {
+      loader.dismiss();
+    }
+
+    if (event) {
+      event.target.complete();
     }
   }
 
@@ -154,7 +192,6 @@ export class HomePage implements OnInit, OnDestroy {
       componentProps: { event },
       cssClass: 'event-modal'
     });
-    modal.onDidDismiss().then(() => this.getData());
     return await modal.present();
   }
 

@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { BackButtonComponent } from '../components/back-button/back-button.component';
 import { PushModalComponent } from '../components/push-modal/push-modal.component';
+import { RequestFeedbackComponent } from '../components/request-feedback/request-feedback.component';
 
 @NgModule({
   imports: [
@@ -12,11 +13,13 @@ import { PushModalComponent } from '../components/push-modal/push-modal.componen
   ],
   declarations: [
     BackButtonComponent,
-    PushModalComponent
+    PushModalComponent,
+    RequestFeedbackComponent
   ],
   exports: [
     BackButtonComponent,
-    PushModalComponent
+    PushModalComponent,
+    RequestFeedbackComponent
   ]
 })
 export class SharedComponentsModule { }

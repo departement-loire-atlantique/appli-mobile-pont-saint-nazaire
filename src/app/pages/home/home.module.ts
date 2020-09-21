@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { DetailspertubationComponent } from 'src/app/components/detailspertubation/detailspertubation.component';
 import { FermetureComponent } from 'src/app/components/fermeture/fermeture.component';
 import { PertubationsComponent } from 'src/app/components/pertubations/pertubations.component';
+import { RequestFeedbackComponent } from 'src/app/components/request-feedback/request-feedback.component';
 import { FilterByPropertyPipe } from 'src/app/shared/filter-by-property.pipe';
 
 import { SvgMapComponent } from '../../components/svg-map/svg-map.component';
@@ -29,7 +30,8 @@ import { HomePage } from './home.page';
     PertubationsComponent,
     FilterByPropertyPipe,
     DetailspertubationComponent,
-    FermetureComponent
+    FermetureComponent,
+    RequestFeedbackComponent
   ],
   exports: [
     FilterByPropertyPipe
