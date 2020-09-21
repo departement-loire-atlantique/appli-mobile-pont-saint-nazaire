@@ -61,7 +61,7 @@ export class ApiService {
 
   async getLatestWebcam(): Promise<string> {
 
-    if (this.platform.is('ios')) {
+    if (this.platform.is('ios') && this.platform.is('capacitor')) {
       await Filesystem.deleteFile({
         path: 'webcam.jpg',
         directory: FilesystemDirectory.Cache

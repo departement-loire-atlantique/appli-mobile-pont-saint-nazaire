@@ -127,13 +127,13 @@ export class HomePage implements OnInit, OnDestroy {
   /**
    * Calls the API to retrieve the current status and events
    */
-  async getData() {
+  async getData(event?: any) {
     this.isFetching = true;
     this.hasError = false;
 
     let loader: HTMLIonLoadingElement;
 
-    if (this.bottomPanel) {
+    if (this.bottomPanel && !event) {
       const currentPanelPosition = this.bottomPanel.currentBreak();
 
       if (currentPanelPosition === 'bottom') {
@@ -170,6 +170,10 @@ export class HomePage implements OnInit, OnDestroy {
     if (loader) {
       loader.dismiss();
     }
+
+    if (event) {
+      event.target.complete();
+    }
   }
 
   /**
@@ -182,7 +186,6 @@ export class HomePage implements OnInit, OnDestroy {
       componentProps: { event },
       cssClass: 'event-modal'
     });
-    modal.onDidDismiss().then(() => this.getData());
     return await modal.present();
   }
 

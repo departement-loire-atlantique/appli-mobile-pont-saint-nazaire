@@ -9,6 +9,10 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="getWebcam($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <app-request-feedback [fetching]="isFetching" [error]="hasError" (clickRetry)="getWebcam()">
     <div class="page-content">
       <div *ngIf="date" class="ds44-flex-container ds44-flex-valign-center">

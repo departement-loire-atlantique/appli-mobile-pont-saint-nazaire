@@ -37,7 +37,7 @@ export class WebcamPage implements OnInit, OnDestroy {
     }, environment.webcamUpdateInterval);
   }
 
-  async getWebcam() {
+  async getWebcam(event?) {
     this.hasError = false;
 
     try {
@@ -53,6 +53,10 @@ export class WebcamPage implements OnInit, OnDestroy {
     }
 
     this.isFetching = false;
+
+    if (event) {
+      event.target.complete();
+    }
   }
 
   dismiss() {
