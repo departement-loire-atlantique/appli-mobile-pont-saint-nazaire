@@ -143,7 +143,7 @@ export class HomePage implements OnInit, OnDestroy {
       }
     }
 
-    const useMocks = true;
+    const useMocks = !environment.production;
 
     try {
       const status = await this.api.getPSNStatus();
