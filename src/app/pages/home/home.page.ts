@@ -143,11 +143,11 @@ export class HomePage implements OnInit, OnDestroy {
       }
     }
 
+    const useMocks = true;
+
     try {
       const status = await this.api.getPSNStatus();
-      this.status = this.utils.formatStatus(status);
-      // Mock to show "MODE_PARTICULIER" and "Fermeture Component"
-      this.status = this.utils.formatStatus(PSN_STATUS);
+      this.status = this.utils.formatStatus(useMocks ? PSN_STATUS : status);
       this.status.from = new Date();
 
     } catch (error) {
@@ -156,9 +156,8 @@ export class HomePage implements OnInit, OnDestroy {
 
     try {
       const events = await this.api.getEvents();
-      this.eventsList = this.utils.getEventsList(events);
-      // Mock to show "MODE_PARTICULIER" and "Fermeture Component"
-      this.eventsList = this.utils.getEventsList(EVENTS_MOCK);
+      this.eventsList = this.utils.getEventsList(useMocks ? EVENTS_MOCK : events);
+
       this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
       this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');
     } catch (error) {
@@ -189,7 +188,7 @@ export class HomePage implements OnInit, OnDestroy {
   async openEventDetail(event: Event) {
     const modal = await this.modalController.create({
       component: DetailspertubationComponent,
-      componentProps: { event },
+      componentProps: { event, status: this.status },
       cssClass: 'event-modal'
     });
     return await modal.present();

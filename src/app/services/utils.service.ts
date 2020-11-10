@@ -80,19 +80,25 @@ export class UtilsService {
     });
   }
 
+  isParticular(apiStatus: ApiStatus) {
+    return apiStatus.code_current_mode === 'MODE_PARTICULIER';
+  }
+
   /**
    * Formats the api response to a more readable object
    * @param apiStatus Response from the api /psnstatus
    */
   formatStatus(apiStatus: ApiStatus): Status {
+    const isParticular = this.isParticular(apiStatus);
+
     return {
-      code: (apiStatus.code_current_mode === 'MODE_PARTICULIER') ? 'particulier' : apiStatus.code_current_mode.toLowerCase(),
+      code: isParticular ? 'mode-particulier' : apiStatus.code_current_mode.toLowerCase(),
       label: apiStatus.lib_current_mode,
       labelFermeture: (apiStatus?.close_from && apiStatus.closed_to) ? this.getLabelFermeture(apiStatus.close_from, apiStatus.closed_to)
-                                                                       : '',
+        : '',
       colorStatus: {
-        north: this.getColor(apiStatus['TIME-CERTE-STBREVIN']),
-        south: this.getColor(apiStatus['TIME-STBREVIN-CERTE'])
+        north: isParticular ? 'particulier' : this.getColor(apiStatus['TIME-CERTE-STBREVIN']),
+        south: isParticular ? 'particulier' : this.getColor(apiStatus['TIME-STBREVIN-CERTE'])
       },
       next: apiStatus.next_mode.map((element: ApiStatus) => {
         return {
@@ -118,7 +124,7 @@ export class UtilsService {
    * @param date Date string to transform to Date
    * @param separator Separator to catch date
    */
-  getDateOject(date: any, separator: string): Date{
+  getDateOject(date: any, separator: string): Date {
     return new Date(date.toString().split(separator)[0]);
   }
 
@@ -126,14 +132,14 @@ export class UtilsService {
    * Returns UtilDate format for closing
    * @param someDate format date for closing
    */
-  getFermetureDate(someDate: string): UtilDate{
+  getFermetureDate(someDate: string): UtilDate {
     const date = this.getDateOject(someDate, ' ');
     const dateCompare = this.getDateOject(someDate, 'T');
     return {
-       dateFormat: date.toLocaleDateString(),
-       timeFormat: date.toLocaleTimeString('fr-FR', {hour: 'numeric', minute: 'numeric'}),
-       dateToCompare: dateCompare.getTime()
-     };
+      dateFormat: date.toLocaleDateString(),
+      timeFormat: date.toLocaleTimeString('fr-FR', { hour: 'numeric', minute: 'numeric' }),
+      dateToCompare: dateCompare.getTime()
+    };
   }
 
   /**
@@ -141,7 +147,7 @@ export class UtilsService {
    * @param closeFrom Closing start date
    * @param closeTo Closing end date
    */
-  getLabelFermeture(closeFrom: string, closeTo: string): string{
+  getLabelFermeture(closeFrom: string, closeTo: string): string {
     let closeFromFormat: UtilDate;
     let closeToFormat: UtilDate;
 
@@ -149,7 +155,7 @@ export class UtilsService {
     closeToFormat = this.getFermetureDate(closeTo);
 
     if (closeFromFormat.dateToCompare < closeToFormat.dateToCompare) {
-       return `Du ${closeFromFormat.dateFormat} - ${closeFromFormat.timeFormat} au ${closeToFormat.dateFormat} - ${closeToFormat.timeFormat}`;
+      return `Du ${closeFromFormat.dateFormat} - ${closeFromFormat.timeFormat} au ${closeToFormat.dateFormat} - ${closeToFormat.timeFormat}`;
     }
     if (closeFromFormat.dateToCompare === closeToFormat.dateToCompare) {
       return `Le ${closeFromFormat.dateFormat}, de ${closeFromFormat.timeFormat} à ${closeToFormat.timeFormat}`;
@@ -161,8 +167,7 @@ export class UtilsService {
    * @param apiEvents Events sent by the api
    */
   getEventsList(apiEvents?: ApiEvent[]): Event[] {
-    // TODO : Remplacer EVENT_MOCK par apiEvents
-    return EVENTS_MOCK.map(event => {
+    return apiEvents.map(event => {
       return this.formatEvent(event);
     });
   }
@@ -171,7 +176,7 @@ export class UtilsService {
     let icon: string;
     let label: string;
     let type: string;
-    let zone: string;
+    let zone = 'nord';
     let datePublication: Date;
 
     if (apiEvent.nature === 'Accident') {
@@ -182,26 +187,26 @@ export class UtilsService {
       icon = 'vent-fort';
       label = 'Vents violents';
       type = 'vent';
+      zone = 'vent';
     } else if (apiEvent.nature === 'VL en panne') {
-      icon = 'particulier';
+      icon = 'mode-particulier';
       label = 'Véhicule en panne';
       type = 'panne';
     } else if (apiEvent.nature === 'Deviation') {
-        icon = 'particulier';
-        label = 'Déviation';
-        type = 'deviation';
+      icon = 'deviation';
+      label = 'Déviation';
+      type = 'deviation';
     }
 
     const long = parseFloat(apiEvent.longitude);
 
-    zone = long > DECOUPAGE_ZONE.LONGMAX_NORD ? 'nord' :
-      long < DECOUPAGE_ZONE.LONGMAX_NORD && long >= DECOUPAGE_ZONE.LONGMAX_A ? 'a' :
-        long < DECOUPAGE_ZONE.LONGMAX_A && long >= DECOUPAGE_ZONE.LONGMAX_B ? 'b' :
-          long < DECOUPAGE_ZONE.LONGMAX_B && long >= DECOUPAGE_ZONE.LONGMAX_C ? 'c' :
-            long < DECOUPAGE_ZONE.LONGMAX_C && long >= DECOUPAGE_ZONE.LONGMAX_D ? 'd' :
-              long < DECOUPAGE_ZONE.LONGMAX_D && long >= DECOUPAGE_ZONE.LONGMAX_E ? 'e' :
-                long < DECOUPAGE_ZONE.LONGMAX_E ? 'sud' : 'nord';
-
+    if (type !== 'vent') {
+      DECOUPAGE_ZONE.forEach((item) => {
+        if (long <= item.value) {
+          zone = item.name;
+        }
+      });
+    }
 
     datePublication = new Date(apiEvent.datePublication.toString().split(' ')[0]);
     // datePublication = new Date('2013-12-06T16:45:11 +0200'.split(' ')[0]);
@@ -219,5 +224,9 @@ export class UtilsService {
       ligne5: apiEvent.ligne5,
       ligne6: apiEvent.ligne6
     };
+  }
+
+  isDeviation(status: Status) {
+    return status.code === 'm120' || status.code === 'm012';
   }
 }

@@ -26,8 +26,11 @@ export class PushModalComponent implements OnInit {
       case 'vent':
         this.icon = 'vent-fort';
         break;
+      case 'deviation':
+        this.icon = 'deviation';
+        break;
       default:
-        this.icon = 'particulier';
+        this.icon = 'mode-particulier';
         break;
     }
   }

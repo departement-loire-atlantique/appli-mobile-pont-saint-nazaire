@@ -41,7 +41,15 @@ export class SvgMapComponent implements OnInit, OnChanges {
 
     if (this.events && this.events.length) {
       this.events.forEach((event: Event) => {
-        const zone = this.svg.nativeElement.querySelector('#perturbation-' + (event.type === 'vent' ? 'vent' : event.zone));
+
+        let eventZone = event.zone;
+        // Display event on east/west according to the current code
+        // for north and south points
+        if (event.zone === 'nord' || event.zone === 'sud') {
+          eventZone += '-' + (this.data.code.toLocaleLowerCase() === 'm120' ? 'est' : 'ouest');
+        }
+
+        const zone = this.svg.nativeElement.querySelector('#perturbation-' + eventZone);
 
         const clickHandler = () => {
           this.handleEventClick(event);

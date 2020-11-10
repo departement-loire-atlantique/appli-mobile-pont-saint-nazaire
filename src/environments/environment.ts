@@ -19,6 +19,10 @@ export const environment = {
     android: 'ca-app-pub-9103443525270445/1682232318',
     ios: 'ca-app-pub-9103443525270445/1666754591'
   },
+  deviationUrl: {
+    m120: 'https://inforoutes.loire-atlantique.fr/deviation-m120-app',
+    m012: 'https://inforoutes.loire-atlantique.fr/deviation-m012-app'
+  },
   webcamUpdateInterval: 5000
 };
 

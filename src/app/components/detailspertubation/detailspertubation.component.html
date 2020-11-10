@@ -12,14 +12,26 @@
     <p class="ds44-app-time"><i class="icon icon-date icon--medium ds44-valignTop" aria-hidden="true"></i>&nbsp;Mis à
       jour le {{ event.datePublication | date: "dd/MM/yyyy à HH:mm" }}</p>
 
-    <p>{{ event ? event.ligne2 : "" }}</p>
+    <div *ngIf="!isDeviation">
+      <p>{{ event ? event.ligne2 : "" }}</p>
 
-    <ul *ngIf="event">
-      <li *ngIf="event.ligne3">{{ event.ligne3 }}</li>
-      <li *ngIf="event.ligne4">{{ event.ligne4 }}</li>
-      <li *ngIf="event.ligne5">{{ event.ligne5 }}</li>
-      <li *ngIf="event.ligne6">{{ event.ligne6 }}</li>
-    </ul>
+      <ul *ngIf="event">
+        <li *ngIf="event.ligne3">{{ event.ligne3 }}</li>
+        <li *ngIf="event.ligne4">{{ event.ligne4 }}</li>
+        <li *ngIf="event.ligne5">{{ event.ligne5 }}</li>
+        <li *ngIf="event.ligne6">{{ event.ligne6 }}</li>
+      </ul>
+    </div>
+
+    <div *ngIf="isDeviation">
+      <p>Déviation : suivre la signalisation.</p>
+
+      <a href="{{ deviationUrl }}" target="_system" class="ds44-btnStd ds44-btn--invert ds44-mt2"
+        title="Voir le plan détaillé">
+        <span class="ds44-btnInnerText">Voir le plan détaillé</span>
+        <i class="icon icon-long-arrow-right" aria-hidden="true"></i>
+      </a>
+    </div>
 
   </div>
 </div>
