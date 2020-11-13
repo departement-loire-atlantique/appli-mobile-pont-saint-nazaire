@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, Platform } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 
 import { SocialNetwork } from './models/social-network';
 import { AnalyticsService } from './services/analytics.service';
 import { NotificationsService } from './services/notifications.service';
 import { RemoteConfigService } from './services/remote-config.service';
-import { StorageService } from './services/storage.service';
+
+const { AdMob } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -30,14 +32,13 @@ export class AppComponent {
 
   constructor(
     private notificationService: NotificationsService,
-    private storageService: StorageService,
-    private alertController: AlertController,
     private remoteConfigService: RemoteConfigService,
     private router: Router,
     private platform: Platform,
     private analyticsService: AnalyticsService
   ) {
     this.initializeApp();
+    AdMob.initialize();
   }
 
   /**
