@@ -38,7 +38,10 @@ export class AppComponent {
     private analyticsService: AnalyticsService
   ) {
     this.initializeApp();
-    AdMob.initialize();
+
+    if (this.platform.is('capacitor')) {
+      AdMob.initialize();
+    }
   }
 
   /**

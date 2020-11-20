@@ -26,7 +26,7 @@
     "@capacitor-community/fcm": "^1.0.8",
     "@capacitor-community/firebase-analytics": "^0.2.0",
     "@capacitor-community/firebase-crashlytics": "^0.3.0",
-    "@capacitor-community/firebase-remote-config": "^0.1.3",
+    "@capacitor-community/firebase-remote-config": "https://github.com/Sebschock/firebase-remote-config/releases/download/v0.1.4/capacitor-community-firebase-remote-config-0.1.4.tgz",
     "@capacitor-community/http": "^0.2.1",
     "@capacitor/android": "^2.4.1",
     "@capacitor/core": "2.4.0",
