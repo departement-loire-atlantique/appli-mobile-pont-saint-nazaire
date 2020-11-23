@@ -37,7 +37,6 @@ export class AppComponent {
     private interstitialServive: InterstitialService
   ) {
     this.initializeApp();
-    interstitialServive.init();
   }
 
   /**
@@ -61,6 +60,8 @@ export class AppComponent {
       // Enable analytics
       this.analyticsService.enableAnalytics();
       this.analyticsService.enableCrashlytics();
+
+      this.interstitialServive.init();
     });
   }
 
