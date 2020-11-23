@@ -23,12 +23,12 @@ export class InterstitialService {
 
   init() {
     this.getInterstitial().then((interstitial) => {
-      this.interstitialData = interstitial;
+      if (interstitial) {
+        this.interstitialData = interstitial;
 
-      this.setListener();
-      this.checkThreshold();
-    }).catch(() => {
-      console.log('no interstitial');
+        this.setListener();
+        this.checkThreshold();
+      }
     });
   }
 
@@ -79,6 +79,7 @@ export class InterstitialService {
   // Api Call
   async getInterstitial() {
     const data = await this.apiService.getInterstitial();
+
     if (data && data.interstitials && data.interstitials.length) {
       const interstitial = data.interstitials.find(item => item.idapp === 'pontsaintnazaire');
       interstitial.every = parseInt(interstitial.every, 10);

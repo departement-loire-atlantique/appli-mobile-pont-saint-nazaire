@@ -27,7 +27,7 @@ export class ApiService {
       }
     });
 
-    return response.data;
+    return response.data.mobile_intersticiel;
   }
 
   async getPSNStatus(): Promise<ApiStatus> {

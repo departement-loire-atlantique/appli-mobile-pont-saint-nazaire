@@ -13,8 +13,8 @@
 
   button {
     position: absolute;
-    right: 16px;
-    top: 16px;
+    left: 0;
+    top: env(safe-area-inset-top);
 
     background: #FFF;
   }
