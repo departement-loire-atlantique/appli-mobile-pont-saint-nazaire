@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://api.loire-atlantique.fr/opendata/1.0',
-  interstitialUrl: 'http://api.loire-atlantique.fr/bacspsn_android/1.0/traficparameter?id=mobile_intersticiel&format=json',
+  interstitialUrl: 'https://api.loire-atlantique.fr/bacspsn_android/1.0/traficparameter?id=mobile_intersticiel&format=json',
   firebaseConfig: {
     apiKey: 'AIzaSyCU60VPBHF0uM32DSvVzxMjsDo0l8L097M',
     authDomain: 'hybride-pont-de-saint-nazaire.firebaseapp.com',

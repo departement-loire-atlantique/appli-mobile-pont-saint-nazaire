@@ -3,6 +3,7 @@ import { AppState, Plugins } from '@capacitor/core';
 import { ModalController } from '@ionic/angular';
 
 import { InterstitialComponent } from '../components/interstitial/interstitial.component';
+import { Interstitial } from '../models/interstitial';
 
 import { ApiService } from './api.service';
 import { UtilsService } from './utils.service';
@@ -16,29 +17,12 @@ export class InterstitialService {
 
   private static readonly STORAGEKEY = 'interstitial_display_date';
 
-  private interstitialData: any = {
-
-    idapp: 'pontsaintnazaire',
-
-    urltarget: 'http://toussurlepont.loire-atlantique.fr',
-
-    duration: 5000,
-
-    every: 10,
-
-    image1: 'http://toussurlepont.loire-atlantique.fr/uploads/media/55e4038e45025/TSLP_pontSN_intersticiel_640x960.png?v2',
-
-    image2: 'http://toussurlepont.loire-atlantique.fr/uploads/media/55e403bfacdee/TSLP_pontSN_intersticiel_1242x2208.png?v2'
-
-  };
+  private interstitialData: Interstitial;
 
   constructor(private utils: UtilsService, private modalController: ModalController, private apiService: ApiService) { }
 
   init() {
-    this.showInterstitial();
-
     this.getInterstitial().then((interstitial) => {
-      console.log(interstitial);
       this.interstitialData = interstitial;
 
       this.setListener();
