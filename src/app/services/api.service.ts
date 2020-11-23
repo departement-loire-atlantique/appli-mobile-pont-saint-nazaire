@@ -6,6 +6,7 @@ import { Platform } from '@ionic/angular';
 
 import { environment } from '../../environments/environment';
 import { ApiEvent } from '../models/event';
+import { InterstitialData } from '../models/interstitial';
 import { ApiStatus } from '../models/status';
 const { Http, Filesystem } = Plugins;
 
@@ -16,6 +17,18 @@ const { Http, Filesystem } = Plugins;
 export class ApiService {
 
   constructor(private platform: Platform) { }
+
+  async getInterstitial(): Promise<InterstitialData> {
+    const response = await Http.request({
+      method: 'GET',
+      url: environment.interstitialUrl,
+      params: {
+        mode: 'no-cors'
+      }
+    });
+
+    return response.data;
+  }
 
   async getPSNStatus(): Promise<ApiStatus> {
     const response = await Http.request({

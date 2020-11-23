@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 
 import { SocialNetwork } from './models/social-network';
 import { AnalyticsService } from './services/analytics.service';
+import { InterstitialService } from './services/interstitial.service';
 import { NotificationsService } from './services/notifications.service';
 import { RemoteConfigService } from './services/remote-config.service';
-
-const { AdMob } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -35,13 +33,11 @@ export class AppComponent {
     private remoteConfigService: RemoteConfigService,
     private router: Router,
     private platform: Platform,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private interstitialServive: InterstitialService
   ) {
     this.initializeApp();
-
-    if (this.platform.is('capacitor')) {
-      AdMob.initialize();
-    }
+    interstitialServive.init();
   }
 
   /**

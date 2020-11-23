@@ -4,7 +4,6 @@ import { Plugins } from '@capacitor/core';
 import { IonRouterOutlet, LoadingController, MenuController, ModalController, Platform } from '@ionic/angular';
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
 import { EVENTS_MOCK, PSN_STATUS } from 'src/app/models/constantesCD44';
-import { AdOptions } from '@capacitor-community/admob';
 
 import { environment } from '../../../environments/environment';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
@@ -12,7 +11,7 @@ import { Event } from '../../models/event';
 import { ApiService } from '../../services/api.service';
 import { UtilsService } from '../../services/utils.service';
 import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
-const { App, AdMob } = Plugins;
+const { App } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -46,8 +45,6 @@ export class HomePage implements OnInit, OnDestroy {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.handleBackButton();
     });
-
-    this.showInterstitial();
   }
 
   ngOnInit() {
@@ -56,26 +53,6 @@ export class HomePage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.getData();
-  }
-
-  showInterstitial() {
-    if (this.platform.is('capacitor')) {
-      const conf: AdOptions = {
-        adId: this.platform.is('ios') ? environment.adMobId.ios : environment.adMobId.android
-      };
-
-      AdMob.prepareInterstitial(conf);
-
-      AdMob.addListener('onInterstitialAdLoaded', (info: boolean) => {
-        console.log('onInterstitialAdLoaded', info);
-
-        AdMob.showInterstitial();
-      });
-
-      AdMob.addListener('onInterstitialAdFailedToLoad', (error) => {
-        console.log(error);
-      });
-    }
   }
 
   /**
