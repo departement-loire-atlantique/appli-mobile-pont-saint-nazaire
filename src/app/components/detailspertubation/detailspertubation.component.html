@@ -9,7 +9,8 @@
 <div class="inner-content">
   <div class="ds44-modal-gab">
     <h2 class="h3-like">{{ event.ligne1 }}</h2>
-    <p class="ds44-app-time"><i class="icon icon-date icon--medium ds44-valignTop" aria-hidden="true"></i>&nbsp;Mis à
+    <p class="ds44-app-time" *ngIf="!isDeviation"><i class="icon icon-date icon--medium ds44-valignTop"
+        aria-hidden="true"></i>&nbsp;Mis à
       jour le {{ event.datePublication | date: "dd/MM/yyyy à HH:mm" }}</p>
 
     <div *ngIf="!isDeviation">

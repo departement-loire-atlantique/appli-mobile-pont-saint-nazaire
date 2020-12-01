@@ -7,7 +7,8 @@ import { EVENTS_MOCK, PSN_STATUS } from 'src/app/models/constantesCD44';
 
 import { environment } from '../../../environments/environment';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
-import { Event } from '../../models/event';
+import { ApiEvent, Event } from '../../models/event';
+import { Status } from '../../models/status';
 import { ApiService } from '../../services/api.service';
 import { UtilsService } from '../../services/utils.service';
 import { FilterByPropertyPipe } from '../../shared/filter-by-property.pipe';
@@ -19,7 +20,7 @@ const { App } = Plugins;
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
-  public status: any;
+  public status: Status;
   public eventsList: Event[] = [];
   public currentEvents: Event[] = [];
   public upcomingEvents: Event[] = [];
@@ -114,6 +115,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.hasError = false;
 
     let loader: HTMLIonLoadingElement;
+    let diversionEvent: ApiEvent;
 
     if (this.bottomPanel && !event) {
       const currentPanelPosition = this.bottomPanel.currentBreak();
@@ -135,8 +137,31 @@ export class HomePage implements OnInit, OnDestroy {
       this.hasError = true;
     }
 
+    // Add fake diversion event in the north zone
+    if (this.utils.isDeviation(this.status)) {
+      diversionEvent = {
+        nature: 'Deviation',
+        longitude: '47.298',
+        datePublication: new Date().toISOString()
+      };
+    }
+
     try {
       const events = await this.api.getEvents();
+
+      if (this.utils.isDeviation(this.status)) {
+        const now = new Date().toISOString();
+        (useMocks ? EVENTS_MOCK : events).push({
+          nature: 'Deviation',
+          longitude: '47.298',
+          datePublication: now
+        }, {
+          nature: 'Deviation',
+          longitude: '47.268',
+          datePublication: now
+        });
+      }
+
       this.eventsList = this.utils.getEventsList(useMocks ? EVENTS_MOCK : events);
 
       this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
@@ -150,6 +175,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.isFirstCall = false;
       this.setupBottomPanel();
     }
+
 
     this.isFetching = false;
 

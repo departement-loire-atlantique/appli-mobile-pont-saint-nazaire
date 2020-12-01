@@ -1,3 +1,5 @@
+import { ApiEvent } from './event';
+
 export const DECOUPAGE_ZONE = [
   {
     name: 'a',
@@ -57,23 +59,7 @@ export const PSN_STATUS = {
   closed_to: '2020-09-18T21:30:00 +0200',
 };
 
-export const EVENTS_MOCK = [{
-  identifiant: 'E138626081400854970_1Haur1138626081400854526',
-  datePublication: '2013-12-06T16:30:39 +0200',
-  ligne1: 'Déviation',
-  ligne2: 'D213 - MONTOIR-DE-BRETAGNE',
-  ligne3: 'ST-BREVINS-LES-PINS, ST-NAZAIRE',
-  ligne4: 'Fin prévisible : 06/12/2013 à 20h',
-  ligne5: 'Route fermée / déviation',
-  ligne6: 'Prudence',
-  rattachement: 'Pont de Saint-Nazaire',
-  nature: 'Deviation',
-  type: 'Deviation',
-  statut: 'en cours',
-  longitude: '47.299',
-  latitude: '6699841.260273831'
-},
-{
+export const EVENTS_MOCK: ApiEvent[] = [{
   identifiant: 'E138660201893538250_1Haur1138660201893538867',
   datePublication: '2013-12-06T16:35:35 +0200',
   ligne1: 'Véhicule en panne',
@@ -98,7 +84,6 @@ export const EVENTS_MOCK = [{
   ligne4: 'Risque de rafales ',
   ligne5: 'Restriction de circulation en cours',
   ligne6: 'Prudence',
-  informationcomplementaire: 'Circulation sur une voie dans chaque sens + Circulation interdite aux 2 roues et aux véhicules tractant une remorque ou une caravane + Avertissement de fermeture possible si vent >120km/h',
   rattachement: 'Pont de Saint-Nazaire',
   nature: 'Vent',
   type: 'Vent',
