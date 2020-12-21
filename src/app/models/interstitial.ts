@@ -1,10 +1,11 @@
 export interface Interstitial {
-  idapp: string;
+  idapp?: string;
   urltarget: string;
-  duration: any;
-  every: any;
+  duration?: any;
+  every?: any;
   image1: string;
-  image2: string;
+  image2?: string;
+  type?: string;
 }
 
 export interface InterstitialData {

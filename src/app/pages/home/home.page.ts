@@ -124,7 +124,7 @@ export class HomePage implements OnInit, OnDestroy {
       }
     }
 
-    const useMocks = !environment.production;
+    const useMocks = true;
 
     try {
       const status = await this.api.getPSNStatus();
@@ -138,6 +138,10 @@ export class HomePage implements OnInit, OnDestroy {
     try {
       const events = await this.api.getEvents();
       this.eventsList = this.utils.getEventsList(useMocks ? EVENTS_MOCK : events);
+
+      if(this.utils.isDeviation(this.status)) {
+        this.eventsList.push(this.utils.getEventDeviation(this.status));
+      }
 
       this.currentEvents = this.filterPipe.transform(this.eventsList, 'status', 'en cours');
       this.upcomingEvents = this.filterPipe.transform(this.eventsList, 'status', 'prévisionnel');

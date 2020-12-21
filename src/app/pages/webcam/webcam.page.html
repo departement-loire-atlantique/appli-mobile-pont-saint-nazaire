@@ -25,7 +25,20 @@
       </div>
 
       <img class="ds44-mt1" [src]="image">
+      <section (click) = "showReferenceWebcam()" class="ds44-card ds44-js-card ">
+        <div class="ds44-flex-container">
+            <div class="ds44-card__dateContainer ds44-flex-container ds44-flex-align-center " aria-hidden="true">
+              <i class="icon icon-webcam" aria-hidden="true"></i>             
+            </div>
+            <div class="ds44-card--horizontal">
+              <p role="heading" aria-level="2" class="ds44-card__title">Plan de localisation des webcams</p>
+              <p class="ds44-cardLocalisation"><span class="ds44-iconInnerText">Relever la référence incrustrée dans l'image</span></p>   
+            </div>
+        </div>
+    </section>
     </div>
+   
+    
   </app-request-feedback>
 
 </ion-content>

@@ -19,7 +19,7 @@ export class DetailspertubationComponent implements OnInit {
   constructor(private utils: UtilsService) { }
 
   ngOnInit() {
-    this.isDeviation = this.utils.isDeviation(this.status) && (this.event.zone === 'sud' || this.event.zone === 'nord');
+    this.isDeviation = this.utils.isDeviation(this.status);
 
     if (this.isDeviation) {
       this.deviationUrl = environment.deviationUrl[this.status.code];

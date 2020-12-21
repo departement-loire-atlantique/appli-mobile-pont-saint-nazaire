@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { InterstitialComponent } from 'src/app/components/interstitial/interstitial.component';
+import { Interstitial } from 'src/app/models/interstitial';
 
 import { environment } from '../../../environments/environment';
 import { langFr } from '../../models/constantesCD44';
@@ -16,6 +18,11 @@ export class WebcamPage implements OnInit, OnDestroy {
   public image: any;
   public date: Date;
   public updateInterval: any;
+  public data: Interstitial = {
+        urltarget: '',
+        image1: 'http://applis-push.loire-atlantique.fr/public/images/icone-applis/icone-bacs.png',
+        type: 'webcam'
+  }
 
   public isFetching = true;
   public hasError = false;
@@ -65,5 +72,16 @@ export class WebcamPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.updateInterval);
+  }
+
+  async showReferenceWebcam() {
+    const modal = await this.modalController.create({
+      component: InterstitialComponent,
+      componentProps: {
+        data: this.data
+      }
+    });
+
+    modal.present();
   }
 }

@@ -94,7 +94,7 @@ export class UtilsService {
     return {
       code: isParticular ? 'mode-particulier' : apiStatus.code_current_mode.toLowerCase(),
       label: apiStatus.lib_current_mode,
-      labelFermeture: (apiStatus?.close_from && apiStatus.closed_to) ? this.getLabelFermeture(apiStatus.close_from, apiStatus.closed_to)
+      labelFermeture: (apiStatus?.close_from && apiStatus?.closed_to) ? this.getLabelFermeture(apiStatus.close_from, apiStatus.closed_to)
         : '',
       colorStatus: {
         north: isParticular ? 'particulier' : this.getColor(apiStatus['TIME-CERTE-STBREVIN']),
@@ -228,5 +228,17 @@ export class UtilsService {
 
   isDeviation(status: Status) {
     return status.code === 'm120' || status.code === 'm012';
+  }
+
+  getEventDeviation(status): Event{
+    return {
+      datePublication: new Date(),
+      icon: 'deviation',
+      label: 'Déviation',
+      type: 'deviation',
+      zone: status.code == 'm012' ? 'nord' : 'sud',
+      status: 'en cours',
+      ligne1: 'Route fermée / déviation'
+    }
   }
 }

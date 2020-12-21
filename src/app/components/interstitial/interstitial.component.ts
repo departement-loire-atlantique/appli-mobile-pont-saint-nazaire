@@ -14,7 +14,10 @@ export class InterstitialComponent implements OnInit {
   constructor(private modalController: ModalController) { }
 
   ngOnInit() {
-    this.timeout = setTimeout(this.close.bind(this), this.data.duration);
+    if (this.data.type == 'interstitial') {
+      this.timeout = setTimeout(this.close.bind(this), this.data.duration);
+    }
+    
   }
 
   close() {
