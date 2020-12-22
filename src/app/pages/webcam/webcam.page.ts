@@ -20,7 +20,8 @@ export class WebcamPage implements OnInit, OnDestroy {
   public updateInterval: any;
   public data: Interstitial = {
         urltarget: '',
-        image1: 'http://applis-push.loire-atlantique.fr/public/images/icone-applis/icone-bacs.png',
+        //image1: 'http://applis-push.loire-atlantique.fr/public/images/icone-applis/icone-bacs.png',
+        image1: 'assets/img/reference.PNG',
         type: 'webcam'
   }
 
