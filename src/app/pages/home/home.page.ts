@@ -153,10 +153,12 @@ export class HomePage implements OnInit, OnDestroy {
         const now = new Date().toISOString();
         (useMocks ? EVENTS_MOCK : events).push({
           nature: 'Deviation',
+          statut: 'en cours',
           longitude: '47.298',
           datePublication: now
         }, {
           nature: 'Deviation',
+          statut: null,
           longitude: '47.268',
           datePublication: now
         });
