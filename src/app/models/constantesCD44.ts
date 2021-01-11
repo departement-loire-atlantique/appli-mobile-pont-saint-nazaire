@@ -41,7 +41,7 @@ export const langFr = {
 };
 
 export const PSN_STATUS = {
-  code_current_mode: 'm120',
+  code_current_mode: 'm012',
   lib_current_mode: 'Déviation sens Saint-Nazaire - Saint-Brevin',
   next_mode: [
     {

@@ -148,7 +148,7 @@ export class HomePage implements OnInit, OnDestroy {
     try {
       const events = await this.api.getEvents();
 
-      if (this.utils.isDeviation(this.status)) {
+    /*   if (this.utils.isDeviation(this.status)) {
         const now = new Date().toISOString();
         (useMocks ? EVENTS_MOCK : events).push({
           nature: 'Deviation',
@@ -161,7 +161,7 @@ export class HomePage implements OnInit, OnDestroy {
           longitude: '47.268',
           datePublication: now
         });
-      }
+      } */
 
       this.eventsList = this.utils.getEventsList(useMocks ? EVENTS_MOCK : events);
 
