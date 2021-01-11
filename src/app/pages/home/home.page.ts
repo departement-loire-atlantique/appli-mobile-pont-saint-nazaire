@@ -5,7 +5,6 @@ import { IonRouterOutlet, LoadingController, MenuController, ModalController, Pl
 import { CupertinoPane, CupertinoSettings } from 'cupertino-pane';
 import { EVENTS_MOCK, PSN_STATUS } from 'src/app/models/constantesCD44';
 
-import { environment } from '../../../environments/environment';
 import { DetailspertubationComponent } from '../../components/detailspertubation/detailspertubation.component';
 import { Event } from '../../models/event';
 import { ApiService } from '../../services/api.service';
@@ -124,7 +123,7 @@ export class HomePage implements OnInit, OnDestroy {
       }
     }
 
-    const useMocks = true;
+    const useMocks = false;
 
     try {
       const status = await this.api.getPSNStatus();

@@ -236,7 +236,7 @@ export class UtilsService {
       icon: 'deviation',
       label: 'Déviation',
       type: 'deviation',
-      zone: status.code == 'm012' ? 'nord' : 'sud',
+      zone: status.code == 'm012' ? 'nord-ouest' : 'sud-est',
       status: 'en cours',
       ligne1: 'Route fermée / déviation'
     }
