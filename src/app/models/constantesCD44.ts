@@ -42,7 +42,7 @@ export const langFr = {
 
 export const PSN_STATUS = {
   code_current_mode: 'm120',
-  lib_current_mode: 'M012',
+  lib_current_mode: 'Déviation sens Saint-Nazaire - Saint-Brevin',
   next_mode: [
     {
       code_mode: 'M112',
@@ -59,7 +59,23 @@ export const PSN_STATUS = {
   closed_to: '2020-09-18T21:30:00 +0200',
 };
 
-export const EVENTS_MOCK: ApiEvent[] = [{
+export const EVENTS_MOCK = [/*{
+  identifiant: 'E138626081400854970_1Haur1138626081400854526',
+  datePublication: '2013-12-06T16:30:39 +0200',
+  ligne1: 'Déviation',
+  ligne2: 'D213 - MONTOIR-DE-BRETAGNE',
+  ligne3: 'ST-BREVINS-LES-PINS, ST-NAZAIRE',
+  ligne4: 'Fin prévisible : 06/12/2013 à 20h',
+  ligne5: 'Route fermée / déviation',
+  ligne6: 'Prudence',
+  rattachement: 'Pont de Saint-Nazaire',
+  nature: 'Deviation',
+  type: 'Deviation',
+  statut: 'en cours',
+  longitude: '47.299',
+  latitude: '6699841.260273831'
+},*/
+{
   identifiant: 'E138660201893538250_1Haur1138660201893538867',
   datePublication: '2013-12-06T16:35:35 +0200',
   ligne1: 'Véhicule en panne',
@@ -91,3 +107,5 @@ export const EVENTS_MOCK: ApiEvent[] = [{
   longitude: '47.298',
   latitude: '6699379.219872664'
 }];
+
+

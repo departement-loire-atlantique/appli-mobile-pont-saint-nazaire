@@ -4,7 +4,6 @@ import { environment } from '../../../environments/environment';
 import { Event } from '../../models/event';
 import { Status } from '../../models/status';
 import { UtilsService } from '../../services/utils.service';
-
 @Component({
   selector: 'app-detailspertubation',
   templateUrl: './detailspertubation.component.html',
@@ -19,7 +18,7 @@ export class DetailspertubationComponent implements OnInit {
   constructor(private utils: UtilsService) { }
 
   ngOnInit() {
-    this.isDeviation = this.utils.isDeviation(this.status) && (this.event.zone === 'sud' || this.event.zone === 'nord');
+    this.isDeviation = this.utils.isDeviation(this.status) && (this.event.zone === 'sud-est' || this.event.zone === 'nord-ouest');
 
     if (this.isDeviation) {
       this.deviationUrl = environment.deviationUrl[this.status.code];

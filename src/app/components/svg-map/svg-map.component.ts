@@ -45,9 +45,9 @@ export class SvgMapComponent implements OnInit, OnChanges {
         let eventZone = event.zone;
         // Display event on east/west according to the current code
         // for north and south points
-        if (event.zone === 'nord' || event.zone === 'sud') {
+        /*if (event.zone === 'nord' || event.zone === 'sud') {
           eventZone += '-' + (this.data.code.toLocaleLowerCase() === 'm120' ? 'est' : 'ouest');
-        }
+        }*/
 
         const zone = this.svg.nativeElement.querySelector('#perturbation-' + eventZone);
 
