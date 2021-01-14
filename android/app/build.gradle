@@ -1,21 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-      release {
-        storeFile file('D:/CD44/confs/pontsaintnazaire.keystore')
-        storePassword 'pontsaintnazaire'
-        keyAlias 'pontsaintnazaire'
-        keyPassword 'pontsaintnazaire'
-      }
-    }
   compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.cg44.PontSaintNazaire"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 23
-        versionName "2.1.4"
+        versionCode 24
+        versionName "2.1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
