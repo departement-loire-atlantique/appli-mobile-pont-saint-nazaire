@@ -15,13 +15,13 @@ def capacitor_pods
   pod 'CapacitorCommunityFirebaseCrashlytics', :path => '../../node_modules/@capacitor-community/firebase-crashlytics'
   pod 'CapacitorCommunityFirebaseRemoteConfig', :path => '../../node_modules/@capacitor-community/firebase-remote-config'
   pod 'CapacitorCommunityHttp', :path => '../../node_modules/@capacitor-community/http'
-  pod 'Firebase'
-  pod 'Firebase/InAppMessaging'
-  pod 'Firebase/Analytics' 
   # Do not delete
 end
 
 target 'App' do
   capacitor_pods
   # Add your Pods here
+  pod 'Firebase'
+  pod 'Firebase/InAppMessaging'
+  pod 'Firebase/Analytics' 
 end
